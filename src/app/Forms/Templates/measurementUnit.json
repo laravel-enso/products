@@ -1,0 +1,37 @@
+{
+    "routePrefix": "administration.measurementUnits",
+    "sections": [
+        {
+            "columns": 2,
+            "fields": [
+                {
+                    "label": "Name",
+                    "name": "name",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text"
+                    }
+                },
+                {
+                    "label": "Order Index",
+                    "name": "order_index",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "number"
+                    }
+                },
+                {
+                    "label": "Active",
+                    "name": "is_active",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "checkbox"
+                    }
+                }
+            ]
+        }
+    ]
+}

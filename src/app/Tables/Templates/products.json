@@ -1,0 +1,22 @@
+{
+    "name": "Product",
+    "routePrefix": "products",
+    "crtNo": true,
+    "buttons": [
+        "excel",
+        "create",
+        "edit",
+        "destroy"
+    ],
+    "columns": [
+        {
+            "label": "Id",
+            "name": "dtRowId",
+            "data": "products.dtRowId",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        }
+    ]
+}

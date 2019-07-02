@@ -1,0 +1,36 @@
+{
+    "name": "laravel-enso/products",
+    "type": "library",
+    "description": "",
+    "authors": [
+        {
+            "name": "Ionut-Catalin Sandu",
+            "email": "catalin.sandu@earthlink.com",
+            "homepage": "https://laravel-enso.com",
+            "role": "Developer"
+        }
+    ],
+    "keywords": [
+        "laravel-enso",
+        "vue-bulma",
+        "products",
+        "products-management"
+    ],
+    "homepage": "https://github.com/laravel-enso/products",
+    "require": {
+        "php": ">=7.1.2",
+        "laravel-enso/core": "4.3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelEnso\\Produtcs\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelEnso\\Products\\AppServiceProvider"
+            ]
+        }
+    }
+}

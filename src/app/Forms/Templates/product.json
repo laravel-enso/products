@@ -1,0 +1,119 @@
+{
+    "routePrefix": "products",
+    "sections": [
+        {
+            "columns": 2,
+            "fields": [
+                {
+                    "label": "Name",
+                    "name": "name",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text"
+                    }
+                },
+                {
+                    "label": "Manufacturer",
+                    "name": "manufacturer_id",
+                    "value": null,
+                    "meta": {
+                        "type": "select",
+                        "source": "administration.companies.options"
+                    }
+                }
+            ]
+        },
+        {
+            "columns": 2,
+            "fields": [
+                {
+                    "label": "Part Number",
+                    "name": "part_number",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "number"
+                    }
+                },
+                {
+                    "label": "Internal Code",
+                    "name": "internal_code",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text"
+                    }
+                }
+            ]
+        },
+        {
+            "columns": 2,
+            "fields": [
+                {
+                    "label": "Measurement",
+                    "name": "measurement_unit_id",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text"
+                    }
+                },
+                {
+                    "label": "Package Quantity",
+                    "name": "pachkage_quantity",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "source": "number"
+                    }
+                }
+            ]
+        },
+        {
+            "columns": 2,
+            "fields": [
+                {
+                    "label": "List Price",
+                    "name": "list_price",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "number"
+                    }
+                },
+                {
+                    "label": "VAT Percent",
+                    "name": "vat_percent",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "source": "number"
+                    }
+                }
+            ]
+        },{
+            "columns": 1,
+            "fields": [
+                {
+                    "label": "Description",
+                    "name": "description",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text"
+                    }
+                },
+                {
+                    "label": "Active",
+                    "name": "is_active",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "checkbox"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "name": "Measurement Unit",
+    "routePrefix": "administration.measurementUnits",
+    "crtNo": true,
+    "buttons": [
+        "excel",
+        "create",
+        "edit",
+        "destroy"
+    ],
+    "columns": [
+        {
+            "label": "Id",
+            "name": "dtRowId",
+            "data": "measurement_units.dtRowId",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        }
+    ]
+}
