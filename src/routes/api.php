@@ -5,7 +5,7 @@ Route::middleware(['web', 'auth', 'core'])
     ->prefix('api')
     ->group(function () {
         Route::prefix('administration')
-            ->as('administration.')
+            ->as('administration.measurementUnits.')
             ->namespace('MeasurementUnits')
             ->group(function () {
                 Route::get('create', 'Create')->name('create');
