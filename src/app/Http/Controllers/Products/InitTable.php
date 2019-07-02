@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Products;
+namespace LaravelEnso\Products\app\Http\Controllers\Products;
 
 use Illuminate\Routing\Controller;
 use LaravelEnso\Tables\app\Traits\Init;
