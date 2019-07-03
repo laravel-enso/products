@@ -10,12 +10,75 @@
     ],
     "columns": [
         {
-            "label": "Id",
-            "name": "dtRowId",
-            "data": "products.dtRowId",
+            "label": "Name",
+            "name": "name",
+            "data": "products.name",
             "meta": [
                 "searchable",
                 "sortable"
+            ]
+        },
+        {
+            "label": "Manufacturer",
+            "name": "manufacturer",
+            "data": "companies.name",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
+            "label": "Part Number",
+            "name": "part_number",
+            "data": "products.part_number",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
+            "label": "List Price",
+            "name": "list_price",
+            "data": "products.list_price",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
+            "label": "Vat",
+            "name": "vat",
+            "data": "products.vat_percent",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
+            "label": "Measurement Unit",
+            "name": "measurement",
+            "data": "measurement_units.name",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
+            "label": "Package Quantity",
+            "name": "package_quantity",
+            "data": "products.package_quantity",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
+            "label": "Active",
+            "name": "is_active",
+            "data": "products.is_active",
+            "meta": [
+                "sortable",
+                "boolean"
             ]
         }
     ]

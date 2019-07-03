@@ -14,7 +14,9 @@ class ValidateMeasurementUnitRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:10',
+            'order_index' => 'required|integer',
+            'is_active' => 'boolean'
         ];
     }
 }

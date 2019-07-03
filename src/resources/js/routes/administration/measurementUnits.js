@@ -4,7 +4,7 @@ const routes = routeImporter(require.context('./measurementUnits', false, /.*\.j
 const RouterView = () => import('@core-pages/Router.vue');
 
 export default {
-    path: '/measurementUnits',
+    path: 'measurementUnits',
     component: RouterView,
     meta: {
         breadcrumb: 'measurement units',

@@ -8,8 +8,8 @@ use LaravelEnso\Products\app\Forms\Builders\MeasurementUnitForm;
 
 class Edit extends Controller
 {
-    public function __invoke(MeasurementUnit $measurementunit, MeasurementUnitForm $form)
+    public function __invoke(MeasurementUnit $measurementUnit, MeasurementUnitForm $form)
     {
-        return ['form' => $form->edit($measurementunit)];
+        return ['form' => $form->edit($measurementUnit)];
     }
 }

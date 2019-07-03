@@ -7,9 +7,9 @@ use LaravelEnso\Products\app\Models\MeasurementUnit;
 
 class Destroy extends Controller
 {
-    public function __invoke(MeasurementUnit $measurementunit)
+    public function __invoke(MeasurementUnit $measurementUnit)
     {
-        $measurementunit->delete();
+        $measurementUnit->delete();
 
         return [
             'message' => __('The measurementunit was successfully deleted'),

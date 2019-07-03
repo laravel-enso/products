@@ -8,10 +8,10 @@ use LaravelEnso\Products\app\Http\Requests\ValidateMeasurementUnitRequest;
 
 class Update extends Controller
 {
-    public function __invoke(ValidateMeasurementUnitRequest $request, MeasurementUnit $measurementunit)
+    public function __invoke(ValidateMeasurementUnitRequest $request, MeasurementUnit $measurementUnit)
     {
-        $measurementunit->update($request->validated());
+        $measurementUnit->update($request->validated());
 
-        return ['message' => __('The measurementunit was successfully updated')];
+        return ['message' => __('The measurement unit was successfully updated')];
     }
 }

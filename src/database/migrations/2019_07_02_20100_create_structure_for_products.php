@@ -5,6 +5,7 @@ use LaravelEnso\Migrator\app\Database\Migration;
 class CreateStructureForProducts extends Migration
 {
     protected $permissions = [
+        ['name' => 'products.index', 'description' => 'Show index for products', 'type' => 0, 'is_default' => false],
         ['name' => 'products.create', 'description' => 'Create product', 'type' => 1, 'is_default' => false],
         ['name' => 'products.store', 'description' => 'Store a new product', 'type' => 1, 'is_default' => false],
         ['name' => 'products.show', 'description' => 'Show product', 'type' => 1, 'is_default' => false],
@@ -18,7 +19,7 @@ class CreateStructureForProducts extends Migration
     ];
 
     protected $menu = [
-        'name' => 'Products', 'icon' => 'product-hunt', 'route' => 'products.index', 'order_index' => 190, 'has_children' => false,
+        'name' => 'Products', 'icon' => 'fab product-hunt', 'route' => 'products.index', 'order_index' => 210, 'has_children' => false,
     ];
 
     protected $parentMenu = '';

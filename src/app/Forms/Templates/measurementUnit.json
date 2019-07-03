@@ -25,7 +25,7 @@
                 {
                     "label": "Active",
                     "name": "is_active",
-                    "value": null,
+                    "value": true,
                     "meta": {
                         "type": "input",
                         "content": "checkbox"

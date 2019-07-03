@@ -8,14 +8,14 @@ use LaravelEnso\Products\app\Http\Requests\ValidateMeasurementUnitRequest;
 
 class Store extends Controller
 {
-    public function __invoke(ValidateMeasurementUnitRequest $request, MeasurementUnit $measurementunit)
+    public function __invoke(ValidateMeasurementUnitRequest $request, MeasurementUnit $measurementUnit)
     {
-        $measurementunit->fill($request->validated())->save();
+        $measurementUnit->fill($request->validated())->save();
 
         return [
             'message' => __('The measurementunit was successfully created'),
             'redirect' => 'administration.measurementUnits.edit',
-            'param' => ['measurementunit' => $measurementunit->id],
+            'param' => ['measurementunit' => $measurementUnit->id],
         ];
     }
 }

@@ -12,7 +12,10 @@ class MeasurementUnitTable extends Table
     public function query()
     {
         return MeasurementUnit::selectRaw('
-            measurement_units.id as "dtRowId"
+            measurement_units.id as "dtRowId",
+            measurement_units.name,
+            measurement_units.order_index,
+            measurement_units.is_active
         ');
     }
 }

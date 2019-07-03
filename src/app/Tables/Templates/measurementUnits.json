@@ -10,12 +10,30 @@
     ],
     "columns": [
         {
-            "label": "Id",
-            "name": "dtRowId",
-            "data": "measurement_units.dtRowId",
+            "label": "Name",
+            "name": "name",
+            "data": "measurement_units.name",
             "meta": [
                 "searchable",
                 "sortable"
+            ]
+        },
+        {
+            "label": "Order Index",
+            "name": "order_index",
+            "data": "measurement_units.order_index",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
+            "label": "Active",
+            "name": "is_active",
+            "data": "measurement_units.is_active",
+            "meta": [
+                "sortable",
+                "boolean"
             ]
         }
     ]

@@ -55,17 +55,17 @@
                     "name": "measurement_unit_id",
                     "value": null,
                     "meta": {
-                        "type": "input",
-                        "content": "text"
+                        "type": "select",
+                        "source": "administration.measurementUnits.options"
                     }
                 },
                 {
                     "label": "Package Quantity",
-                    "name": "pachkage_quantity",
+                    "name": "package_quantity",
                     "value": null,
                     "meta": {
                         "type": "input",
-                        "source": "number"
+                        "content": "number"
                     }
                 }
             ]
@@ -88,7 +88,7 @@
                     "value": null,
                     "meta": {
                         "type": "input",
-                        "source": "number"
+                        "content": "number"
                     }
                 }
             ]
@@ -100,14 +100,14 @@
                     "name": "description",
                     "value": null,
                     "meta": {
-                        "type": "input",
+                        "type": "textarea",
                         "content": "text"
                     }
                 },
                 {
                     "label": "Active",
                     "name": "is_active",
-                    "value": null,
+                    "value": true,
                     "meta": {
                         "type": "input",
                         "content": "checkbox"
