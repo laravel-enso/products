@@ -8,7 +8,7 @@ use LaravelEnso\Companies\app\Models\Company;
 class Product extends Model
 {
     protected $fillable = [
-        'manufacturer_id', 'measurement_unit_id', 'name', 'part_number', 'internal_code', 
+        'manufacturer_id', 'measurement_unit_id', 'name', 'part_number', 'internal_code',
         'list_price', 'vat_percent', 'package_quantity', 'description', 'is_active',
     ];
 
@@ -25,7 +25,7 @@ class Product extends Model
     public function suppliers()
     {
         return $this->belongsToMany(
-            Company::class, 
+            Company::class,
             'product_supplier', 'product_id', 'supplier_id'
         );
     }

@@ -16,7 +16,7 @@ class ValidateMeasurementUnitRequest extends FormRequest
         return [
             'name' => 'required|string|max:10',
             'order_index' => 'required|integer',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
         ];
     }
 }
