@@ -19,11 +19,12 @@
     "homepage": "https://github.com/laravel-enso/products",
     "require": {
         "php": ">=7.1.2",
-        "laravel-enso/core": "4.3.*"
+        "laravel-enso/core": "4.3.*",
+        "laravel-enso/helpers": "1.11.*"
     },
     "autoload": {
         "psr-4": {
-            "LaravelEnso\\Produtcs\\": "src/"
+            "LaravelEnso\\Products\\": "src/"
         }
     },
     "extra": {

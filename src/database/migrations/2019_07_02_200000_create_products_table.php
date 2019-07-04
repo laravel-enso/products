@@ -27,6 +27,8 @@ class CreateProductsTable extends Migration
 
             $table->boolean('is_active');
 
+            $table->unique(['part_number', 'manufacturer_id']);
+
             $table->timestamps();
         });
     }

@@ -8,7 +8,6 @@ class CreateStructureForMeasurementUnits extends Migration
         ['name' => 'administration.measurementUnits.index', 'description' => 'Show index for measurement unit', 'type' => 0, 'is_default' => false],
         ['name' => 'administration.measurementUnits.create', 'description' => 'Create measurement unit', 'type' => 1, 'is_default' => false],
         ['name' => 'administration.measurementUnits.store', 'description' => 'Store a new measurement unit', 'type' => 1, 'is_default' => false],
-        ['name' => 'administration.measurementUnits.show', 'description' => 'Show measurement unit', 'type' => 1, 'is_default' => false],
         ['name' => 'administration.measurementUnits.edit', 'description' => 'Edit measurement unit', 'type' => 1, 'is_default' => false],
         ['name' => 'administration.measurementUnits.update', 'description' => 'Update measurement unit', 'type' => 1, 'is_default' => false],
         ['name' => 'administration.measurementUnits.destroy', 'description' => 'Delete measurement unit', 'type' => 1, 'is_default' => false],

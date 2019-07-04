@@ -11,4 +11,9 @@ class Options extends Controller
     use OptionsBuilder;
 
     protected $model = MeasurementUnit::class;
+
+    public function query()
+    {
+        return MeasurementUnit::active();
+    }
 }

@@ -8,7 +8,6 @@ class CreateStructureForProducts extends Migration
         ['name' => 'products.index', 'description' => 'Show index for products', 'type' => 0, 'is_default' => false],
         ['name' => 'products.create', 'description' => 'Create product', 'type' => 1, 'is_default' => false],
         ['name' => 'products.store', 'description' => 'Store a new product', 'type' => 1, 'is_default' => false],
-        ['name' => 'products.show', 'description' => 'Show product', 'type' => 1, 'is_default' => false],
         ['name' => 'products.edit', 'description' => 'Edit product', 'type' => 1, 'is_default' => false],
         ['name' => 'products.update', 'description' => 'Update product', 'type' => 1, 'is_default' => false],
         ['name' => 'products.destroy', 'description' => 'Delete product', 'type' => 1, 'is_default' => false],
