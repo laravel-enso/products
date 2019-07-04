@@ -3,8 +3,6 @@
 namespace LaravelEnso\Products\app\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use LaravelEnso\Companies\app\Models\Company;
-use LaravelEnso\Products\app\Models\MeasurementUnit;
 
 class ValidateProductRequest extends FormRequest
 {
