@@ -17,7 +17,7 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
     ];
 
     public function measurementUnit()
@@ -39,7 +39,7 @@ class Product extends Model
             'supplier_id'
         )->withPivot(['acquisiton_price', 'is_default']);
     }
-    
+
     public function defaultSupplier()
     {
         return $this->suppliers()
