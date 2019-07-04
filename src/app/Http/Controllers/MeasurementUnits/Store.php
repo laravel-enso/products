@@ -15,7 +15,7 @@ class Store extends Controller
         return [
             'message' => __('The measurementunit was successfully created'),
             'redirect' => 'administration.measurementUnits.edit',
-            'param' => ['measurementunit' => $measurementUnit->id],
+            'param' => ['measurementUnit' => $measurementUnit->id],
         ];
     }
 }

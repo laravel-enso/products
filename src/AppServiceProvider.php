@@ -22,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
 
     private function publish()
     {
+        $this->publishes([
+            __DIR__.'/database/factories' => database_path('factories'),
+        ], 'products-factories');
+
         return $this;
     }
 }
