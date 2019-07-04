@@ -13,7 +13,7 @@ class CreateMeasurementUnitsTable extends Migration
 
             $table->string('name');
             $table->integer('order_index')->unsigned();
-            
+
             $table->boolean('is_active');
 
             $table->timestamps();
