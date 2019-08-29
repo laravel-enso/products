@@ -3,27 +3,24 @@
 namespace LaravelEnso\Products\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use LaravelEnso\Helpers\app\Traits\InCents;
 use LaravelEnso\Companies\app\Models\Company;
 use LaravelEnso\Helpers\app\Traits\ActiveState;
+use LaravelEnso\DynamicMethods\app\Traits\Relations;
 use LaravelEnso\Helpers\app\Traits\AvoidsDeletionConflicts;
 
 class Product extends Model
 {
-    use ActiveState, AvoidsDeletionConflicts;
+    use ActiveState, AvoidsDeletionConflicts, Relations, InCents;
 
     protected $fillable = [
-        'manufacturer_id', 'measurement_unit_id', 'name', 'part_number', 'internal_code',
-        'list_price', 'vat_percent', 'package_quantity', 'description', 'is_active',
+        'manufacturer_id', 'name', 'part_number', 'internal_code', 'measurement_unit',
+        'package_quantity', 'list_price', 'vat_percent', 'description', 'link', 'is_active',
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
-
-    public function measurementUnit()
-    {
-        return $this->belongsTo(MeasurementUnit::class);
-    }
+    protected $casts = ['is_active' => 'boolean'];
+    
+    protected $centAttributes = ['list_price'];
 
     public function manufacturer()
     {

@@ -10,7 +10,7 @@ class Store extends Controller
 {
     public function __invoke(ValidateProductRequest $request, Product $product)
     {
-        $product->fill($request->validated())->save();
+        $product->inCents(false)->fill($request->validated())->save();
 
         return [
             'message' => __('The product was successfully created'),

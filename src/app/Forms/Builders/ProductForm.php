@@ -7,13 +7,13 @@ use LaravelEnso\Products\app\Models\Product;
 
 class ProductForm
 {
-    private const TemplatePath = __DIR__.'/../Templates/product.json';
+    protected const TemplatePath = __DIR__.'/../Templates/product.json';
 
-    private $form;
+    protected $form;
 
     public function __construct()
     {
-        $this->form = new Form(self::TemplatePath);
+        $this->form = new Form(static::TemplatePath);
     }
 
     public function create()
@@ -23,6 +23,6 @@ class ProductForm
 
     public function edit(Product $product)
     {
-        return $this->form->edit($product);
+        return $this->form->edit($product->inCents(false));
     }
 }

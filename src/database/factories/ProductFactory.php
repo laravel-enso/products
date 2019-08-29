@@ -20,6 +20,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'vat_percent' => collect([5, 19, 24])->random(),
         'package_quantity' => $faker->numberBetween(0, 5),
         'description' => $faker->text(50),
+        'link' => $faker->link,
         'is_active' => true,
     ];
 });
