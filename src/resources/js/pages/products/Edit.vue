@@ -3,7 +3,7 @@
         <div class="column is-three-quarters-desktop is-full-touch">
             <enso-form class="box form-box has-background-light raises-on-hover"
                 ref="form"
-                @loaded="init()">
+                @loaded="selectedSuppliers.id = $refs.form.field('suppliers').value;">
                 <template v-slot:suppliers="{ field }">
                     <form-field :field="field"
                         @input="selectedSuppliers.id = $event"
@@ -30,12 +30,6 @@ export default {
     data: () => ({
         selectedSuppliers: { id: [] },
     }),
-
-    methods: {
-        init() {
-            this.selectedSuppliers.id = this.$refs.form.field('suppliers').value;
-        },
-    },
 };
 </script>
 
