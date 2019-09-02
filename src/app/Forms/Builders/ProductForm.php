@@ -23,6 +23,8 @@ class ProductForm
 
     public function edit(Product $product)
     {
-        return $this->form->edit($product->inCents(false));
+        return $this->form
+            ->value('defaultSupplierId', optional($product->defaultSupplier())->id)
+            ->edit($product->inCents(false));
     }
 }

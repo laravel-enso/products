@@ -28,6 +28,32 @@
             "columns": 2,
             "fields": [
                 {
+                    "label": "Suppliers",
+                    "name": "suppliers",
+                    "value": [],
+                    "meta": {
+                        "custom": true,
+                        "type": "select",
+                        "multiple": true,
+                        "source": "administration.companies.options"
+                    }
+                },
+                {
+                    "label": "Default supplier",
+                    "name": "defaultSupplierId",
+                    "value": [],
+                    "meta": {
+                        "custom": true,
+                        "type": "select",
+                        "source": "administration.companies.options"
+                    }
+                }
+            ]
+        },
+        {
+            "columns": 2,
+            "fields": [
+                {
                     "label": "Part Number",
                     "name": "part_number",
                     "value": null,

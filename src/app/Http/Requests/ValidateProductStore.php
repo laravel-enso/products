@@ -8,7 +8,7 @@ use LaravelEnso\Products\app\Models\Product;
 use LaravelEnso\Companies\app\Models\Company;
 use LaravelEnso\Products\app\Enums\MeasurementUnits;
 
-class ValidateProductRequest extends FormRequest
+class ValidateProductStore extends FormRequest
 {
     public function authorize()
     {
@@ -19,12 +19,13 @@ class ValidateProductRequest extends FormRequest
     {
         return [
             'manufacturer_id' => 'required|integer|exists:companies,id',
-            'suppliers' => 'array|' . $this->companies(),
+            'suppliers' => 'array',            
+            'suppliers.*' => 'exists:companies,id',
             'defaultSupplierId' => 'nullable|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:75',
             'part_number' => 'required|integer',
             'internal_code' => 'nullable|string|max:100',
-            'measurement_unit' => 'required|integer|' . $this->measurementUnits(),
+            'measurement_unit' => ['required', 'integer', $this->measurementUnits()],
             'package_quantity' => 'nullable|integer',
             'list_price' => 'required|numeric',
             'vat_percent' => 'nullable|integer',
@@ -34,15 +35,7 @@ class ValidateProductRequest extends FormRequest
         ];
     }
 
-    private function companies()
-    {
-        return Rule::in(
-            $this->suppliers,
-            Company::pluck('id')->toArray()    
-        );
-    }
-
-    private function measurementUnits()
+    protected function measurementUnits()
     {
         return Rule::in(MeasurementUnits::keys());
     }
@@ -54,13 +47,21 @@ class ValidateProductRequest extends FormRequest
                 $validator->errors()->add('part_number', 'A product with the specified part number and made by the selected manufacturer already exists!');
                 $validator->errors()->add('manufacturer_id', 'A product with the specified part number and made by the selected manufacturer already exists!');
             }
+            
+            if(!collect($this->get('suppliers'))->contains($this->get('defaultSupplierId'))) {
+                $validator->errors()->add('defaultSupplierId', 'This supplier must be within selected suppliers');
+            }
         });
     }
 
-    private function productExists()
+    protected function productExists()
+    {
+        return $this->productQuery()->exists();
+    }
+
+    protected function productQuery()
     {
         return Product::where('part_number', $this->get('part_number'))
-            ->where('manufacturer_id', $this->get('manufacturer_id'))
-            ->exists();
+            ->where('manufacturer_id', $this->get('manufacturer_id'));
     }
 }

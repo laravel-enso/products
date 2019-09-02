@@ -34,7 +34,7 @@ class Product extends Model
             'product_supplier',
             'product_id',
             'supplier_id'
-        )->withPivot(['acquisiton_price', 'is_default']);
+        )->withPivot(['acquisition_price', 'is_default']);
     }
 
     public function defaultSupplier()
@@ -43,5 +43,15 @@ class Product extends Model
             ->withPivot('acquisition_price')
             ->wherePivot('is_default', true)
             ->first();
+    }
+
+    public function syncSuppliers($supplierIds, $defaultSupplierId)
+    {
+        $pivotIds =  collect($supplierIds)
+            ->reduce(function ($pivot, $value) use ($defaultSupplierId) {
+                return $pivot->put($value, ['is_default' => $value === $defaultSupplierId]);
+            }, collect())->toArray();
+
+        $this->suppliers()->sync($pivotIds);
     }
 }
