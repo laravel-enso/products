@@ -20,8 +20,7 @@ class ProductTable extends Table
             products.package_quantity,
             products.is_active,
             companies.name as "manufacturer", 
-            measurement_units.name as "measurement"
-        ')->join('companies', 'products.manufacturer_id', '=', 'companies.id')
-        ->join('measurement_units', 'products.measurement_unit_id', '=', 'measurement_units.id');
+            measurement_unit
+        ')->join('companies', 'products.manufacturer_id', '=', 'companies.id');
     }
 }

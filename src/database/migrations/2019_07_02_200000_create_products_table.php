@@ -14,22 +14,22 @@ class CreateProductsTable extends Migration
             $table->integer('manufacturer_id')->unsigned();
             $table->foreign('manufacturer_id')->references('id')->on('companies');
 
-            $table->integer('measurement_unit_id')->unsigned();
-            $table->foreign('measurement_unit_id')->references('id')->on('measurement_units');
-
             $table->string('name');
             $table->integer('part_number');
             $table->string('internal_code')->nullable();
-            $table->integer('list_price')->unsigned();
-            $table->integer('vat_percent')->nullable();
+            $table->tinyInteger('measurement_unit')->unsigned();
             $table->integer('package_quantity')->nullable();
+            $table->integer('list_price')->unsigned();
+            $table->tinyInteger('vat_percent')->unsigned();
+
             $table->text('description')->nullable();
+            $table->string('link')->nullable();
 
             $table->boolean('is_active');
 
-            $table->unique(['part_number', 'manufacturer_id']);
-
             $table->timestamps();
+
+            $table->unique(['part_number', 'manufacturer_id']);
         });
     }
 

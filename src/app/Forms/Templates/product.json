@@ -28,6 +28,32 @@
             "columns": 2,
             "fields": [
                 {
+                    "label": "Suppliers",
+                    "name": "suppliers",
+                    "value": [],
+                    "meta": {
+                        "custom": true,
+                        "type": "select",
+                        "multiple": true,
+                        "source": "administration.companies.options"
+                    }
+                },
+                {
+                    "label": "Default supplier",
+                    "name": "defaultSupplierId",
+                    "value": [],
+                    "meta": {
+                        "custom": true,
+                        "type": "select",
+                        "source": "administration.companies.options"
+                    }
+                }
+            ]
+        },
+        {
+            "columns": 2,
+            "fields": [
+                {
                     "label": "Part Number",
                     "name": "part_number",
                     "value": null,
@@ -52,11 +78,11 @@
             "fields": [
                 {
                     "label": "Measurement",
-                    "name": "measurement_unit_id",
+                    "name": "measurement_unit",
                     "value": null,
                     "meta": {
                         "type": "select",
-                        "source": "administration.measurementUnits.options"
+                        "options": "LaravelEnso\\Products\\app\\Enums\\MeasurementUnits"
                     }
                 },
                 {
@@ -79,7 +105,9 @@
                     "value": null,
                     "meta": {
                         "type": "input",
-                        "content": "number"
+                        "content": "number",
+                        "min": 0,
+                        "step": 0.01
                     }
                 },
                 {
@@ -88,7 +116,9 @@
                     "value": null,
                     "meta": {
                         "type": "input",
-                        "content": "number"
+                        "content": "number",
+                        "min": 0,
+                        "step": 1
                     }
                 }
             ]

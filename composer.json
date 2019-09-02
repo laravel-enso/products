@@ -14,12 +14,14 @@
         "laravel-enso",
         "vue-bulma",
         "products",
-        "products-management"
+        "product-management"
     ],
     "homepage": "https://github.com/laravel-enso/products",
     "require": {
         "php": ">=7.1.2",
         "laravel-enso/core": "4.3.*",
+        "laravel-enso/dynamic-methods": "1.0.*",
+        "laravel-enso/enums": "1.0.*",
         "laravel-enso/helpers": "1.11.*"
     },
     "autoload": {
@@ -30,7 +32,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LaravelEnso\\Products\\AppServiceProvider"
+                "LaravelEnso\\Products\\AppServiceProvider",
+                "LaravelEnso\\Products\\EnumServiceProvider"
             ]
         }
     }
