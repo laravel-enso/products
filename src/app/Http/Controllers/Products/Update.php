@@ -15,7 +15,7 @@ class Update extends Controller
         $product->syncSuppliers(
             $request->get('suppliers'), $request->get('defaultSupplierId')
         );
-        
+
         return ['message' => __('The product was successfully updated')];
     }
 }

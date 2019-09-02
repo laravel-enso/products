@@ -5,7 +5,6 @@ namespace LaravelEnso\Products\app\Http\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use LaravelEnso\Products\app\Models\Product;
-use LaravelEnso\Companies\app\Models\Company;
 use LaravelEnso\Products\app\Enums\MeasurementUnits;
 
 class ValidateProductStore extends FormRequest
@@ -19,7 +18,7 @@ class ValidateProductStore extends FormRequest
     {
         return [
             'manufacturer_id' => 'required|integer|exists:companies,id',
-            'suppliers' => 'array',            
+            'suppliers' => 'array',
             'suppliers.*' => 'exists:companies,id',
             'defaultSupplierId' => 'nullable|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:75',
@@ -47,8 +46,8 @@ class ValidateProductStore extends FormRequest
                 $validator->errors()->add('part_number', 'A product with the specified part number and made by the selected manufacturer already exists!');
                 $validator->errors()->add('manufacturer_id', 'A product with the specified part number and made by the selected manufacturer already exists!');
             }
-            
-            if(!collect($this->get('suppliers'))->contains($this->get('defaultSupplierId'))) {
+
+            if (! collect($this->get('suppliers'))->contains($this->get('defaultSupplierId'))) {
                 $validator->errors()->add('defaultSupplierId', 'This supplier must be within selected suppliers');
             }
         });

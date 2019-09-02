@@ -19,7 +19,7 @@ class Product extends Model
     ];
 
     protected $casts = ['is_active' => 'boolean'];
-    
+
     protected $centAttributes = ['list_price'];
 
     public function manufacturer()
@@ -47,7 +47,7 @@ class Product extends Model
 
     public function syncSuppliers($supplierIds, $defaultSupplierId)
     {
-        $pivotIds =  collect($supplierIds)
+        $pivotIds = collect($supplierIds)
             ->reduce(function ($pivot, $value) use ($defaultSupplierId) {
                 return $pivot->put($value, ['is_default' => $value === $defaultSupplierId]);
             }, collect())->toArray();

@@ -19,12 +19,12 @@ class ValidateProductRequest extends FormRequest
     {
         return [
             'manufacturer_id' => 'required|integer|exists:companies,id',
-            'suppliers' => 'array|' . $this->companies(),
+            'suppliers' => 'array|'.$this->companies(),
             'defaultSupplierId' => 'nullable|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:75',
             'part_number' => 'required|integer',
             'internal_code' => 'nullable|string|max:100',
-            'measurement_unit' => 'required|integer|' . $this->measurementUnits(),
+            'measurement_unit' => 'required|integer|'.$this->measurementUnits(),
             'package_quantity' => 'nullable|integer',
             'list_price' => 'required|numeric',
             'vat_percent' => 'nullable|integer',
@@ -38,7 +38,7 @@ class ValidateProductRequest extends FormRequest
     {
         return Rule::in(
             $this->suppliers,
-            Company::pluck('id')->toArray()    
+            Company::pluck('id')->toArray()
         );
     }
 

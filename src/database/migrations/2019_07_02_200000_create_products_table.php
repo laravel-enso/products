@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->integer('package_quantity')->nullable();
             $table->integer('list_price')->unsigned();
             $table->tinyInteger('vat_percent')->unsigned();
-            
+
             $table->text('description')->nullable();
             $table->string('link')->nullable();
 
