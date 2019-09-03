@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
             $table->foreign('manufacturer_id')->references('id')->on('companies');
 
             $table->string('name');
-            $table->bigInteger('part_number');
+            $table->string('part_number');
             $table->string('internal_code')->nullable();
             $table->tinyInteger('measurement_unit')->unsigned();
             $table->integer('package_quantity')->nullable();
