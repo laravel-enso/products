@@ -1,5 +1,7 @@
 <?php
 
+namespace LaravelEnso\Products;
+
 use LaravelEnso\Products\app\Enums\MeasurementUnits;
 use LaravelEnso\Enums\EnumServiceProvider as ServiceProvider;
 
