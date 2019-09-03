@@ -35,6 +35,7 @@
         "laravel": {
             "providers": [
                 "LaravelEnso\\Products\\AppServiceProvider",
+                "LaravelEnso\\Products\\CompanyServiceProvider",
                 "LaravelEnso\\Products\\EnumServiceProvider"
             ]
         }
