@@ -55,7 +55,8 @@ class ValidateProductStore extends FormRequest
 
     protected function productExists()
     {
-        return $this->productQuery()->exists();
+        return $this->filled('manufacturer_id')
+            && $this->productQuery()->exists();
     }
 
     protected function productQuery()
