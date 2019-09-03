@@ -22,7 +22,9 @@
         "laravel-enso/core": "4.3.*",
         "laravel-enso/dynamic-methods": "1.0.*",
         "laravel-enso/enums": "1.0.*",
-        "laravel-enso/helpers": "1.11.*"
+        "laravel-enso/forms": "3.1.*",
+        "laravel-enso/helpers": "1.11.*",
+        "laravel-enso/tables": "2.1.*"
     },
     "autoload": {
         "psr-4": {

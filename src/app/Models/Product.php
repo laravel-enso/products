@@ -5,13 +5,16 @@ namespace LaravelEnso\Products\app\Models;
 use Illuminate\Database\Eloquent\Model;
 use LaravelEnso\Helpers\app\Traits\InCents;
 use LaravelEnso\Companies\app\Models\Company;
+use LaravelEnso\Tables\app\Traits\TableCache;
 use LaravelEnso\Helpers\app\Traits\ActiveState;
 use LaravelEnso\DynamicMethods\app\Traits\Relations;
+use LaravelEnso\Rememberable\app\Traits\Rememberable;
 use LaravelEnso\Helpers\app\Traits\AvoidsDeletionConflicts;
 
 class Product extends Model
 {
-    use ActiveState, AvoidsDeletionConflicts, Relations, InCents;
+    use ActiveState, AvoidsDeletionConflicts, InCents,
+        Relations, Rememberable, TableCache;
 
     protected $fillable = [
         'manufacturer_id', 'name', 'part_number', 'internal_code', 'measurement_unit',
