@@ -49,7 +49,9 @@ Products package is an extesion of the Laravel Enso enviroment, designed for man
 * make sure `hot module replacement` is **not** active, and run `yarn dev` or `npm run dev`
 
 ### Publishes
-* coming soon...
+* you can publish the product seeder and customize it to your liking
+
+`php artisan vendor:publish --tag=products-factories`
 
 ### Icons
 The package uses the following icons:
