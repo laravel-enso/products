@@ -49,9 +49,7 @@ Products package is an extesion of the Laravel Enso enviroment, designed for man
 * make sure `hot module replacement` is **not** active, and run `yarn dev` or `npm run dev`
 
 ### Publishes
-* you can publish the currency seeder and customize it to your liking
-
-`php artisan vendor:publish --tag=currency-seeder`
+* coming soon...
 
 ### Icons
 The package uses the following icons:
