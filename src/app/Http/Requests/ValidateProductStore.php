@@ -28,7 +28,7 @@ class ValidateProductStore extends FormRequest
             'package_quantity' => 'nullable|integer',
             'list_price' => 'required|numeric',
             'vat_percent' => 'nullable|integer',
-            'description' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'link' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ];

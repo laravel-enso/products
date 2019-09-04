@@ -42,10 +42,9 @@ class Product extends Model
 
     public function defaultSupplier()
     {
-        return $this->suppliers()
-            ->withPivot('acquisition_price')
-            ->wherePivot('is_default', true)
-            ->first();
+        return $this->suppliers->first(function ($supplier) {
+            return $supplier->pivot->is_default;
+        });
     }
 
     public function syncSuppliers($supplierIds, $defaultSupplierId)
