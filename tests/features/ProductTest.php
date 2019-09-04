@@ -28,7 +28,7 @@ class ProductTest extends TestCase
             ->actingAs(User::first());
 
         $this->testModel = factory(Product::class)->make([
-            'manufacturer_id' => 
+            'manufacturer_id' =>
                 factory(Company::class)->create()->id,
             'measurement_unit_id' =>
                 factory(MeasurementUnit::class)->create()->id
