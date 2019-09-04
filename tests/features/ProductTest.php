@@ -9,7 +9,6 @@ use LaravelEnso\Forms\app\TestTraits\CreateForm;
 use LaravelEnso\Forms\app\TestTraits\DestroyForm;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LaravelEnso\Tables\app\Traits\Tests\Datatable;
-use LaravelEnso\Products\app\Models\MeasurementUnit;
 
 class ProductTest extends TestCase
 {
@@ -18,20 +17,19 @@ class ProductTest extends TestCase
     private $permissionGroup = 'products';
     private $testModel;
 
+    private const SupplierNumber = 5;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         $this->seed()
             ->actingAs(User::first());
 
         $this->testModel = factory(Product::class)->make([
-            'manufacturer_id' => 
-                factory(Company::class)->create()->id,
-            'measurement_unit_id' =>
-                factory(MeasurementUnit::class)->create()->id
+            'manufacturer_id' => factory(Company::class)->create()->id
         ]);
     }
 
@@ -55,10 +53,88 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function can_store_product_with_default_supplier()
+    {
+        $supplierIds = factory(
+            Company::class, static::SupplierNumber
+        )->create()->pluck('id')->toArray();
+
+        $response = $response = $this->post(
+            route('products.store', [], false),
+            $this->testModel->toArray() + [
+                'suppliers' => $supplierIds,
+                'defaultSupplierId' => $supplierIds[0],
+            ]
+        );
+
+        $product = Product::whereName($this->testModel->name)
+            ->first();
+
+        $response->assertStatus(200)
+            ->assertJsonStructure(['message'])
+            ->assertJsonFragment([
+                'redirect' => 'products.edit',
+                'param' => ['product' => $product->id],
+            ]);
+
+        $this->assertEqualsCanonicalizing(
+            $supplierIds, $product->suppliers()->pluck('id')->toArray()
+        );
+
+        $this->assertEquals(
+            $supplierIds[0], $product->defaultSupplier()->id
+        );
+
+        $this->assertTrue(
+            $product->suppliers->except($supplierIds[0])->every(function($supplier) {
+                return $supplier->pivot->is_default === "0";
+            })
+        );
+    }
+
+    /** @test */
+    public function can_update_default_supplier()
+    {
+        $supplierIds = factory(
+            Company::class, static::SupplierNumber
+        )->create()->pluck('id')->toArray();
+        $newSupplierId = factory(Company::class)->create()->id;
+
+        $this->testModel->save();
+        $this->testModel->syncSuppliers($supplierIds, $supplierIds[0]);
+
+
+        $this->patch(
+            route('products.update', $this->testModel->id, false),
+            $this->testModel->toArray() + [
+                'suppliers' => $supplierIds + [$newSupplierId],
+                'defaultSupplierId' => $supplierIds[1]
+            ]
+        )->assertStatus(200)
+        ->assertJsonStructure(['message']);
+
+        $refreshedTestModel = $this->testModel->fresh();
+
+        $this->assertEqualsCanonicalizing( 
+            $supplierIds, $refreshedTestModel->suppliers()->pluck('id')->toArray()
+        );
+        
+        $this->assertEquals(
+            $supplierIds[1], $refreshedTestModel->defaultSupplier()->id
+        );
+
+        $this->assertTrue(
+            $refreshedTestModel->suppliers->except($supplierIds[1])
+                ->every(function($supplier) {
+                    return $supplier->pivot->is_default === "0";
+                })
+        );
+    }
+
+    /** @test */
     public function can_update_product()
     {
-        tap($this->testModel)->save()
-            ->name = 'updated';
+        tap($this->testModel)->save()->name = 'updated';
 
         $this->patch(
             route('products.update', $this->testModel->id, false),
