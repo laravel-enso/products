@@ -26,8 +26,8 @@ class ValidateProductStore extends FormRequest
             'internal_code' => 'nullable|string|max:100',
             'measurement_unit' => ['required', 'integer', $this->measurementUnits()],
             'package_quantity' => 'nullable|integer',
-            'list_price' => 'required|numeric',
-            'vat_percent' => 'nullable|integer',
+            'list_price' => 'required|numeric|min:0.01',
+            'vat_percent' => 'required|integer',
             'description' => 'nullable|string',
             'link' => 'nullable|string|max:255',
             'is_active' => 'boolean',
@@ -47,7 +47,8 @@ class ValidateProductStore extends FormRequest
                 $validator->errors()->add('manufacturer_id', 'A product with the specified part number and made by the selected manufacturer already exists!');
             }
 
-            if (! collect($this->get('suppliers'))->contains($this->get('defaultSupplierId'))) {
+            if (collect($this->get('suppliers'))->isNotEmpty()
+                && ! collect($this->get('suppliers'))->contains($this->get('defaultSupplierId'))) {
                 $validator->errors()->add('defaultSupplierId', 'This supplier must be within selected suppliers');
             }
         });
