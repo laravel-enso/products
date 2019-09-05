@@ -15,8 +15,8 @@ Route::middleware(['web', 'auth', 'core'])
                 Route::delete('{product}', 'Destroy')->name('destroy');
 
                 Route::get('initTable', 'InitTable')->name('initTable');
-                Route::post('tableData', 'TableData')->name('tableData');
-                Route::post('exportExcel', 'ExportExcel')->name('exportExcel');
+                Route::get('tableData', 'TableData')->name('tableData');
+                Route::get('exportExcel', 'ExportExcel')->name('exportExcel');
 
                 Route::get('options', 'Options')->name('options');
             });
