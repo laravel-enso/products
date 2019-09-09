@@ -12,15 +12,9 @@ class ProductTable extends Table
     public function query()
     {
         return Product::selectRaw('
-            products.id as "dtRowId",
-            products.name,
-            products.part_number,
-            products.list_price,
-            products.vat_percent as "vat",
-            products.package_quantity,
-            products.is_active,
-            companies.name as "manufacturer", 
-            measurement_unit
+            products.id as "dtRowId", products.name, products.part_number, products.list_price,
+            products.vat_percent as "vat", products.package_quantity, products.is_active,
+            companies.name as "manufacturer",  measurement_unit
         ')->join('companies', 'products.manufacturer_id', '=', 'companies.id');
     }
 }
