@@ -17,7 +17,7 @@ class ValidateProductStore extends FormRequest
     public function rules()
     {
         return [
-            'manufacturer_id' => 'required|integer|exists:companies,id',
+            'manufacturer_id' => 'nullable|integer|exists:companies,id',
             'suppliers' => 'array',
             'suppliers.*' => 'exists:companies,id',
             'defaultSupplierId' => 'nullable|exists:companies,id|required_with:suppliers',
@@ -42,7 +42,7 @@ class ValidateProductStore extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if ($this->productExists()) {
+            if ($this->productQuery()->exists()) {
                 $validator->errors()->add('part_number', 'A product with the specified part number and made by the selected manufacturer already exists!');
                 $validator->errors()->add('manufacturer_id', 'A product with the specified part number and made by the selected manufacturer already exists!');
             }
@@ -52,12 +52,6 @@ class ValidateProductStore extends FormRequest
                 $validator->errors()->add('defaultSupplierId', 'This supplier must be within selected suppliers');
             }
         });
-    }
-
-    protected function productExists()
-    {
-        return $this->filled('manufacturer_id')
-            && $this->productQuery()->exists();
     }
 
     protected function productQuery()
