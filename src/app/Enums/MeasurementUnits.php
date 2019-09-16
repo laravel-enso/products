@@ -2,7 +2,7 @@
 
 namespace LaravelEnso\Products\app\Enums;
 
-use LaravelEnso\Helpers\app\Classes\Enum;
+use LaravelEnso\Enums\app\Services\Enum;
 
 class MeasurementUnits extends Enum
 {
