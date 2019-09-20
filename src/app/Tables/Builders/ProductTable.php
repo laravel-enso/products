@@ -11,8 +11,6 @@ class ProductTable extends Table
 
     public function query()
     {
-        \Log::debug('Products ProductTable');
-
         return Product::selectRaw('
             products.id, products.name, products.part_number, products.list_price,
             products.vat_percent as "vat", products.package_quantity, products.is_active,
