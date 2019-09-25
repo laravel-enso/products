@@ -81,6 +81,16 @@
                 "sortable",
                 "boolean"
             ]
+        },
+        {
+            "label": "Created",
+            "name": "created_at",
+            "data": "products.created_at",
+            "meta": [
+                "date",
+                "searchable",
+                "sortable"
+            ]
         }
     ]
 }
