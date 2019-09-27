@@ -3,6 +3,11 @@
 namespace LaravelEnso\Products\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Str;
+use LaravelEnso\Comments\app\Traits\Commentable;
+use LaravelEnso\Documents\app\Traits\Documentable;
+use LaravelEnso\Helpers\app\Traits\CascadesMorphMap;
 use LaravelEnso\Helpers\app\Traits\InCents;
 use LaravelEnso\Companies\app\Models\Company;
 use LaravelEnso\Tables\app\Traits\TableCache;
@@ -14,7 +19,8 @@ use LaravelEnso\Helpers\app\Traits\AvoidsDeletionConflicts;
 class Product extends Model
 {
     use ActiveState, AvoidsDeletionConflicts, InCents,
-        Relations, Rememberable, TableCache;
+        Relations, Rememberable, TableCache,
+        Documentable, Commentable, CascadesMorphMap;
 
     protected $fillable = [
         'manufacturer_id', 'name', 'part_number', 'internal_code', 'measurement_unit',
