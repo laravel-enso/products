@@ -3,16 +3,14 @@
 namespace LaravelEnso\Products\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Str;
-use LaravelEnso\Comments\app\Traits\Commentable;
-use LaravelEnso\Documents\app\Traits\Documentable;
-use LaravelEnso\Helpers\app\Traits\CascadesMorphMap;
 use LaravelEnso\Helpers\app\Traits\InCents;
 use LaravelEnso\Companies\app\Models\Company;
 use LaravelEnso\Tables\app\Traits\TableCache;
 use LaravelEnso\Helpers\app\Traits\ActiveState;
+use LaravelEnso\Comments\app\Traits\Commentable;
+use LaravelEnso\Documents\app\Traits\Documentable;
 use LaravelEnso\DynamicMethods\app\Traits\Relations;
+use LaravelEnso\Helpers\app\Traits\CascadesMorphMap;
 use LaravelEnso\Rememberable\app\Traits\Rememberable;
 use LaravelEnso\Helpers\app\Traits\AvoidsDeletionConflicts;
 
