@@ -41,7 +41,8 @@ class Product extends Model
             'product_supplier',
             'product_id',
             'supplier_id'
-        )->withPivot(['acquisition_price', 'is_default']);
+        )->withPivot(['acquisition_price', 'is_default'])
+        ->withTimeStamps();
     }
 
     public function defaultSupplier()

@@ -16,7 +16,7 @@ class CompanyServiceProvider extends ServiceProvider
                 'product_supplier',
                 'supplier_id',
                 'product_id'
-            );
+            )->withTimeStamps();
         });
 
         Company::addDynamicMethod('hasMappedProducts', function () {

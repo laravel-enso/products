@@ -20,6 +20,8 @@ class CreateProductSupplierPivotTable extends Migration
 
             $table->boolean('is_default');
 
+            $table->timestamps();
+
             $table->primary(['product_id', 'supplier_id']);
         });
     }
