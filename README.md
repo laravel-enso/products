@@ -1,8 +1,9 @@
 # Products
 
-Products package is an extesion of the Laravel Enso enviroment, designed for management of products.
+Products is a package for the Laravel Enso enviroment, designed for the management of products.
 
-**Note:** *This package cannot be used outside of enso enviroment and is not included in [Laravel Enso Core](https://github.com/laravel-enso/Core) packages.*
+**Note:** *This package cannot be used outside of the Enso enviroment and is not included by default 
+in the [Laravel Enso Core](https://github.com/laravel-enso/Core) package.*
 
 ### Features
 * crud operations for products
