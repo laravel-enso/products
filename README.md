@@ -7,13 +7,13 @@ Products package is an extesion of the Laravel Enso enviroment, designed for man
 ### Features
 * crud operations for products
 * measurement units enum
-* includes seeders & factories
-* includes front-end assets
+* includes a publishable product factory
 * default supplier management
 * tests
 
 ### Instalation
 * install the package using composer: `composer require laravel-enso/products`
+* install the front-end ui package using yarn: `yarn add @enso-ui/products`
 * adds the following alias in `webackpack.mix.js`
 ```
 .webpackConfig({
@@ -21,7 +21,7 @@ Products package is an extesion of the Laravel Enso enviroment, designed for man
             extensions: ['.js', '.vue', '.json'],
             alias: {
                  //other aliases
-                '@products': `${__dirname}/vendor/laravel-enso/products/src/resources/js`,
+                '@products': `${__dirname}/node_modules/@enso-ui/products/src/bulma`,
             },
         },
     })
@@ -38,8 +38,9 @@ Products package is an extesion of the Laravel Enso enviroment, designed for man
 
 ```
 (new RouteMerger(routes))
-    .add(routeImporter(require.context('./routes', false, /.*\.js$/)))
-    .add(routeImporter(require.context('@products/routes', false, /.*\.js$/)));
+    //other routes
+    .add(routeImporter(require.context('@products/routes', false, /.*\.js$/)))
+    .add(routeImporter(require.context('./routes', false, /.*\.js$/)));
 ```
 
 * in `resources/js/app.js` import the package's icons
@@ -48,14 +49,12 @@ Products package is an extesion of the Laravel Enso enviroment, designed for man
 
 * make sure `hot module replacement` is **not** active, and run `yarn dev` or `npm run dev`
 
+* run `php artisan migrate` to create table, add menu, permissions etc.
+
 ### Publishes
 * you can publish the product seeder and customize it to your liking
 
 `php artisan vendor:publish --tag=products-factories`
-
-### Icons
-The package uses the following icons:
-* `fab product-hunt`
 
 ### Contributions
 
