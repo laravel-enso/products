@@ -46,7 +46,7 @@ in the [Laravel Enso Core](https://github.com/laravel-enso/Core) package.*
 
 * in `resources/js/app.js` import the package's icons
 
-`import '@products/icons'`
+`import '@products/icons';`
 
 * make sure `hot module replacement` is **not** active, and run `yarn dev` or `npm run dev`
 
