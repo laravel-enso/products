@@ -2,14 +2,17 @@
 
 namespace LaravelEnso\Products;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use LaravelEnso\Products\app\Models\Product;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         $this->load()
-            ->publish();
+            ->publish()
+            ->mapMorphings();
     }
 
     private function load()
@@ -25,6 +28,15 @@ class AppServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/database/factories' => database_path('factories'),
         ], 'products-factories');
+
+        return $this;
+    }
+
+    private function mapMorphings()
+    {
+        Relation::morphMap([
+            'product' => Product::class,
+        ]);
 
         return $this;
     }
