@@ -31,6 +31,8 @@ class ProductTest extends TestCase
         $this->testModel = factory(Product::class)->make([
             'manufacturer_id' => factory(Company::class)->create()->id
         ]);
+
+        $this->testModel->inCents = true;
     }
 
     /** @test */
@@ -115,10 +117,10 @@ class ProductTest extends TestCase
 
         $refreshedTestModel = $this->testModel->fresh();
 
-        $this->assertEqualsCanonicalizing( 
+        $this->assertEqualsCanonicalizing(
             $supplierIds, $refreshedTestModel->suppliers()->pluck('id')->toArray()
         );
-        
+
         $this->assertEquals(
             $supplierIds[1], $refreshedTestModel->defaultSupplier()->id
         );

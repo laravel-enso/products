@@ -1,7 +1,15 @@
 {
     "name": "laravel-enso/products",
+    "description": "Product manager for Laravel Enso",
+    "keywords": [
+        "laravel-enso",
+        "laravel",
+        "products",
+        "product-management"
+    ],
+    "homepage": "https://github.com/laravel-enso/products",
     "type": "library",
-    "description": "",
+    "license": "MIT",
     "authors": [
         {
             "name": "Ionut-Catalin Sandu",
@@ -10,13 +18,6 @@
             "role": "Developer"
         }
     ],
-    "keywords": [
-        "laravel-enso",
-        "vue-bulma",
-        "products",
-        "product-management"
-    ],
-    "homepage": "https://github.com/laravel-enso/products",
     "require": {
         "php": ">=7.1.2",
         "laravel-enso/core": "4.4.*",
