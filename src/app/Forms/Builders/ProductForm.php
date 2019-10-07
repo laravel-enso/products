@@ -3,6 +3,7 @@
 namespace LaravelEnso\Products\app\Forms\Builders;
 
 use LaravelEnso\Forms\app\Services\Form;
+use LaravelEnso\Products\app\Http\Resources\Company;
 use LaravelEnso\Products\app\Models\Product;
 
 class ProductForm
@@ -24,6 +25,7 @@ class ProductForm
     public function edit(Product $product)
     {
         return $this->form
+            ->value('suppliers', Company::collection($product->suppliers))
             ->value('defaultSupplierId', optional($product->defaultSupplier())->id)
             ->edit($product->inCents(false));
     }
