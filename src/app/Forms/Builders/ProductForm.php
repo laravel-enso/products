@@ -3,8 +3,8 @@
 namespace LaravelEnso\Products\app\Forms\Builders;
 
 use LaravelEnso\Forms\app\Services\Form;
-use LaravelEnso\Products\app\Http\Resources\Company;
 use LaravelEnso\Products\app\Models\Product;
+use LaravelEnso\Products\app\Http\Resources\Company;
 
 class ProductForm
 {

@@ -3,7 +3,6 @@
 namespace LaravelEnso\Products\app\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use LaravelEnso\TrackWho\app\Http\Resources\TrackWho;
 
 class Company extends JsonResource
 {
