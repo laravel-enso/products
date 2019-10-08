@@ -4,11 +4,11 @@ namespace LaravelEnso\Products\app\Http\Controllers\Products;
 
 use Illuminate\Routing\Controller;
 use LaravelEnso\Products\app\Models\Product;
-use LaravelEnso\Products\app\Http\Requests\ValidateProductStore;
+use LaravelEnso\Products\app\Http\Requests\ValidateProductRequest;
 
 class Store extends Controller
 {
-    public function __invoke(ValidateProductStore $request, Product $product)
+    public function __invoke(ValidateProductRequest $request, Product $product)
     {
         $product->inCents(false)
             ->fill($request->validated())->save();

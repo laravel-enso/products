@@ -19,5 +19,6 @@ Route::middleware(['web', 'auth', 'core'])
                 Route::get('exportExcel', 'ExportExcel')->name('exportExcel');
 
                 Route::get('options', 'Options')->name('options');
+                Route::get('suppliers', 'Suppliers')->name('suppliers');
             });
     });

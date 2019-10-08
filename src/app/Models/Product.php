@@ -41,8 +41,9 @@ class Product extends Model
             'product_supplier',
             'product_id',
             'supplier_id'
-        )->withPivot(['part_number','acquisition_price', 'is_default'])
-        ->withTimeStamps();
+        )
+            ->withPivot(['part_number','acquisition_price', 'is_default'])
+            ->withTimeStamps();
     }
 
     public function defaultSupplier()
@@ -52,11 +53,21 @@ class Product extends Model
         });
     }
 
-    public function syncSuppliers($supplierIds, $defaultSupplierId)
+    public function syncSuppliers($suppliers, $defaultSupplierId)
     {
-        $pivotIds = collect($supplierIds)
-            ->reduce(function ($pivot, $value) use ($defaultSupplierId) {
-                return $pivot->put($value, ['is_default' => $value === $defaultSupplierId]);
+        if (empty($suppliers)) {
+            $this->suppliers()->sync($suppliers);
+
+            return;
+        }
+
+        $pivotIds = collect($suppliers)
+            ->reduce(function ($pivot, $supplier) use ($defaultSupplierId) {
+                return $pivot->put($supplier['id'], [
+                    'part_number' => $supplier['pivot']['part_number'],
+                    'acquisition_price' => $supplier['pivot']['acquisition_price'],
+                    'is_default' => $supplier['id'] === $defaultSupplierId,
+                ]);
             }, collect())->toArray();
 
         $this->suppliers()->sync($pivotIds);

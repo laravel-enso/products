@@ -9,8 +9,6 @@ class Company extends JsonResource
 {
     public function toArray($request)
     {
-        \Log::debug($this->pivot);
-
         return [
             'id' => $this->id,
             'name' => $this->name,
