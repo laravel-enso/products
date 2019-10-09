@@ -2,10 +2,10 @@
 
 namespace LaravelEnso\Products\app\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use LaravelEnso\Products\app\Models\Product;
+use Illuminate\Validation\Rule;
 use LaravelEnso\Products\app\Enums\MeasurementUnits;
+use LaravelEnso\Products\app\Models\Product;
 
 class ValidateProductRequest extends FormRequest
 {
@@ -94,8 +94,10 @@ class ValidateProductRequest extends FormRequest
 
     private function hasInvalidListPrice()
     {
-        return collect($this->get('suppliers'))
-            ->every(function ($supplier) {
+        $suppliers = collect($this->get('suppliers'));
+
+        return $suppliers->isNotEmpty() &&
+            $suppliers->every(function ($supplier) {
                 return $supplier['pivot']['acquisition_price'] >= $this->get('list_price');
             });
     }
