@@ -2,10 +2,10 @@
 
 namespace LaravelEnso\Products\app\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use LaravelEnso\Products\app\Models\Product;
+use Illuminate\Validation\Rule;
 use LaravelEnso\Products\app\Enums\MeasurementUnits;
+use LaravelEnso\Products\app\Models\Product;
 
 class ValidateProductRequest extends FormRequest
 {
@@ -104,16 +104,16 @@ class ValidateProductRequest extends FormRequest
 
     private function hasInvalidDefaultSupplier()
     {
-        $cheapestSupplier = null;
+        $suppliers = collect($this->get('suppliers'));
+        $cheapestSupplier = $suppliers->first(function ($supplier) {
+            return $supplier['id'] = $this->get('defaultSupplierId');
+        });
 
-        collect($this->get('suppliers'))
-            ->each(function ($supplier) use (&$cheapestSupplier) {
-                if (! $cheapestSupplier ||
-                    $supplier['pivot']['acquisition_price'] < $cheapestSupplier['pivot']['acquisition_price']) {
-                    $cheapestSupplier = $supplier;
-                }
+        return $suppliers
+            ->first(function ($supplier) use ($cheapestSupplier) {
+                return
+                    $supplier['pivot']['acquisition_price'] < $cheapestSupplier['pivot']['acquisition_price']
+                    && $supplier['id'] !== $cheapestSupplier['id'];
             });
-
-        return $cheapestSupplier['id'] !== $this->get('defaultSupplierId');
     }
 }
