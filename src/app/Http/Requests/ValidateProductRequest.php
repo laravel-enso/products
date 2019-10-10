@@ -22,7 +22,7 @@ class ValidateProductRequest extends FormRequest
             'suppliers.id' => 'exists:companies,id',
             'defaultSupplierId' => 'nullable|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:255',
-            'part_number' => 'required|integer',
+            'part_number' => 'required|string',
             'internal_code' => 'nullable|string|max:255',
             'measurement_unit' => ['required', 'integer', $this->measurementUnits()],
             'package_quantity' => 'nullable|integer',
