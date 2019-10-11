@@ -98,7 +98,7 @@ class ValidateProductRequest extends FormRequest
 
         return $suppliers->isNotEmpty() &&
             $suppliers->every(function ($supplier) {
-                return $supplier['pivot']['acquisition_price'] >= $this->get('list_price');
+                return $supplier['pivot']['acquisition_price'] > $this->get('list_price');
             });
     }
 
