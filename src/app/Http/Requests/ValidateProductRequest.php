@@ -55,14 +55,14 @@ class ValidateProductRequest extends FormRequest
             if ($this->hasInvalidSuppliers()) {
                 $validator->errors()->add(
                     'suppliers',
-                    __('Part number and numeric acquisition price are mandatory for each supplier')
+                    __('Part number and acquisition price are mandatory for each supplier')
                 );
             }
 
             if ($this->hasInvalidListPrice()) {
                 $validator->errors()->add(
                     'list_price',
-                    __('List price must be bigger than all acquisition prices')
+                    __('Acquisition price must be smaller that list price')
                 );
             }
 
