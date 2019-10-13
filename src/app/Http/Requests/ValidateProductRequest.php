@@ -42,78 +42,69 @@ class ValidateProductRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if ($this->productQuery()->exists()) {
-                $validator->errors()->add('part_number', 'A product with the specified part number and made by the selected manufacturer already exists!');
-                $validator->errors()->add('manufacturer_id', 'A product with the specified part number and made by the selected manufacturer already exists!');
+            if ($this->product()->exists()) {
+                collect(['part_number', 'manufacturer_id'])->each(function ($attribute) use ($validator) {
+                    $validator->errors()->add($attribute, __(
+                        'A product with the specified part number and manufacturer already exists!'
+                    ));
+                });
             }
 
-            if (collect($this->get('suppliers'))->isNotEmpty()
-                && ! collect($this->get('suppliers'))->pluck('id')->contains($this->get('defaultSupplierId'))) {
-                $validator->errors()->add('defaultSupplierId', 'This supplier must be within selected suppliers');
+            $suppliers = collect($this->get('suppliers'));
+
+            if ($suppliers->isEmpty()) {
+                return;
             }
 
-            if ($this->hasInvalidSuppliers()) {
-                $validator->errors()->add(
-                    'suppliers',
-                    __('Part number and acquisition price are mandatory for each supplier')
-                );
+            if (! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
+                $validator->errors()->add('defaultSupplierId', __(
+                    'This supplier must be within selected suppliers
+                '));
             }
 
-            if ($this->hasInvalidListPrice()) {
-                $validator->errors()->add(
-                    'list_price',
-                    __('Acquisition price must be smaller that list price')
-                );
+            if ($this->hasInvalidSuppliers($suppliers)) {
+                $validator->errors()->add('suppliers', __(
+                    'Part number and acquisition price are mandatory for each supplier
+                '));
             }
 
-            if ($this->hasInvalidDefaultSupplier()) {
-                $validator->errors()->add(
-                    'defaultSupplierId',
-                    __('The chosen supplier does not have the minimum price')
-                );
+            if ($this->hasInvalidDefaultSupplier($suppliers)) {
+                $validator->errors()->add('defaultSupplierId', __(
+                    'The default supplier does not have the minimum acquisition price'
+                ));
             }
         });
     }
 
-    protected function productQuery()
+    protected function product()
     {
         return Product::where('part_number', $this->get('part_number'))
             ->where('manufacturer_id', $this->get('manufacturer_id'))
             ->where('id', '<>', optional($this->route('product'))->id);
     }
 
-    private function hasInvalidSuppliers()
+    private function hasInvalidSuppliers($suppliers)
     {
-        return collect($this->get('suppliers'))
-            ->filter(function ($supplier) {
-                return ! $supplier['pivot']['acquisition_price']
-                    || ! is_numeric($supplier['pivot']['acquisition_price'])
-                    || ! $supplier['pivot']['part_number'];
-            })->isNotEmpty();
-    }
-
-    private function hasInvalidListPrice()
-    {
-        $suppliers = collect($this->get('suppliers'));
-
-        return $suppliers->isNotEmpty() &&
-            $suppliers->every(function ($supplier) {
-                return $supplier['pivot']['acquisition_price'] > $this->get('list_price');
-            });
-    }
-
-    private function hasInvalidDefaultSupplier()
-    {
-        $suppliers = collect($this->get('suppliers'));
-        $cheapestSupplier = $suppliers->first(function ($supplier) {
-            return $supplier['id'] = $this->get('defaultSupplierId');
+        return $suppliers->some(function ($supplier) {
+            return ! is_numeric($supplier['pivot']['acquisition_price'])
+                || $supplier['pivot']['acquisition_price'] <= 0
+                || ! $supplier['pivot']['part_number'];
         });
+    }
 
-        return $suppliers
-            ->first(function ($supplier) use ($cheapestSupplier) {
-                return
-                    $supplier['pivot']['acquisition_price'] < $cheapestSupplier['pivot']['acquisition_price']
-                    && $supplier['id'] !== $cheapestSupplier['id'];
-            });
+    private function hasInvalidDefaultSupplier($suppliers)
+    {
+        return $suppliers->reduce(function ($preferred, $supplier) {
+            return $preferred
+                ? $this->preferred($preferred, $supplier)
+                : $supplier;
+        }, null)['id'] !== $this->get('defaultSupplierId');
+    }
+
+    private function preferred($first, $second)
+    {
+        return $first['acquisition_price'] < $second['acquisition_price']
+                ? $first
+                : $second;
     }
 }
