@@ -6,7 +6,7 @@ use LaravelEnso\Core\app\Models\User;
 use LaravelEnso\Forms\app\TestTraits\CreateForm;
 use LaravelEnso\Forms\app\TestTraits\DestroyForm;
 use LaravelEnso\Forms\app\TestTraits\EditForm;
-use LaravelEnso\Products\app\Http\Resources\Company as CompanyResource;
+use LaravelEnso\Products\app\Http\Resources\Supplier;
 use LaravelEnso\Products\app\Models\Product;
 use LaravelEnso\Tables\app\Traits\Tests\Datatable;
 use Tests\TestCase;
@@ -58,7 +58,7 @@ class ProductTest extends TestCase
     /** @test */
     public function can_store_product_with_default_supplier()
     {
-        $suppliers = CompanyResource::collection(
+        $suppliers = Supplier::collection(
             factory(Company::class, static::SupplierNumber)->create()
         )
             ->toArray(null);
@@ -102,24 +102,29 @@ class ProductTest extends TestCase
     /** @test */
     public function can_update_default_supplier()
     {
-        $suppliers = CompanyResource::collection(
+        $suppliers = Supplier::collection(
             factory(Company::class, static::SupplierNumber)->create()
         )
             ->toArray(null);
 
         $suppliers = $this->updatePivot($suppliers);
 
+        \Log::debug($suppliers);
+
         $this->testModel->save();
         $this->testModel->syncSuppliers($suppliers, $suppliers[0]['id']);
 
 
-        $this->patch(
+        $r = $this->patch(
             route('products.update', $this->testModel->id, false),
             $this->testModel->toArray() + [
                 'suppliers' => $suppliers,
                 'defaultSupplierId' => $suppliers[1]['id'],
             ]
-        )->assertStatus(200)
+        );
+
+
+            $r->assertStatus(200)
             ->assertJsonStructure(['message']);
 
         $refreshedTestModel = $this->testModel->fresh();
@@ -170,14 +175,10 @@ class ProductTest extends TestCase
     {
         return collect($suppliers)
             ->map(function ($supplier) {
-                return json_decode(json_encode($supplier));
-            })
-            ->each(function ($supplier) {
-                $supplier->pivot->part_number = $this->testModel->part_number;
-                $supplier->pivot->acquisition_price = $this->testModel->list_price - 1;
-            })
-            ->map(function ($supplier) {
-                return json_decode(json_encode($supplier), JSON_OBJECT_AS_ARRAY);
+                $supplier['pivot']['part_number'] = $this->testModel->part_number;
+                $supplier['pivot']['acquisition_price'] = $this->testModel->list_price - 1;
+
+                return $supplier;
             })
             ->toArray();
     }

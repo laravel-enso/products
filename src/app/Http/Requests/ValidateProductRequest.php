@@ -103,7 +103,7 @@ class ValidateProductRequest extends FormRequest
 
     private function preferred($first, $second)
     {
-        return $first['acquisition_price'] < $second['acquisition_price']
+        return $first['pivot']['acquisition_price'] < $second['pivot']['acquisition_price']
                 ? $first
                 : $second;
     }
