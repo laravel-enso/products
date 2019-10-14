@@ -9,12 +9,13 @@ use LaravelEnso\Tables\app\Traits\TableCache;
 use LaravelEnso\Helpers\app\Traits\ActiveState;
 use LaravelEnso\Comments\app\Traits\Commentable;
 use LaravelEnso\Documents\app\Traits\Documentable;
+use LaravelEnso\Helpers\app\Contracts\Activatable;
 use LaravelEnso\DynamicMethods\app\Traits\Relations;
 use LaravelEnso\Helpers\app\Traits\CascadesMorphMap;
 use LaravelEnso\Rememberable\app\Traits\Rememberable;
 use LaravelEnso\Helpers\app\Traits\AvoidsDeletionConflicts;
 
-class Product extends Model
+class Product extends Model implements Activatable
 {
     use ActiveState, AvoidsDeletionConflicts, InCents,
         Relations, Rememberable, TableCache,
