@@ -3,8 +3,8 @@
 namespace LaravelEnso\Products\app\Tables\Builders;
 
 use Illuminate\Database\Eloquent\Builder;
-use LaravelEnso\Products\app\Models\Product;
 use LaravelEnso\Tables\app\Contracts\Table;
+use LaravelEnso\Products\app\Models\Product;
 
 class ProductTable implements Table
 {
