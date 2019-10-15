@@ -2,10 +2,11 @@
 
 namespace LaravelEnso\Products\app\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use LaravelEnso\Products\app\Models\Product;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use LaravelEnso\Products\app\Enums\MeasurementUnits;
+use LaravelEnso\Products\app\Models\Product;
 
 class ValidateProductRequest extends FormRequest
 {
@@ -58,14 +59,14 @@ class ValidateProductRequest extends FormRequest
 
             if (! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
                 $validator->errors()->add('defaultSupplierId', __(
-                    'This supplier must be within selected suppliers
-                '));
+                    'This supplier must be within selected suppliers'
+                ));
             }
 
             if ($this->hasInvalidSuppliers($suppliers)) {
                 $validator->errors()->add('suppliers', __(
-                    'Part number and acquisition price are mandatory for each supplier
-                '));
+                    'Part number and acquisition price are mandatory for each supplier'
+                ));
             }
 
             if ($this->hasInvalidDefaultSupplier($suppliers)) {
@@ -92,19 +93,18 @@ class ValidateProductRequest extends FormRequest
         });
     }
 
-    private function hasInvalidDefaultSupplier($suppliers)
+    private function hasInvalidDefaultSupplier(Collection $suppliers)
     {
-        return $suppliers->reduce(function ($preferred, $supplier) {
-            return $preferred
-                ? $this->preferred($preferred, $supplier)
-                : $supplier;
-        }, null)['id'] !== $this->get('defaultSupplierId');
-    }
+        $defaultSupplier = $suppliers->first(function ($supplier) {
+            return $supplier['id'] === $this->get('defaultSupplierId');
+        });
 
-    private function preferred($first, $second)
-    {
-        return $first['pivot']['acquisition_price'] < $second['pivot']['acquisition_price']
-                ? $first
-                : $second;
+        return $suppliers
+            ->reject(function ($supplier) use ($defaultSupplier) {
+                return $supplier['id'] === $defaultSupplier['id'];
+            })
+            ->contains(function ($supplier) use ($defaultSupplier) {
+                return $supplier['pivot']['acquisition_price'] < $defaultSupplier['pivot']['acquisition_price'];
+            });
     }
 }
