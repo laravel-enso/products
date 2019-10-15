@@ -42,7 +42,8 @@ class Product extends Model implements Activatable
             'product_supplier',
             'product_id',
             'supplier_id'
-        )->withPivot(['part_number', 'acquisition_price', 'is_default'])
+        )->using(ProductSupplier::class)
+        ->withPivot(['part_number', 'acquisition_price', 'is_default'])
         ->withTimeStamps();
     }
 
