@@ -3,17 +3,17 @@
 namespace LaravelEnso\Products\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use LaravelEnso\Helpers\app\Traits\InCents;
-use LaravelEnso\Companies\app\Models\Company;
-use LaravelEnso\Tables\app\Traits\TableCache;
-use LaravelEnso\Helpers\app\Traits\ActiveState;
 use LaravelEnso\Comments\app\Traits\Commentable;
+use LaravelEnso\Companies\app\Models\Company;
 use LaravelEnso\Documents\app\Traits\Documentable;
-use LaravelEnso\Helpers\app\Contracts\Activatable;
 use LaravelEnso\DynamicMethods\app\Traits\Relations;
-use LaravelEnso\Helpers\app\Traits\CascadesMorphMap;
-use LaravelEnso\Rememberable\app\Traits\Rememberable;
+use LaravelEnso\Helpers\app\Contracts\Activatable;
+use LaravelEnso\Helpers\app\Traits\ActiveState;
 use LaravelEnso\Helpers\app\Traits\AvoidsDeletionConflicts;
+use LaravelEnso\Helpers\app\Traits\CascadesMorphMap;
+use LaravelEnso\Helpers\app\Traits\InCents;
+use LaravelEnso\Rememberable\app\Traits\Rememberable;
+use LaravelEnso\Tables\app\Traits\TableCache;
 
 class Product extends Model implements Activatable
 {
@@ -42,9 +42,10 @@ class Product extends Model implements Activatable
             'product_supplier',
             'product_id',
             'supplier_id'
-        )->using(ProductSupplier::class)
-        ->withPivot(['part_number', 'acquisition_price', 'is_default'])
-        ->withTimeStamps();
+        )
+            //->using(ProductSupplier::class)
+            ->withPivot(['part_number', 'acquisition_price', 'is_default'])
+            ->withTimeStamps();
     }
 
     public function defaultSupplier()
