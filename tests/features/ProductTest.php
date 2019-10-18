@@ -89,12 +89,13 @@ class ProductTest extends TestCase
         );
 
         $this->assertEquals(
-            $suppliers[0]['id'], $product->defaultSupplier()->id
+            $suppliers[0]['id'],
+            $product->defaultSupplier()->id
         );
 
         $this->assertTrue(
             $product->suppliers->except($suppliers[0]['id'])->every(function ($supplier) {
-                return $supplier->pivot->is_default === "0";
+                return $supplier->pivot->is_default === false;
             })
         );
     }
@@ -109,34 +110,30 @@ class ProductTest extends TestCase
 
         $suppliers = $this->updatePivot($suppliers);
 
-        \Log::debug($suppliers);
-
         $this->testModel->save();
         $this->testModel->syncSuppliers($suppliers, $suppliers[0]['id']);
 
 
-        $r = $this->patch(
+        $this->patch(
             route('products.update', $this->testModel->id, false),
             $this->testModel->toArray() + [
                 'suppliers' => $suppliers,
                 'defaultSupplierId' => $suppliers[1]['id'],
             ]
-        );
-
-
-            $r->assertStatus(200)
+        )->assertStatus(200)
             ->assertJsonStructure(['message']);
 
         $refreshedTestModel = $this->testModel->fresh();
 
         $this->assertEquals(
-            $suppliers[1]['id'], $refreshedTestModel->defaultSupplier()->id
+            $suppliers[1]['id'],
+            $refreshedTestModel->defaultSupplier()->id
         );
 
         $this->assertTrue(
             $refreshedTestModel->suppliers->except($suppliers[1]['id'])
                 ->every(function ($supplier) {
-                    return $supplier->pivot->is_default === "0";
+                    return $supplier->pivot->is_default === false;
                 })
         );
     }
