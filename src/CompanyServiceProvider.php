@@ -2,8 +2,8 @@
 
 namespace LaravelEnso\Products;
 
-use App\Models\Product;
 use Illuminate\Support\ServiceProvider;
+use LaravelEnso\Products\app\Models\Product;
 use LaravelEnso\Companies\app\Models\Company;
 
 class CompanyServiceProvider extends ServiceProvider
