@@ -9,16 +9,16 @@ use LaravelEnso\Tables\app\Traits\TableCache;
 use LaravelEnso\Helpers\app\Traits\ActiveState;
 use LaravelEnso\Comments\app\Traits\Commentable;
 use LaravelEnso\Documents\app\Traits\Documentable;
+use LaravelEnso\Helpers\app\Contracts\Activatable;
 use LaravelEnso\DynamicMethods\app\Traits\Relations;
 use LaravelEnso\Helpers\app\Traits\CascadesMorphMap;
 use LaravelEnso\Rememberable\app\Traits\Rememberable;
 use LaravelEnso\Helpers\app\Traits\AvoidsDeletionConflicts;
 
-class Product extends Model
+class Product extends Model implements Activatable
 {
-    use ActiveState, AvoidsDeletionConflicts, InCents,
-        Relations, Rememberable, TableCache,
-        Documentable, Commentable, CascadesMorphMap;
+    use ActiveState, AvoidsDeletionConflicts, CascadesMorphMap, Commentable,
+        Documentable, InCents, Relations, Rememberable, TableCache;
 
     protected $fillable = [
         'manufacturer_id', 'name', 'part_number', 'internal_code', 'measurement_unit',
@@ -37,11 +37,10 @@ class Product extends Model
     public function suppliers()
     {
         return $this->belongsToMany(
-            Company::class,
-            'product_supplier',
-            'product_id',
-            'supplier_id'
-        )->withPivot(['acquisition_price', 'is_default']);
+            Company::class, 'product_supplier', 'product_id', 'supplier_id'
+        )->using(ProductSupplier::class)
+        ->withPivot(['part_number', 'acquisition_price', 'is_default'])
+        ->withTimeStamps();
     }
 
     public function defaultSupplier()
@@ -51,11 +50,15 @@ class Product extends Model
         });
     }
 
-    public function syncSuppliers($supplierIds, $defaultSupplierId)
+    public function syncSuppliers($suppliers, $defaultSupplierId)
     {
-        $pivotIds = collect($supplierIds)
-            ->reduce(function ($pivot, $value) use ($defaultSupplierId) {
-                return $pivot->put($value, ['is_default' => $value === $defaultSupplierId]);
+        $pivotIds = collect($suppliers)
+            ->reduce(function ($pivot, $supplier) use ($defaultSupplierId) {
+                return $pivot->put($supplier['id'], [
+                    'part_number' => $supplier['pivot']['part_number'],
+                    'acquisition_price' => $supplier['pivot']['acquisition_price'],
+                    'is_default' => $supplier['id'] === $defaultSupplierId,
+                ]);
             }, collect())->toArray();
 
         $this->suppliers()->sync($pivotIds);
