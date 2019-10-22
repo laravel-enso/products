@@ -1,7 +1,9 @@
 {
     "routePrefix": "products",
+    "tabs": true,
     "sections": [
         {
+            "tab": "General",
             "columns": 2,
             "fields": [
                 {
@@ -25,32 +27,7 @@
             ]
         },
         {
-            "columns": 2,
-            "fields": [
-                {
-                    "label": "Suppliers",
-                    "name": "suppliers",
-                    "value": [],
-                    "meta": {
-                        "custom": true,
-                        "type": "select",
-                        "multiple": true,
-                        "source": "administration.companies.options"
-                    }
-                },
-                {
-                    "label": "Default supplier",
-                    "name": "defaultSupplierId",
-                    "value": [],
-                    "meta": {
-                        "custom": true,
-                        "type": "select",
-                        "source": "administration.companies.options"
-                    }
-                }
-            ]
-        },
-        {
+            "tab": "General",
             "columns": 2,
             "fields": [
                 {
@@ -74,6 +51,7 @@
             ]
         },
         {
+            "tab": "General",
             "columns": 2,
             "fields": [
                 {
@@ -97,6 +75,7 @@
             ]
         },
         {
+            "tab": "General",
             "columns": 2,
             "fields": [
                 {
@@ -122,7 +101,9 @@
                     }
                 }
             ]
-        },{
+        },
+        {
+            "tab": "General",
             "columns": 1,
             "fields": [
                 {
@@ -141,6 +122,34 @@
                     "meta": {
                         "type": "input",
                         "content": "checkbox"
+                    }
+                }
+            ]
+        },
+        {
+            "tab": "Suppliers",
+            "columns": "slot",
+            "slot": "suppliers",
+            "fields": [
+                {
+                    "label": "Suppliers",
+                    "name": "suppliers",
+                    "value": [],
+                    "meta": {
+                        "objects": true,
+                        "type": "select",
+                        "multiple": true,
+                        "source": "products.suppliers"
+                    }
+                },
+                {
+                    "label": "Default supplier",
+                    "name": "defaultSupplierId",
+                    "value": null,
+                    "meta": {
+                        "custom": true,
+                        "type": "select",
+                        "source": "administration.companies.options"
                     }
                 }
             ]

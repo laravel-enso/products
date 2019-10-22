@@ -2,14 +2,15 @@
 
 namespace LaravelEnso\Products\app\Tables\Builders;
 
-use LaravelEnso\Tables\app\Services\Table;
+use Illuminate\Database\Eloquent\Builder;
+use LaravelEnso\Tables\app\Contracts\Table;
 use LaravelEnso\Products\app\Models\Product;
 
-class ProductTable extends Table
+class ProductTable implements Table
 {
-    protected $templatePath = __DIR__.'/../Templates/products.json';
+    protected const TemplatePath = __DIR__.'/../Templates/products.json';
 
-    public function query()
+    public function query(): Builder
     {
         return Product::selectRaw('
             products.id, 
@@ -23,5 +24,10 @@ class ProductTable extends Table
             products.measurement_unit,
             companies.name as "manufacturer"
         ')->leftJoin('companies', 'products.manufacturer_id', '=', 'companies.id');
+    }
+
+    public function templatePath(): string
+    {
+        return static::TemplatePath;
     }
 }

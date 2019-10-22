@@ -4,6 +4,7 @@ namespace LaravelEnso\Products\app\Forms\Builders;
 
 use LaravelEnso\Forms\app\Services\Form;
 use LaravelEnso\Products\app\Models\Product;
+use LaravelEnso\Products\app\Http\Resources\Supplier;
 
 class ProductForm
 {
@@ -23,7 +24,12 @@ class ProductForm
 
     public function edit(Product $product)
     {
+        $product->suppliers->each(function ($supplier) {
+            $supplier->pivot->inCents(false);
+        });
+
         return $this->form
+            ->value('suppliers', Supplier::collection($product->suppliers))
             ->value('defaultSupplierId', optional($product->defaultSupplier())->id)
             ->edit($product->inCents(false));
     }

@@ -15,6 +15,7 @@ class CreateStructureForProducts extends Migration
         ['name' => 'products.tableData', 'description' => 'Get table data for product', 'type' => 0, 'is_default' => false],
         ['name' => 'products.exportExcel', 'description' => 'Export excel for product', 'type' => 0, 'is_default' => false],
         ['name' => 'products.options', 'description' => 'Get product options for select', 'type' => 0, 'is_default' => false],
+        ['name' => 'products.suppliers', 'description' => 'Get product supplier options for select', 'type' => 0, 'is_default' => false],
     ];
 
     protected $menu = [

@@ -1,14 +1,15 @@
 <?php
 
-use Tests\TestCase;
-use LaravelEnso\Core\app\Models\User;
-use LaravelEnso\Products\app\Models\Product;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use LaravelEnso\Companies\app\Models\Company;
-use LaravelEnso\Forms\app\TestTraits\EditForm;
+use LaravelEnso\Core\app\Models\User;
 use LaravelEnso\Forms\app\TestTraits\CreateForm;
 use LaravelEnso\Forms\app\TestTraits\DestroyForm;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use LaravelEnso\Forms\app\TestTraits\EditForm;
+use LaravelEnso\Products\app\Http\Resources\Supplier;
+use LaravelEnso\Products\app\Models\Product;
 use LaravelEnso\Tables\app\Traits\Tests\Datatable;
+use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
@@ -29,8 +30,10 @@ class ProductTest extends TestCase
             ->actingAs(User::first());
 
         $this->testModel = factory(Product::class)->make([
-            'manufacturer_id' => factory(Company::class)->create()->id
+            'manufacturer_id' => factory(Company::class)->create()->id,
         ]);
+
+        $this->testModel->inCents = true;
     }
 
     /** @test */
@@ -55,15 +58,18 @@ class ProductTest extends TestCase
     /** @test */
     public function can_store_product_with_default_supplier()
     {
-        $supplierIds = factory(
-            Company::class, static::SupplierNumber
-        )->create()->pluck('id')->toArray();
+        $suppliers = Supplier::collection(
+            factory(Company::class, static::SupplierNumber)->create()
+        )
+            ->toArray(null);
+
+        $suppliers = $this->updatePivot($suppliers);
 
         $response = $response = $this->post(
             route('products.store', [], false),
             $this->testModel->toArray() + [
-                'suppliers' => $supplierIds,
-                'defaultSupplierId' => $supplierIds[0],
+                'suppliers' => $suppliers,
+                'defaultSupplierId' => $suppliers[0]['id'],
             ]
         );
 
@@ -78,16 +84,18 @@ class ProductTest extends TestCase
             ]);
 
         $this->assertEqualsCanonicalizing(
-            $supplierIds, $product->suppliers()->pluck('id')->toArray()
+            collect($suppliers)->pluck('id')->toArray(),
+            $product->suppliers()->pluck('id')->toArray()
         );
 
         $this->assertEquals(
-            $supplierIds[0], $product->defaultSupplier()->id
+            $suppliers[0]['id'],
+            $product->defaultSupplier()->id
         );
 
         $this->assertTrue(
-            $product->suppliers->except($supplierIds[0])->every(function($supplier) {
-                return $supplier->pivot->is_default === "0";
+            $product->suppliers->except($suppliers[0]['id'])->every(function ($supplier) {
+                return $supplier->pivot->is_default === false;
             })
         );
     }
@@ -95,38 +103,37 @@ class ProductTest extends TestCase
     /** @test */
     public function can_update_default_supplier()
     {
-        $supplierIds = factory(
-            Company::class, static::SupplierNumber
-        )->create()->pluck('id')->toArray();
-        $newSupplierId = factory(Company::class)->create()->id;
+        $suppliers = Supplier::collection(
+            factory(Company::class, static::SupplierNumber)->create()
+        )
+            ->toArray(null);
+
+        $suppliers = $this->updatePivot($suppliers);
 
         $this->testModel->save();
-        $this->testModel->syncSuppliers($supplierIds, $supplierIds[0]);
+        $this->testModel->syncSuppliers($suppliers, $suppliers[0]['id']);
 
 
         $this->patch(
             route('products.update', $this->testModel->id, false),
             $this->testModel->toArray() + [
-                'suppliers' => $supplierIds + [$newSupplierId],
-                'defaultSupplierId' => $supplierIds[1]
+                'suppliers' => $suppliers,
+                'defaultSupplierId' => $suppliers[1]['id'],
             ]
         )->assertStatus(200)
-        ->assertJsonStructure(['message']);
+            ->assertJsonStructure(['message']);
 
         $refreshedTestModel = $this->testModel->fresh();
 
-        $this->assertEqualsCanonicalizing( 
-            $supplierIds, $refreshedTestModel->suppliers()->pluck('id')->toArray()
-        );
-        
         $this->assertEquals(
-            $supplierIds[1], $refreshedTestModel->defaultSupplier()->id
+            $suppliers[1]['id'],
+            $refreshedTestModel->defaultSupplier()->id
         );
 
         $this->assertTrue(
-            $refreshedTestModel->suppliers->except($supplierIds[1])
-                ->every(function($supplier) {
-                    return $supplier->pivot->is_default === "0";
+            $refreshedTestModel->suppliers->except($suppliers[1]['id'])
+                ->every(function ($supplier) {
+                    return $supplier->pivot->is_default === false;
                 })
         );
     }
@@ -140,7 +147,7 @@ class ProductTest extends TestCase
             route('products.update', $this->testModel->id, false),
             $this->testModel->toArray()
         )->assertStatus(200)
-        ->assertJsonStructure(['message']);
+            ->assertJsonStructure(['message']);
 
         $this->assertEquals(
             $this->testModel->name,
@@ -157,7 +164,19 @@ class ProductTest extends TestCase
             'query' => $this->testModel->name,
             'limit' => 10,
         ], false))
-        ->assertStatus(200)
-        ->assertJsonFragment(['name' => $this->testModel->name]);
+            ->assertStatus(200)
+            ->assertJsonFragment(['name' => $this->testModel->name]);
+    }
+
+    private function updatePivot($suppliers)
+    {
+        return collect($suppliers)
+            ->map(function ($supplier) {
+                $supplier['pivot']['part_number'] = $this->testModel->part_number;
+                $supplier['pivot']['acquisition_price'] = $this->testModel->list_price - 1;
+
+                return $supplier;
+            })
+            ->toArray();
     }
 }
