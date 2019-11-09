@@ -2,9 +2,9 @@
 
 namespace LaravelEnso\Products\app\Models;
 
-use LaravelEnso\Helpers\app\Traits\InCents;
-use LaravelEnso\Companies\app\Models\Company;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use LaravelEnso\Companies\app\Models\Company;
+use LaravelEnso\Helpers\app\Traits\InCents;
 
 class ProductSupplier extends Pivot
 {

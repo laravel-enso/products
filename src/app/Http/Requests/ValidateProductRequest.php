@@ -2,11 +2,11 @@
 
 namespace LaravelEnso\Products\app\Http\Requests;
 
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Collection;
 use Illuminate\Foundation\Http\FormRequest;
-use LaravelEnso\Products\app\Models\Product;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use LaravelEnso\Products\app\Enums\MeasurementUnits;
+use LaravelEnso\Products\app\Models\Product;
 
 class ValidateProductRequest extends FormRequest
 {

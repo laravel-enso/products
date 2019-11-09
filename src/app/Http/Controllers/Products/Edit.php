@@ -3,8 +3,8 @@
 namespace LaravelEnso\Products\app\Http\Controllers\Products;
 
 use Illuminate\Routing\Controller;
-use LaravelEnso\Products\app\Models\Product;
 use LaravelEnso\Products\app\Forms\Builders\ProductForm;
+use LaravelEnso\Products\app\Models\Product;
 
 class Edit extends Controller
 {

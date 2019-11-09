@@ -2,9 +2,9 @@
 
 namespace LaravelEnso\Products;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use LaravelEnso\Products\app\Models\Product;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {

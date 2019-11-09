@@ -1,9 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
-use LaravelEnso\Products\app\Models\Product;
 use LaravelEnso\Companies\app\Models\Company;
 use LaravelEnso\Products\app\Enums\MeasurementUnits;
+use LaravelEnso\Products\app\Models\Product;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
