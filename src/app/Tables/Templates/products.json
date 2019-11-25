@@ -56,12 +56,12 @@
         },
         {
             "label": "Measurement Unit",
-            "name": "measurement_unit",
-            "enum": "LaravelEnso\\Products\\app\\Enums\\MeasurementUnits",
-            "data": "products.measurement_unit",
+            "name": "measurementUnit",
+            "data": "measurement_units.name",
             "meta": [
                 "searchable",
-                "sortable"
+                "sortable",
+                "translated"
             ]
         },
         {

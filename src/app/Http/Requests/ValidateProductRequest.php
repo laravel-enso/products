@@ -4,8 +4,6 @@ namespace LaravelEnso\Products\app\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\Rule;
-use LaravelEnso\Products\app\Enums\MeasurementUnits;
 use LaravelEnso\Products\app\Models\Product;
 
 class ValidateProductRequest extends FormRequest
@@ -25,7 +23,7 @@ class ValidateProductRequest extends FormRequest
             'name' => 'required|string|max:255',
             'part_number' => 'required|string',
             'internal_code' => 'nullable|string|max:255',
-            'measurement_unit' => ['required', 'integer', $this->measurementUnits()],
+            'measurement_unit_id' => 'required|exists:measurement_units,id',
             'package_quantity' => 'nullable|integer',
             'list_price' => 'required|numeric|min:0.01',
             'vat_percent' => 'required|integer',
@@ -33,11 +31,6 @@ class ValidateProductRequest extends FormRequest
             'link' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ];
-    }
-
-    protected function measurementUnits()
-    {
-        return Rule::in(MeasurementUnits::keys());
     }
 
     public function withValidator($validator)

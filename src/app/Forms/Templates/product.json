@@ -56,11 +56,12 @@
             "fields": [
                 {
                     "label": "Measurement",
-                    "name": "measurement_unit",
+                    "name": "measurement_unit_id",
                     "value": null,
                     "meta": {
                         "type": "select",
-                        "options": "LaravelEnso\\Products\\app\\Enums\\MeasurementUnits"
+                        "source": "administration.measurementUnits.options",
+                        "translated": true
                     }
                 },
                 {

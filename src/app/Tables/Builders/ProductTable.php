@@ -21,9 +21,10 @@ class ProductTable implements Table
             products.package_quantity, 
             products.is_active,
             products.created_at,
-            products.measurement_unit,
-            companies.name as "manufacturer"
-        ')->leftJoin('companies', 'products.manufacturer_id', '=', 'companies.id');
+            companies.name as "manufacturer",
+            measurement_units.name as measurementUnit
+        ')->leftJoin('companies', 'products.manufacturer_id', '=', 'companies.id')
+        ->leftJoin('measurement_units', 'measurement_units.id', '=', 'products.measurement_unit_id');
     }
 
     public function templatePath(): string

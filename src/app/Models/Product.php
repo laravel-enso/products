@@ -12,6 +12,7 @@ use LaravelEnso\Helpers\app\Traits\ActiveState;
 use LaravelEnso\Helpers\app\Traits\AvoidsDeletionConflicts;
 use LaravelEnso\Helpers\app\Traits\CascadesMorphMap;
 use LaravelEnso\Helpers\app\Traits\InCents;
+use LaravelEnso\MeasurementUnits\app\Models\MeasurementUnit;
 use LaravelEnso\Rememberable\app\Traits\Rememberable;
 use LaravelEnso\Tables\app\Traits\TableCache;
 
@@ -21,13 +22,18 @@ class Product extends Model implements Activatable
         Documentable, InCents, Relations, Rememberable, TableCache;
 
     protected $fillable = [
-        'manufacturer_id', 'name', 'part_number', 'internal_code', 'measurement_unit',
+        'manufacturer_id', 'measurement_unit_id', 'name', 'part_number', 'internal_code',
         'package_quantity', 'list_price', 'vat_percent', 'description', 'link', 'is_active',
     ];
 
     protected $casts = ['is_active' => 'boolean'];
 
     protected $centAttributes = ['list_price'];
+
+    public function measurementUnit()
+    {
+        return $this->belongsTo(MeasurementUnit::class);
+    }
 
     public function manufacturer()
     {

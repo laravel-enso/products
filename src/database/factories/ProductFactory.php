@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 use LaravelEnso\Companies\app\Models\Company;
-use LaravelEnso\Products\app\Enums\MeasurementUnits;
+use LaravelEnso\MeasurementUnits\app\Models\MeasurementUnit;
 use LaravelEnso\Products\app\Models\Product;
 
 $factory->define(Product::class, function (Faker $faker) {
@@ -10,7 +10,9 @@ $factory->define(Product::class, function (Faker $faker) {
         'manufacturer_id' => function () {
             return factory(Company::class)->create()->id;
         },
-        'measurement_unit' => MeasurementUnits::keys()->random(),
+        'measurement_unit_id' => function () {
+            return (factory(MeasurementUnit::class)->create())->id;
+        },
         'name' => $faker->word,
         'part_number' => Product::max('part_number') + 1,
         'internal_code' => 'CT-'.$faker->numberBetween(0, 500),
