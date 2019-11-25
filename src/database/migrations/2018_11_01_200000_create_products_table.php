@@ -11,13 +11,17 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('manufacturer_id')->unsigned()->nullable();
-            $table->foreign('manufacturer_id')->references('id')->on('companies');
+            $table->unsignedInteger('manufacturer_id')->nullable();
+            $table->foreign('manufacturer_id')->references('id')
+                ->on('companies');
+
+            $table->unsignedInteger('measurement_unit_id');
+            $table->foreign('measurement_unit_id')->references('id')
+                ->on('measurement_units');
 
             $table->string('name');
             $table->string('part_number');
             $table->string('internal_code')->nullable();
-            $table->tinyInteger('measurement_unit')->unsigned();
             $table->integer('package_quantity')->nullable();
             $table->integer('list_price')->unsigned();
             $table->tinyInteger('vat_percent')->unsigned();

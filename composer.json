@@ -25,6 +25,7 @@
         "laravel-enso/helpers": "1.14.*",
         "laravel-enso/forms": "3.3.*",
         "laravel-enso/migrator": "1.0.*",
+        "laravel-enso/measurement-units": "1.0.*",
         "laravel-enso/tables": "3.1.*"
     },
     "autoload": {
@@ -36,8 +37,7 @@
         "laravel": {
             "providers": [
                 "LaravelEnso\\Products\\AppServiceProvider",
-                "LaravelEnso\\Products\\CompanyServiceProvider",
-                "LaravelEnso\\Products\\EnumServiceProvider"
+                "LaravelEnso\\Products\\CompanyServiceProvider"
             ]
         }
     }
