@@ -42,7 +42,8 @@
             "data": "products.list_price",
             "meta": [
                 "searchable",
-                "sortable"
+                "sortable",
+                "cents"
             ]
         },
         {
@@ -61,7 +62,7 @@
             "meta": [
                 "searchable",
                 "sortable",
-                "translated"
+                "translatable"
             ]
         },
         {

@@ -26,7 +26,7 @@ class ValidateProductRequest extends FormRequest
             'measurement_unit_id' => 'required|exists:measurement_units,id',
             'package_quantity' => 'nullable|integer',
             'list_price' => 'required|numeric|min:0.01',
-            'vat_percent' => 'required|integer',
+            'vat_percent' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'link' => 'nullable|string|max:255',
             'is_active' => 'boolean',
