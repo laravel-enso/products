@@ -12,7 +12,7 @@ class ProductsUpgrade extends DatabaseUpgrade
 {
     private $enum;
 
-    public function __construct(string $enum = null)
+    public function __construct(?string $enum)
     {
         parent::__construct();
         $this->enum = $enum;
@@ -26,32 +26,37 @@ class ProductsUpgrade extends DatabaseUpgrade
 
     protected function migrateTable()
     {
-        Artisan::call('vendor:publish', [
-            '--tag' => 'measurement-units-factories',
-            '--force' => true,
-        ]);
-
-        Artisan::call('vendor:publish', [
-            '--tag' => 'measurement-units-seeders',
-            '--force' => true,
-        ]);
+        $this->publishFactory()
+            ->publishSeeder();
 
         if (! MeasurementUnit::exists()) {
             $this->seedEnums();
         }
 
-        Schema::table('products', function (Blueprint $table) {
-            $table->renameColumn('measurement_unit', 'measurement_unit_id');
-        });
-
-        Schema::table('products', function (Blueprint $table) {
-            $table->unsignedInteger('measurement_unit_id')->change();
-            $table->foreign('measurement_unit_id')->references('id')
-                ->on('measurement_units');
-        });
+        $this->alterProducts();
     }
 
-    protected function seedEnums(): void
+    private function publishFactory()
+    {
+        Artisan::call('vendor:publish', [
+            '--tag' => 'measurement-units-factories',
+            '--force' => true,
+        ]);
+
+        return $this;
+    }
+
+    private function publishSeeder()
+    {
+        Artisan::call('vendor:publish', [
+            '--tag' => 'measurement-units-seeders',
+            '--force' => true,
+        ]);
+
+        return $this;
+    }
+
+    private function seedEnums(): void
     {
         if (! $this->enum) {
             Artisan::call('db:seed', [
@@ -68,6 +73,19 @@ class ProductsUpgrade extends DatabaseUpgrade
                 'name' => $name,
                 'description' => '',
             ]);
+        });
+    }
+
+    private function alterProducts(): void
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->renameColumn('measurement_unit', 'measurement_unit_id');
+        });
+
+        Schema::table('products', function (Blueprint $table) {
+            $table->unsignedInteger('measurement_unit_id')->change();
+            $table->foreign('measurement_unit_id')->references('id')
+                ->on('measurement_units');
         });
     }
 }
