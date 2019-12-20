@@ -19,6 +19,17 @@ class ProductSupplier extends Pivot
 
     protected $centAttributes = ['acquisition_price'];
 
+    protected static function boot()
+    {
+        static::saving(function ($model) {
+            if (! $model->exists) {
+                $model->inCents = false;
+            }
+        });
+
+        parent::boot();
+    }
+
     public function supplier()
     {
         return $this->belongsTo(Company::class, 'supplier_id');
