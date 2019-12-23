@@ -51,21 +51,21 @@ class Product extends Model implements Activatable
 
     public function defaultSupplier()
     {
-        return $this->suppliers->first(function ($supplier) {
-            return $supplier->pivot->is_default;
-        });
+        return $this->suppliers
+            ->first(fn($supplier) => $supplier->pivot->is_default);
     }
 
     public function syncSuppliers($suppliers, $defaultSupplierId)
     {
         $pivotIds = collect($suppliers)
-            ->reduce(function ($pivot, $supplier) use ($defaultSupplierId) {
-                return $pivot->put($supplier['id'], [
+            ->reduce(fn($pivot, $supplier) => (
+                $pivot->put($supplier['id'], [
                     'part_number' => $supplier['pivot']['part_number'],
                     'acquisition_price' => $supplier['pivot']['acquisition_price'],
                     'is_default' => $supplier['id'] === $defaultSupplierId,
-                ]);
-            }, collect())->toArray();
+                ])
+            ), collect())
+            ->toArray();
 
         $this->suppliers()->sync($pivotIds);
     }
