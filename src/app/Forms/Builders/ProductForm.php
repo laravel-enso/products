@@ -24,9 +24,8 @@ class ProductForm
 
     public function edit(Product $product)
     {
-        $product->suppliers->each(function ($supplier) {
-            $supplier->pivot->inCents(false);
-        });
+        $product->suppliers
+            ->each(fn($supplier) => $supplier->pivot->inCents(false));
 
         return $this->form
             ->value('suppliers', Supplier::collection($product->suppliers))

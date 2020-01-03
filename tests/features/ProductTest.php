@@ -94,9 +94,8 @@ class ProductTest extends TestCase
         );
 
         $this->assertTrue(
-            $product->suppliers->except($suppliers[0]['id'])->every(function ($supplier) {
-                return $supplier->pivot->is_default === false;
-            })
+            $product->suppliers->except($suppliers[0]['id'])
+                ->every(fn($supplier) => $supplier->pivot->is_default === false)
         );
     }
 
@@ -132,9 +131,7 @@ class ProductTest extends TestCase
 
         $this->assertTrue(
             $refreshedTestModel->suppliers->except($suppliers[1]['id'])
-                ->every(function ($supplier) {
-                    return $supplier->pivot->is_default === false;
-                })
+                ->every(fn($supplier) => $supplier->pivot->is_default === false)
         );
     }
 

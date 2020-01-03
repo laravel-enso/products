@@ -11,20 +11,9 @@ class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this
-            ->addCommands()
-            ->load()
+        $this->load()
             ->publish()
             ->mapMorphings();
-    }
-
-    private function addCommands()
-    {
-        $this->commands(
-            Upgrade::class,
-        );
-
-        return $this;
     }
 
     private function load()

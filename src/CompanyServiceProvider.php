@@ -10,17 +10,15 @@ class CompanyServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Company::addDynamicMethod('products', function () {
-            return $this->belongsToMany(
+        Company::addDynamicMethod('products', fn() => (
+            $this->belongsToMany(
                 Product::class,
                 'product_supplier',
                 'supplier_id',
                 'product_id'
-            )->withTimeStamps();
-        });
+            )->withTimeStamps()
+        ));
 
-        Company::addDynamicMethod('hasMappedProducts', function () {
-            return $this->products()->exists();
-        });
+        Company::addDynamicMethod('hasMappedProducts', fn() => $this->products()->exists());
     }
 }

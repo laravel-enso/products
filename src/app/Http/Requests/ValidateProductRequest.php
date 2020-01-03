@@ -37,11 +37,11 @@ class ValidateProductRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if ($this->product()->exists()) {
-                collect(['part_number', 'manufacturer_id'])->each(function ($attribute) use ($validator) {
+                collect(['part_number', 'manufacturer_id'])->each(fn($attribute) => (
                     $validator->errors()->add($attribute, __(
                         'A product with the specified part number and manufacturer already exists!'
-                    ));
-                });
+                    ))
+                ));
             }
 
             $suppliers = collect($this->get('suppliers'));
@@ -79,25 +79,23 @@ class ValidateProductRequest extends FormRequest
 
     private function hasInvalidSuppliers($suppliers)
     {
-        return $suppliers->some(function ($supplier) {
-            return ! is_numeric($supplier['pivot']['acquisition_price'])
-                || $supplier['pivot']['acquisition_price'] <= 0
-                || ! $supplier['pivot']['part_number'];
-        });
+        return $suppliers->some(fn($supplier) => (
+            ! is_numeric($supplier['pivot']['acquisition_price'])
+            || $supplier['pivot']['acquisition_price'] <= 0
+            || ! $supplier['pivot']['part_number']
+        ));
     }
 
     private function hasInvalidDefaultSupplier(Collection $suppliers)
     {
-        $defaultSupplier = $suppliers->first(function ($supplier) {
-            return $supplier['id'] === $this->get('defaultSupplierId');
-        });
+        $defaultSupplier = $suppliers->first(fn($supplier) => (
+            $supplier['id'] === $this->get('defaultSupplierId')
+        ));
 
         return $suppliers
-            ->reject(function ($supplier) use ($defaultSupplier) {
-                return $supplier['id'] === $defaultSupplier['id'];
-            })
-            ->contains(function ($supplier) use ($defaultSupplier) {
-                return $supplier['pivot']['acquisition_price'] < $defaultSupplier['pivot']['acquisition_price'];
-            });
+            ->reject(fn($supplier) => $supplier['id'] === $defaultSupplier['id'])
+            ->contains(fn($supplier) => (
+                $supplier['pivot']['acquisition_price'] < $defaultSupplier['pivot']['acquisition_price']
+            ));
     }
 }
