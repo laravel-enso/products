@@ -19,11 +19,11 @@ class ProductSupplier extends Pivot
 
     protected $centAttributes = ['acquisition_price'];
 
-    public static function boot()
+    public function __construct()
     {
-        self::saving(fn ($model) => $model->inCents = true);
+        parent::__construct();
 
-        parent::boot();
+        $this->inCents = $this->exists;
     }
 
     public function supplier()
