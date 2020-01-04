@@ -4,8 +4,7 @@ namespace LaravelEnso\Products;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\Products\app\Console\Commands\Upgrade;
-use LaravelEnso\Products\app\Models\Product;
+use LaravelEnso\Products\App\Models\Product;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/database/factories' => database_path('factories'),
-        ], 'products-factories');
+        ], ['products-factories', 'enso-factories']);
 
         return $this;
     }

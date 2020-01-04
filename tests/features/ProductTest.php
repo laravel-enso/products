@@ -1,14 +1,15 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use LaravelEnso\Companies\app\Models\Company;
-use LaravelEnso\Core\app\Models\User;
-use LaravelEnso\Forms\app\TestTraits\CreateForm;
-use LaravelEnso\Forms\app\TestTraits\DestroyForm;
-use LaravelEnso\Forms\app\TestTraits\EditForm;
-use LaravelEnso\Products\app\Http\Resources\Supplier;
-use LaravelEnso\Products\app\Models\Product;
-use LaravelEnso\Tables\app\Traits\Tests\Datatable;
+use Illuminate\Support\Collection;
+use LaravelEnso\Companies\App\Models\Company;
+use LaravelEnso\Core\App\Models\User;
+use LaravelEnso\Forms\App\TestTraits\CreateForm;
+use LaravelEnso\Forms\App\TestTraits\DestroyForm;
+use LaravelEnso\Forms\App\TestTraits\EditForm;
+use LaravelEnso\Products\App\Http\Resources\Supplier;
+use LaravelEnso\Products\App\Models\Product;
+use LaravelEnso\Tables\App\Traits\Tests\Datatable;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -18,13 +19,11 @@ class ProductTest extends TestCase
     private $permissionGroup = 'products';
     private $testModel;
 
-    private const SupplierNumber = 5;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $this->seed()
             ->actingAs(User::first());
@@ -58,12 +57,7 @@ class ProductTest extends TestCase
     /** @test */
     public function can_store_product_with_default_supplier()
     {
-        $suppliers = Supplier::collection(
-            factory(Company::class, static::SupplierNumber)->create()
-        )
-            ->toArray(null);
-
-        $suppliers = $this->updatePivot($suppliers);
+        $suppliers = $this->suppliers();
 
         $response = $response = $this->post(
             route('products.store', [], false),
@@ -84,7 +78,7 @@ class ProductTest extends TestCase
             ]);
 
         $this->assertEqualsCanonicalizing(
-            collect($suppliers)->pluck('id')->toArray(),
+            array_column($suppliers, 'id'),
             $product->suppliers()->pluck('id')->toArray()
         );
 
@@ -95,23 +89,17 @@ class ProductTest extends TestCase
 
         $this->assertTrue(
             $product->suppliers->except($suppliers[0]['id'])
-                ->every(fn($supplier) => $supplier->pivot->is_default === false)
+                ->every(fn ($supplier) => $supplier->pivot->is_default === false)
         );
     }
 
     /** @test */
     public function can_update_default_supplier()
     {
-        $suppliers = Supplier::collection(
-            factory(Company::class, static::SupplierNumber)->create()
-        )
-            ->toArray(null);
-
-        $suppliers = $this->updatePivot($suppliers);
-
+        $suppliers = $this->suppliers();
         $this->testModel->save();
-        $this->testModel->syncSuppliers($suppliers, $suppliers[0]['id']);
 
+        $this->testModel->syncSuppliers($suppliers, $suppliers[0]['id']);
 
         $this->patch(
             route('products.update', $this->testModel->id, false),
@@ -131,7 +119,7 @@ class ProductTest extends TestCase
 
         $this->assertTrue(
             $refreshedTestModel->suppliers->except($suppliers[1]['id'])
-                ->every(fn($supplier) => $supplier->pivot->is_default === false)
+                ->every(fn ($supplier) => $supplier->pivot->is_default === false)
         );
     }
 
@@ -165,15 +153,22 @@ class ProductTest extends TestCase
             ->assertJsonFragment(['name' => $this->testModel->name]);
     }
 
-    private function updatePivot($suppliers)
+    private function suppliers()
     {
-        return collect($suppliers)
-            ->map(function ($supplier) {
-                $supplier['pivot']['part_number'] = $this->testModel->part_number;
-                $supplier['pivot']['acquisition_price'] = $this->testModel->list_price - 1;
+        $suppliers = Supplier::collection(
+            factory(Company::class, 5)->create()
+        )->resolve();
 
-                return $supplier;
-            })
+        return (new Collection($suppliers))
+            ->map(fn ($supplier) => $this->supplier($supplier))
             ->toArray();
+    }
+
+    private function supplier($supplier)
+    {
+        $supplier['pivot']['part_number'] = $this->testModel->part_number;
+        $supplier['pivot']['acquisition_price'] = $this->testModel->list_price - 1;
+
+        return $supplier;
     }
 }

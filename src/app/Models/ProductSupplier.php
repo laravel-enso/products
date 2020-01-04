@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelEnso\Products\app\Models;
+namespace LaravelEnso\Products\App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use LaravelEnso\Companies\app\Models\Company;
-use LaravelEnso\Helpers\app\Traits\InCents;
+use LaravelEnso\Companies\App\Models\Company;
+use LaravelEnso\Helpers\App\Traits\InCents;
 
 class ProductSupplier extends Pivot
 {
@@ -19,13 +19,9 @@ class ProductSupplier extends Pivot
 
     protected $centAttributes = ['acquisition_price'];
 
-    protected static function boot()
+    public static function boot()
     {
-        static::saving(function ($model) {
-            if (! $model->exists) {
-                $model->inCents = false;
-            }
-        });
+        self::saving(fn ($model) => $model->inCents = true);
 
         parent::boot();
     }

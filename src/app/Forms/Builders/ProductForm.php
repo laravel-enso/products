@@ -1,16 +1,16 @@
 <?php
 
-namespace LaravelEnso\Products\app\Forms\Builders;
+namespace LaravelEnso\Products\App\Forms\Builders;
 
-use LaravelEnso\Forms\app\Services\Form;
-use LaravelEnso\Products\app\Http\Resources\Supplier;
-use LaravelEnso\Products\app\Models\Product;
+use LaravelEnso\Forms\App\Services\Form;
+use LaravelEnso\Products\App\Http\Resources\Supplier;
+use LaravelEnso\Products\App\Models\Product;
 
 class ProductForm
 {
     protected const TemplatePath = __DIR__.'/../Templates/product.json';
 
-    protected $form;
+    protected Form $form;
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ class ProductForm
     public function edit(Product $product)
     {
         $product->suppliers
-            ->each(fn($supplier) => $supplier->pivot->inCents(false));
+            ->each(fn ($supplier) => $supplier->pivot->inCents(false));
 
         return $this->form
             ->value('suppliers', Supplier::collection($product->suppliers))

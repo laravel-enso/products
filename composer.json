@@ -16,6 +16,12 @@
             "email": "catalin.sandu@earthlink.com",
             "homepage": "https://laravel-enso.com",
             "role": "Developer"
+        },
+        {
+            "name": "Adrian Ocneanu",
+            "email": "aocneanu@gmail.com",
+            "homepage": "https://laravel-enso.com",
+            "role": "Developer"
         }
     ],
     "require": {

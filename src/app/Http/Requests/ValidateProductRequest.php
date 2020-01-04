@@ -1,13 +1,16 @@
 <?php
 
-namespace LaravelEnso\Products\app\Http\Requests;
+namespace LaravelEnso\Products\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
-use LaravelEnso\Products\app\Models\Product;
+use LaravelEnso\Products\App\Models\Product;
 
 class ValidateProductRequest extends FormRequest
 {
+    protected $validator;
+    protected $suppliers;
+
     public function authorize()
     {
         return true;
@@ -36,38 +39,49 @@ class ValidateProductRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if ($this->product()->exists()) {
-                collect(['part_number', 'manufacturer_id'])->each(fn($attribute) => (
-                    $validator->errors()->add($attribute, __(
-                        'A product with the specified part number and manufacturer already exists!'
-                    ))
-                ));
-            }
+            $this->validator = $validator;
+            $this->validateUnicity();
 
-            $suppliers = collect($this->get('suppliers'));
-
-            if ($suppliers->isEmpty()) {
-                return;
-            }
-
-            if (! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
-                $validator->errors()->add('defaultSupplierId', __(
-                    'This supplier must be within selected suppliers'
-                ));
-            }
-
-            if ($this->hasInvalidSuppliers($suppliers)) {
-                $validator->errors()->add('suppliers', __(
-                    'Part number and acquisition price are mandatory for each supplier'
-                ));
-            }
-
-            if ($this->hasInvalidDefaultSupplier($suppliers)) {
-                $validator->errors()->add('defaultSupplierId', __(
-                    'The default supplier does not have the minimum acquisition price'
-                ));
+            if ($this->filled('suppliers')) {
+                $this->checkSuppliers();
             }
         });
+    }
+
+    protected function validateUnicity()
+    {
+        if (! $this->product()->exists()) {
+            return;
+        }
+
+        (new Collection(['part_number', 'manufacturer_id']))
+            ->each(fn ($attribute) => $this->validator->errors()->add(
+                $attribute,
+                'A product with the specified part number and manufacturer already exists'
+            ));
+    }
+
+    protected function checkSuppliers()
+    {
+        $suppliers = new Collection($this->get('suppliers'));
+
+        if (! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
+            $this->validator->errors()->add('defaultSupplierId', __(
+                'This supplier must be within selected suppliers'
+            ));
+        }
+
+        if ($this->invalidSuppliers($suppliers)) {
+            $this->validator->errors()->add('suppliers', __(
+                'Part number and acquisition price are mandatory for each supplier'
+            ));
+        }
+
+        if ($this->invalidDefaultSupplier($suppliers)) {
+            $this->validator->errors()->add('defaultSupplierId', __(
+                'The default supplier does not have the minimum acquisition price'
+            ));
+        }
     }
 
     protected function product()
@@ -77,25 +91,26 @@ class ValidateProductRequest extends FormRequest
             ->where('id', '<>', optional($this->route('product'))->id);
     }
 
-    private function hasInvalidSuppliers($suppliers)
+    private function invalidSuppliers($suppliers)
     {
-        return $suppliers->some(fn($supplier) => (
-            ! is_numeric($supplier['pivot']['acquisition_price'])
-            || $supplier['pivot']['acquisition_price'] <= 0
-            || ! $supplier['pivot']['part_number']
-        ));
+        return $suppliers->some(fn ($supplier) => $this->invalidSupplier($supplier));
     }
 
-    private function hasInvalidDefaultSupplier(Collection $suppliers)
+    private function invalidSupplier($supplier)
     {
-        $defaultSupplier = $suppliers->first(fn($supplier) => (
-            $supplier['id'] === $this->get('defaultSupplierId')
-        ));
+        return ! is_numeric($supplier['pivot']['acquisition_price'])
+            || $supplier['pivot']['acquisition_price'] <= 0
+            || ! $supplier['pivot']['part_number'];
+    }
+
+    private function invalidDefaultSupplier(Collection $suppliers)
+    {
+        $defaultSupplier = $suppliers
+            ->first(fn ($supplier) => $supplier['id'] === $this->get('defaultSupplierId'));
 
         return $suppliers
-            ->reject(fn($supplier) => $supplier['id'] === $defaultSupplier['id'])
-            ->contains(fn($supplier) => (
-                $supplier['pivot']['acquisition_price'] < $defaultSupplier['pivot']['acquisition_price']
-            ));
+            ->reject(fn ($supplier) => $supplier['id'] === $defaultSupplier['id'])
+            ->contains(fn ($supplier) => $supplier['pivot']['acquisition_price']
+                < $defaultSupplier['pivot']['acquisition_price']);
     }
 }
