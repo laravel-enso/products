@@ -19,7 +19,8 @@ class ProductSupplier extends Pivot
 
     protected $centAttributes = ['acquisition_price'];
 
-    public function __construct(array $attributes = []){
+    public function __construct(array $attributes = [])
+    {
         parent::__construct($attributes);
 
         $this->inCents = true;
