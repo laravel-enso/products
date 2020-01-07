@@ -1,4 +1,5 @@
 <?php
+
 namespace LaravelEnso\Products\App\Dynamics\Relations;
 
 use Closure;

@@ -7,7 +7,6 @@ use LaravelEnso\Companies\App\Models\Company;
 use LaravelEnso\DynamicMethods\App\Services\Methods;
 use LaravelEnso\Products\App\Dynamics\Methods\HasMappedProducts;
 use LaravelEnso\Products\App\Dynamics\Relations\Products;
-use LaravelEnso\Products\App\Models\Product;
 
 class CompanyServiceProvider extends ServiceProvider
 {
