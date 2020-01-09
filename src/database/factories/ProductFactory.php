@@ -10,7 +10,7 @@ $factory->define(Product::class, fn (Faker $faker) => [
     'manufacturer_id' => fn () => factory(Company::class)->create()->id,
     'measurement_unit_id' => fn () => (factory(MeasurementUnit::class)->create())->id,
     'name' => $faker->word,
-    'part_number' => 'P'.(Product::max('part_number') + 1),
+    'part_number' => 'P'.(Product::max('id') + 1),
     'internal_code' => 'CT-'.$faker->numberBetween(0, 500),
     'list_price' => $faker->numberBetween(1, 300),
     'vat_percent' => VatRates::collection()->random(),
