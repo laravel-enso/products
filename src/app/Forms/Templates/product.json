@@ -149,6 +149,7 @@
                     "value": null,
                     "meta": {
                         "custom": true,
+                        "disable-clear": true,
                         "type": "select",
                         "source": "administration.companies.options"
                     }
