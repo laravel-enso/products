@@ -21,8 +21,8 @@ class ValidateProductRequest extends FormRequest
         return [
             'manufacturer_id' => 'nullable|integer|exists:companies,id',
             'suppliers' => 'array',
-            'suppliers.id' => 'exists:companies,id',
-            'defaultSupplierId' => 'nullable|exists:companies,id|required_with:suppliers',
+            'suppliers.id' => 'nullable|numeric|exists:companies,id',
+            'defaultSupplierId' => 'nullable|numeric|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:255',
             'part_number' => 'required|string',
             'internal_code' => 'nullable|string|max:255',

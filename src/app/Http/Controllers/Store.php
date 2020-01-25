@@ -14,7 +14,8 @@ class Store extends Controller
             ->fill($request->validated())->save();
 
         $product->syncSuppliers(
-            $request->get('suppliers'), $request->get('defaultSupplierId')
+            $request->get('suppliers'),
+            $request->get('defaultSupplierId')
         );
 
         return [

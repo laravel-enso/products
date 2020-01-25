@@ -11,8 +11,8 @@ class ProductSupplier extends Pivot
     use InCents;
 
     protected $fillable = [
-        'product_id', 'supplier_id', 'acquisition_price', 'part_number', 'is_default',
-        'created_at', 'updated_at',
+        'product_id', 'supplier_id', 'acquisition_price', 'part_number',
+        'is_default', 'created_at', 'updated_at',
     ];
 
     protected $casts = ['is_default' => 'boolean'];

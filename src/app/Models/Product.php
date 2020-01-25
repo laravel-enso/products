@@ -19,8 +19,15 @@ use LaravelEnso\Tables\App\Traits\TableCache;
 
 class Product extends Model implements Activatable
 {
-    use ActiveState, AvoidsDeletionConflicts, CascadesMorphMap, Commentable,
-        Documentable, InCents, Relations, Rememberable, TableCache;
+    use ActiveState,
+        AvoidsDeletionConflicts,
+        CascadesMorphMap,
+        Commentable,
+        Documentable,
+        InCents,
+        Relations,
+        Rememberable,
+        TableCache;
 
     protected $fillable = [
         'manufacturer_id', 'measurement_unit_id', 'name', 'part_number', 'internal_code',
@@ -44,10 +51,13 @@ class Product extends Model implements Activatable
     public function suppliers()
     {
         return $this->belongsToMany(
-            Company::class, 'product_supplier', 'product_id', 'supplier_id'
+            Company::class,
+            'product_supplier',
+            'product_id',
+            'supplier_id'
         )->using(ProductSupplier::class)
-        ->withPivot(['part_number', 'acquisition_price', 'is_default'])
-        ->withTimeStamps();
+            ->withPivot(['part_number', 'acquisition_price', 'is_default'])
+            ->withTimeStamps();
     }
 
     public function defaultSupplier()
@@ -56,16 +66,17 @@ class Product extends Model implements Activatable
             ->first(fn ($supplier) => $supplier->pivot->is_default);
     }
 
-    public function syncSuppliers($suppliers, $defaultSupplierId)
+    public function syncSuppliers(array $suppliers, ?int $defaultSupplierId)
     {
-        $pivotIds = (new Collection($suppliers))
-            ->reduce(fn ($pivot, $supplier) => $pivot->put(
-                $supplier['id'], [
+        $pivot = (new Collection($suppliers))
+            ->mapWithKeys(fn ($supplier) => [
+                $supplier['id'] => [
                     'part_number' => $supplier['pivot']['part_number'],
                     'acquisition_price' => $supplier['pivot']['acquisition_price'],
                     'is_default' => $supplier['id'] === $defaultSupplierId,
-                ]), new Collection())->toArray();
+                ],
+            ]);
 
-        $this->suppliers()->sync($pivotIds);
+        $this->suppliers()->sync($pivot);
     }
 }
