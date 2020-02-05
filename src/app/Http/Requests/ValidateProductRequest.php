@@ -77,7 +77,7 @@ class ValidateProductRequest extends FormRequest
             ));
         }
 
-        if ($this->invalidDefaultSupplier($suppliers)) {
+        if ($this->filled('defaultSupplierId') && $this->invalidDefaultSupplier($suppliers)) {
             $this->validator->errors()->add('defaultSupplierId', __(
                 'The default supplier does not have the minimum acquisition price'
             ));
