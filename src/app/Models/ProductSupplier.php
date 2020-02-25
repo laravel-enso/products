@@ -8,7 +8,7 @@ use LaravelEnso\Helpers\App\Traits\InCents;
 
 class ProductSupplier extends Pivot
 {
-    use InCents;
+    //use InCents;
 
     protected $fillable = [
         'product_id', 'supplier_id', 'acquisition_price', 'part_number',
