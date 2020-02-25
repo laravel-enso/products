@@ -24,7 +24,7 @@ class Supplier extends JsonResource
 
     private function existingPivot()
     {
-        $this->pivot->inCents(false);
+        //$this->pivot->inCents(false);
 
         return [
             'part_number' => $this->pivot->part_number,

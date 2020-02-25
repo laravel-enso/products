@@ -10,7 +10,9 @@ class Update extends Controller
 {
     public function __invoke(ValidateProductRequest $request, Product $product)
     {
-        $product->inCents(false)->update($request->validated());
+        $product
+            //->inCents(false)
+            ->update($request->validated());
 
         $product->syncSuppliers(
             $request->get('suppliers'),

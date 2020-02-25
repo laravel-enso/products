@@ -24,7 +24,6 @@ class Product extends Model implements Activatable
         CascadesMorphMap,
         Commentable,
         Documentable,
-        InCents,
         Relations,
         Rememberable,
         TableCache;
