@@ -12,7 +12,6 @@ use LaravelEnso\Helpers\App\Contracts\Activatable;
 use LaravelEnso\Helpers\App\Traits\ActiveState;
 use LaravelEnso\Helpers\App\Traits\AvoidsDeletionConflicts;
 use LaravelEnso\Helpers\App\Traits\CascadesMorphMap;
-use LaravelEnso\Helpers\App\Traits\InCents;
 use LaravelEnso\MeasurementUnits\App\Models\MeasurementUnit;
 use LaravelEnso\Rememberable\App\Traits\Rememberable;
 use LaravelEnso\Tables\App\Traits\TableCache;
