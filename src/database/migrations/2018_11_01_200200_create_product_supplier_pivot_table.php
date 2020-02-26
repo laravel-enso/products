@@ -16,7 +16,7 @@ class CreateProductSupplierPivotTable extends Migration
             $table->integer('supplier_id')->unsigned();
             $table->foreign('supplier_id')->references('id')->on('companies');
 
-            $table->integer('acquisition_price')->unsigned()->nullable();
+            $table->unsignedDecimal('acquisition_price', 11, 2)->nullable();
             $table->string('part_number')->nullable();
 
             $table->boolean('is_default');
