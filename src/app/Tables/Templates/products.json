@@ -48,8 +48,7 @@
             },
             "meta": [
                 "searchable",
-                "sortable",
-                "cents"
+                "sortable"
             ]
         },
         {
