@@ -19,5 +19,3 @@ $factory->define(Product::class, fn (Faker $faker) => [
     'link' => $faker->url,
     'is_active' => true,
 ]);
-
-$factory->afterMaking(Product::class, fn ($product, $faker) => $product->inCents = true);

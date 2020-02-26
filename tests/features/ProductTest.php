@@ -31,8 +31,6 @@ class ProductTest extends TestCase
         $this->testModel = factory(Product::class)->make([
             'manufacturer_id' => factory(Company::class)->create()->id,
         ]);
-
-        $this->testModel->inCents = true;
     }
 
     /** @test */

@@ -10,8 +10,8 @@ class Store extends Controller
 {
     public function __invoke(ValidateProductRequest $request, Product $product)
     {
-        $product->inCents(false)
-            ->fill($request->validated())->save();
+        $product->fill($request->validated())
+            ->save();
 
         $product->syncSuppliers(
             $request->get('suppliers'),
