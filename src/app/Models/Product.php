@@ -2,8 +2,6 @@
 
 namespace LaravelEnso\Products\App\Models;
 
-use App\Models\Genre;
-use App\Models\Subgenre;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use LaravelEnso\Categories\App\Models\Category;
