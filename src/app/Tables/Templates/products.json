@@ -19,6 +19,15 @@
             ]
         },
         {
+            "label": "Category",
+            "name": "category",
+            "data": "categories.name",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
             "label": "Manufacturer",
             "name": "manufacturer",
             "data": "companies.name",

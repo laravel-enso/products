@@ -11,6 +11,10 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->unsignedInteger('category_id')->index()->nullable();
+            $table->foreign('category_id')->references('id')
+                ->on('categories');
+
             $table->unsignedInteger('manufacturer_id')->nullable();
             $table->foreign('manufacturer_id')->references('id')
                 ->on('companies');

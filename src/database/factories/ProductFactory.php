@@ -1,12 +1,14 @@
 <?php
 
 use Faker\Generator as Faker;
+use LaravelEnso\Categories\App\Models\Category;
 use LaravelEnso\Companies\App\Models\Company;
 use LaravelEnso\Financials\App\Enums\VatRates;
 use LaravelEnso\MeasurementUnits\App\Models\MeasurementUnit;
 use LaravelEnso\Products\App\Models\Product;
 
 $factory->define(Product::class, fn (Faker $faker) => [
+    'category_id' => fn () => factory(Category::class)->create()->id,
     'manufacturer_id' => fn () => factory(Company::class)->create()->id,
     'measurement_unit_id' => fn () => (factory(MeasurementUnit::class)->create())->id,
     'name' => $faker->word,
