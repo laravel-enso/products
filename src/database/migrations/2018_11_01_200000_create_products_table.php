@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
 
             $table->string('name');
             $table->string('part_number');
-            $table->string('internal_code')->nullable();
+            $table->string('internal_code')->nullable()->unique();
             $table->integer('package_quantity')->nullable();
             $table->unsignedDecimal('list_price', 11, 2);
             $table->tinyInteger('vat_percent')->unsigned();
