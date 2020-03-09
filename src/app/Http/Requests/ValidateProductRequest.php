@@ -4,6 +4,7 @@ namespace LaravelEnso\Products\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use LaravelEnso\Products\App\Models\Product;
 
 class ValidateProductRequest extends FormRequest
@@ -25,7 +26,7 @@ class ValidateProductRequest extends FormRequest
             'defaultSupplierId' => 'nullable|numeric|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:255',
             'part_number' => 'required|string',
-            'internal_code' => 'nullable|string|max:255',
+            'internal_code' => ['nullable', 'string', 'max:255', $this->internalCodeUnique()],
             'measurement_unit_id' => 'required|exists:measurement_units,id',
             'package_quantity' => 'nullable|integer',
             'list_price' => 'required|numeric|min:0.01',
@@ -112,5 +113,11 @@ class ValidateProductRequest extends FormRequest
             ->reject(fn ($supplier) => $supplier['id'] === $defaultSupplier['id'])
             ->contains(fn ($supplier) => $supplier['pivot']['acquisition_price']
                 < $defaultSupplier['pivot']['acquisition_price']);
+    }
+
+    private function internalCodeUnique()
+    {
+        return Rule::unique('products', 'internal_code')
+            ->ignore(optional($this->route('product'))->id);
     }
 }
