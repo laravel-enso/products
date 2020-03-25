@@ -39,6 +39,7 @@ class ProductTest extends TestCase
         $response = $this->post(
             route('products.store', [], false),
             $this->testModel->toArray()
+            + ['suppliers' => []]
         );
 
         $product = Product::whereName($this->testModel->name)
@@ -129,6 +130,7 @@ class ProductTest extends TestCase
         $this->patch(
             route('products.update', $this->testModel->id, false),
             $this->testModel->toArray()
+            + ['suppliers' => []]
         )->assertStatus(200)
             ->assertJsonStructure(['message']);
 
