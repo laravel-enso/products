@@ -62,7 +62,7 @@ class Product extends Model implements Activatable
             ->first(fn ($supplier) => $supplier->pivot->is_default);
     }
 
-    public function syncSuppliers(array $suppliers, ?int $defaultSupplierId)
+    public function syncSuppliers(?array $suppliers, ?int $defaultSupplierId)
     {
         $pivot = (new Collection($suppliers))
             ->mapWithKeys(fn ($supplier) => [
