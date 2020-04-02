@@ -28,6 +28,20 @@
         },
         {
             "tab": "General",
+            "columns": 1,
+            "fields": [
+                {
+                    "label": "Category",
+                    "name": "category_id",
+                    "value": null,
+                    "meta": {
+                        "custom": true
+                    }
+                }
+            ]
+        },
+        {
+            "tab": "General",
             "columns": 2,
             "fields": [
                 {
