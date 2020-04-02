@@ -16,8 +16,7 @@ class ProductTable implements Table
             products.id, products.name, products.part_number, products.list_price,
             products.vat_percent as "vat", products.package_quantity,
             products.is_active, products.created_at, companies.name as "manufacturer",
-            measurement_units.name as measurementUnit,
-            categories.name as category
+            measurement_units.name as measurementUnit, categories.name as category
         ')->leftJoin('categories', 'products.category_id', 'categories.id')
         ->leftJoin('companies', 'products.manufacturer_id', 'companies.id')
         ->leftJoin('measurement_units', 'measurement_units.id', 'products.measurement_unit_id');
