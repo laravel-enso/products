@@ -4,6 +4,7 @@ namespace LaravelEnso\Products\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use LaravelEnso\Categories\App\Models\Category;
 use LaravelEnso\Comments\App\Traits\Commentable;
 use LaravelEnso\Companies\App\Models\Company;
 use LaravelEnso\Documents\App\Traits\Documentable;
@@ -28,11 +29,17 @@ class Product extends Model implements Activatable
         TableCache;
 
     protected $fillable = [
-        'manufacturer_id', 'measurement_unit_id', 'name', 'part_number', 'internal_code',
-        'package_quantity', 'list_price', 'vat_percent', 'description', 'link', 'is_active',
+        'category_id', 'manufacturer_id', 'measurement_unit_id', 'name',
+        'part_number', 'internal_code', 'package_quantity', 'list_price',
+        'vat_percent', 'description', 'link', 'is_active',
     ];
 
     protected $casts = ['is_active' => 'boolean'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function measurementUnit()
     {
