@@ -8,17 +8,18 @@ use LaravelEnso\Upgrade\App\Contracts\MigratesTable;
 
 class Products implements MigratesTable
 {
-    public function migrateTable(): void
-    {
-        Schema::table('products', function (Blueprint $table) {
-            $table->unsignedInteger('category_id')->index()->nullable()->after('id');
-            $table->foreign('category_id')->references('id')
-                ->on('categories');
-        });
-    }
-
     public function isMigrated(): bool
     {
         return Schema::hasColumn('products', 'category_id');
+    }
+
+    public function migrateTable(): void
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->unsignedInteger('category_id')->index()->nullable()
+                ->after('measurement_unit_id');
+            $table->foreign('category_id')->references('id')
+                ->on('categories');
+        });
     }
 }

@@ -11,10 +11,6 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('category_id')->index()->nullable();
-            $table->foreign('category_id')->references('id')
-                ->on('categories');
-
             $table->unsignedInteger('manufacturer_id')->nullable();
             $table->foreign('manufacturer_id')->references('id')
                 ->on('companies');
@@ -22,6 +18,10 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('measurement_unit_id');
             $table->foreign('measurement_unit_id')->references('id')
                 ->on('measurement_units');
+
+            $table->unsignedInteger('category_id')->index()->nullable();
+            $table->foreign('category_id')->references('id')
+                ->on('categories');
 
             $table->string('name');
             $table->string('part_number');
