@@ -3,6 +3,7 @@
 namespace LaravelEnso\Products\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use LaravelEnso\Categories\App\Models\Category;
 use LaravelEnso\Comments\App\Traits\Commentable;
@@ -35,6 +36,11 @@ class Product extends Model implements Activatable
     ];
 
     protected $casts = ['is_active' => 'boolean'];
+
+    public function pictures()
+    {
+        return $this->hasMany(Picture::class);
+    }
 
     public function category()
     {
@@ -81,5 +87,21 @@ class Product extends Model implements Activatable
             ]);
 
         $this->suppliers()->sync($pivot);
+    }
+
+    public function uploadPictures(array $pictures)
+    {
+        $lastIndex = (int) $this->pictures()->max('order_index');
+
+        (new Collection($pictures))->values()
+            ->each(fn ($picture, $index) => $this
+                ->uploadPicture($picture, $lastIndex + $index + 1));
+    }
+
+    public function uploadPicture(UploadedFile $picture, int $orderIndex)
+    {
+        $this->pictures()
+            ->create(['order_index' => $orderIndex])
+            ->upload($picture);
     }
 }

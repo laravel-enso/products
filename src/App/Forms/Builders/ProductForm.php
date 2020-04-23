@@ -25,6 +25,7 @@ class ProductForm
     public function edit(Product $product)
     {
         return $this->form
+            ->show('gallery')
             ->value('suppliers', Supplier::collection($product->suppliers))
             ->value('defaultSupplierId', optional($product->defaultSupplier())->id)
             ->edit($product);

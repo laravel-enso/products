@@ -116,6 +116,21 @@
             ]
         },
         {
+            "tab": "Pictures",
+            "columns": 1,
+            "fields": [
+                {
+                    "label": "Gallery",
+                    "name": "gallery",
+                    "value": null,
+                    "meta": {
+                        "hidden": true,
+                        "custom": true
+                    }
+                }
+            ]
+        },
+        {
             "tab": "Category",
             "columns": 1,
             "fields": [

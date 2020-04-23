@@ -4,6 +4,7 @@ namespace LaravelEnso\Products;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use LaravelEnso\Products\App\Models\Picture;
 use LaravelEnso\Products\App\Models\Product;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             'product' => Product::class,
+            'productPicture' => Picture::class,
         ]);
 
         return $this;
