@@ -33,11 +33,12 @@ class Picture extends Model implements Attachable
 
     public function reorder(int $newIndex)
     {
+        $order = $newIndex >= $this->order_index ? 'asc' : 'desc';
+
         $this->update(['order_index' => $newIndex]);
 
         $this->product->pictures()
-            ->orderBy('order_index')
-            ->orderByDesc('updated_at')
+            ->orderBy('updated_at', $order)
             ->get()
             ->each(fn ($picture, $index) => $picture
                 ->update(['order_index' => $index + 1]));

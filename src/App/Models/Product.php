@@ -39,7 +39,8 @@ class Product extends Model implements Activatable
 
     public function pictures()
     {
-        return $this->hasMany(Picture::class);
+        return $this->hasMany(Picture::class)
+            ->orderBy('order_index');
     }
 
     public function category()
