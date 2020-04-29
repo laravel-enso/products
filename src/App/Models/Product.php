@@ -37,6 +37,12 @@ class Product extends Model implements Activatable
 
     protected $casts = ['is_active' => 'boolean'];
 
+    public function picture()
+    {
+        return $this->hasOne(Picture::class)
+            ->orderBy('order_index');
+    }
+
     public function pictures()
     {
         return $this->hasMany(Picture::class)
