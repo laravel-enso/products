@@ -11,9 +11,4 @@ class Options extends Controller
     use OptionsBuilder;
 
     protected $model = Product::class;
-
-    public function query()
-    {
-        return Product::active();
-    }
 }
