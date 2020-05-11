@@ -10,5 +10,6 @@ class Options extends Controller
 {
     use OptionsBuilder;
 
+    protected $queryAttributes = ['name', 'part_number'];
     protected $model = Product::class;
 }
