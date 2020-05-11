@@ -5,6 +5,7 @@ namespace LaravelEnso\Products\App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
+use LaravelEnso\Categories\App\Models\Category;
 use LaravelEnso\Products\App\Models\Product;
 
 class ValidateProductRequest extends FormRequest
@@ -42,15 +43,19 @@ class ValidateProductRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $this->validator = $validator;
-            $this->validateUnicity();
+            $this->validateUniqueness();
 
             if ($this->filled('suppliers')) {
                 $this->checkSuppliers();
             }
+
+            if ($this->filled('category_id')) {
+                $this->ensureNotParent();
+            }
         });
     }
 
-    protected function validateUnicity()
+    protected function validateUniqueness()
     {
         if (! $this->product()->exists()) {
             return;
@@ -59,7 +64,7 @@ class ValidateProductRequest extends FormRequest
         (new Collection(['part_number', 'manufacturer_id']))
             ->each(fn ($attribute) => $this->validator->errors()->add(
                 $attribute,
-                'A product with the specified part number and manufacturer already exists'
+                __('A product with the specified part number and manufacturer already exists')
             ));
     }
 
@@ -120,5 +125,15 @@ class ValidateProductRequest extends FormRequest
     {
         return Rule::unique('products', 'internal_code')
             ->ignore(optional($this->route('product'))->id);
+    }
+
+    private function ensureNotParent()
+    {
+        if(Category::find($this->get('category_id'))->isParent()) {
+            $this->validator->errors()->add(
+                'category_id',
+                __('Must choose a subcategory')
+            );
+        }
     }
 }
