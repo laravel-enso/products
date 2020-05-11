@@ -129,7 +129,7 @@ class ValidateProductRequest extends FormRequest
 
     private function ensureNotParent()
     {
-        if(Category::find($this->get('category_id'))->isParent()) {
+        if (Category::find($this->get('category_id'))->isParent()) {
             $this->validator->errors()->add(
                 'category_id',
                 __('Must choose a subcategory')
