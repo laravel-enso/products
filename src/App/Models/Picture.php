@@ -3,10 +3,12 @@
 namespace LaravelEnso\Products\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use LaravelEnso\Core\App\Models\User;
 use LaravelEnso\Files\App\Contracts\Attachable;
+use LaravelEnso\Files\App\Contracts\AuthorizesFileAccess;
 use LaravelEnso\Files\App\Traits\HasFile;
 
-class Picture extends Model implements Attachable
+class Picture extends Model implements Attachable, AuthorizesFileAccess
 {
     use HasFile;
 
@@ -42,5 +44,20 @@ class Picture extends Model implements Attachable
             ->get()
             ->each(fn ($picture, $index) => $picture
                 ->update(['order_index' => $index + 1]));
+    }
+
+    public function viewableBy(User $user): bool
+    {
+        return true;
+    }
+
+    public function shareableBy(User $user): bool
+    {
+        return true;
+    }
+
+    public function destroyableBy(User $user): bool
+    {
+        return true;
     }
 }
