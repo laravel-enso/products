@@ -18,10 +18,9 @@
         {
             "label": "Picture",
             "name": "pictureUrl",
-            "data": "product.picture",
+            "data": "pictureUrl",
             "meta": [
-                "slot",
-                "notExportable"
+                "slot"
             ]
         },
         {

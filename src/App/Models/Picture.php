@@ -15,7 +15,7 @@ class Picture extends Model implements Attachable, AuthorizesFileAccess
 
     public const Width = 1000;
     public const Height = 1000;
-    public const DefaultPicture = 'default-picture.svg';
+    public const DefaultPicture = 'default-picture.png';
 
     protected $table = 'product_pictures';
 
@@ -52,7 +52,7 @@ class Picture extends Model implements Attachable, AuthorizesFileAccess
     {
         $appUrl = Config::get('app.url');
 
-        return "$appUrl/{$this->folder()}/{$this->file->saved_name}";
+        return "{$appUrl}/{$this->folder()}/{$this->file->saved_name}";
     }
 
     public static function defaultUrl()
@@ -60,7 +60,7 @@ class Picture extends Model implements Attachable, AuthorizesFileAccess
         $appUrl = Config::get('app.url');
         $fileName = self::DefaultPicture;
 
-        return "$appUrl/images/$fileName";
+        return "{$appUrl}/images/{$fileName}";
     }
 
     public function viewableBy(User $user): bool

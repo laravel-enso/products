@@ -84,9 +84,8 @@ class Product extends Model implements Activatable
 
     public function pictureUrl()
     {
-        return $this->picture
-            ? $this->picture->url()
-            : Picture::defaultUrl();
+        return optional($this->picture)->url()
+            ?? Picture::defaultUrl();
     }
 
     public function getPictureUrlAttribute()
