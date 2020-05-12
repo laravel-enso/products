@@ -31,8 +31,8 @@ class AppServiceProvider extends ServiceProvider
         ], ['products-factories', 'enso-factories']);
 
         $this->publishes([
-            __DIR__.'/resources/images' => public_path('images'),
-        ], ['products-resources', 'enso-resources']);
+            __DIR__.'/resources/images' => resource_path('images'),
+        ], ['products-assets', 'enso-assets']);
 
         return $this;
     }
