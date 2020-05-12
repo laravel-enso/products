@@ -2,6 +2,12 @@
     "name": "Product",
     "routePrefix": "products",
     "crtNo": true,
+    "appends": [
+        "pictureUrl"
+    ],
+    "strip": [
+        "picture"
+    ],
     "buttons": [
         "excel",
         "create",
@@ -9,6 +15,15 @@
         "destroy"
     ],
     "columns": [
+        {
+            "label": "Picture",
+            "name": "pictureUrl",
+            "data": "product.picture",
+            "meta": [
+                "slot",
+                "notExportable"
+            ]
+        },
         {
             "label": "Name",
             "name": "name",

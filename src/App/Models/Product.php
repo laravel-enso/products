@@ -82,6 +82,18 @@ class Product extends Model implements Activatable
             ->first(fn ($supplier) => $supplier->pivot->is_default);
     }
 
+    public function pictureUrl()
+    {
+        return $this->picture
+            ? $this->picture->url()
+            : Picture::defaultUrl();
+    }
+
+    public function getPictureUrlAttribute()
+    {
+        return $this->pictureUrl();
+    }
+
     public function syncSuppliers(array $suppliers, ?int $defaultSupplierId)
     {
         $pivot = (new Collection($suppliers))

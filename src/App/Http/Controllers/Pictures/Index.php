@@ -2,7 +2,7 @@
 
 namespace LaravelEnso\Products\App\Http\Controllers\Pictures;
 
-use App\Models\Product;
+use LaravelEnso\Products\App\Models\Product;
 use Illuminate\Routing\Controller;
 use LaravelEnso\Products\App\Http\Resources\Picture;
 
