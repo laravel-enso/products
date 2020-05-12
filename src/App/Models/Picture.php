@@ -3,6 +3,7 @@
 namespace LaravelEnso\Products\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 use LaravelEnso\Core\App\Models\User;
 use LaravelEnso\Files\App\Contracts\Attachable;
 use LaravelEnso\Files\App\Contracts\AuthorizesFileAccess;
@@ -14,6 +15,7 @@ class Picture extends Model implements Attachable, AuthorizesFileAccess
 
     public const Width = 1000;
     public const Height = 1000;
+    public const DefaultPicture = 'default-picture.png';
 
     protected $table = 'product_pictures';
 
@@ -44,6 +46,21 @@ class Picture extends Model implements Attachable, AuthorizesFileAccess
             ->get()
             ->each(fn ($picture, $index) => $picture
                 ->update(['order_index' => $index + 1]));
+    }
+
+    public function url()
+    {
+        $appUrl = Config::get('app.url');
+
+        return "{$appUrl}/{$this->folder()}/{$this->file->saved_name}";
+    }
+
+    public static function defaultUrl()
+    {
+        $appUrl = Config::get('app.url');
+        $fileName = self::DefaultPicture;
+
+        return "{$appUrl}/images/{$fileName}";
     }
 
     public function viewableBy(User $user): bool

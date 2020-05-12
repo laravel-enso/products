@@ -12,7 +12,8 @@ class ProductTable implements Table
 
     public function query(): Builder
     {
-        return Product::selectRaw('
+        return Product::with(['picture.file'])
+        ->selectRaw('
             products.id, products.name, products.part_number, products.list_price,
             products.vat_percent as "vat", products.package_quantity,
             products.is_active, products.created_at, companies.name as "manufacturer",

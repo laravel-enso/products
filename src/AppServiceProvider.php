@@ -30,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
             __DIR__.'/database/factories' => database_path('factories'),
         ], ['products-factories', 'enso-factories']);
 
+        $this->publishes([
+            __DIR__.'/resources/images' => resource_path('images'),
+        ], ['products-assets', 'enso-assets']);
+
         return $this;
     }
 
