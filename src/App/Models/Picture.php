@@ -8,10 +8,11 @@ use LaravelEnso\Core\App\Models\User;
 use LaravelEnso\Files\App\Contracts\Attachable;
 use LaravelEnso\Files\App\Contracts\AuthorizesFileAccess;
 use LaravelEnso\Files\App\Traits\HasFile;
+use LaravelEnso\Helpers\App\Traits\CascadesMorphMap;
 
 class Picture extends Model implements Attachable, AuthorizesFileAccess
 {
-    use HasFile;
+    use CascadesMorphMap, HasFile;
 
     public const Width = 1000;
     public const Height = 1000;

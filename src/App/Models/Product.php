@@ -20,7 +20,8 @@ use LaravelEnso\Tables\App\Traits\TableCache;
 
 class Product extends Model implements Activatable
 {
-    use ActiveState,
+    use CascadesMorphMap,
+        ActiveState,
         AvoidsDeletionConflicts,
         CascadesMorphMap,
         Commentable,
