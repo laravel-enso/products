@@ -16,7 +16,7 @@
     ],
     "columns": [
         {
-            "label": "Picture",
+            "label": "Pic",
             "name": "pictureUrl",
             "data": "pictureUrl",
             "meta": [

@@ -21,6 +21,8 @@ class Picture extends Model implements Attachable, AuthorizesFileAccess
 
     protected $fillable = ['product_id', 'order_index'];
 
+    protected $touches = ['product'];
+
     protected $folder = 'pictures';
 
     protected $optimizeImages = true;
