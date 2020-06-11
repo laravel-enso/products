@@ -29,11 +29,7 @@ class Product extends Model implements Activatable
         Rememberable,
         TableCache;
 
-    protected $fillable = [
-        'category_id', 'manufacturer_id', 'measurement_unit_id', 'name',
-        'part_number', 'internal_code', 'package_quantity', 'list_price',
-        'vat_percent', 'description', 'link', 'is_active',
-    ];
+    protected $guarded = ['id'];
 
     protected $casts = ['is_active' => 'boolean'];
 
