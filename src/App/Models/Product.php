@@ -10,6 +10,7 @@ use LaravelEnso\Comments\App\Traits\Commentable;
 use LaravelEnso\Companies\App\Models\Company;
 use LaravelEnso\Documents\App\Traits\Documentable;
 use LaravelEnso\DynamicMethods\App\Traits\Relations;
+use LaravelEnso\DynamicMethods\App\Traits\Scopes;
 use LaravelEnso\Helpers\App\Contracts\Activatable;
 use LaravelEnso\Helpers\App\Traits\ActiveState;
 use LaravelEnso\Helpers\App\Traits\AvoidsDeletionConflicts;
@@ -27,6 +28,7 @@ class Product extends Model implements Activatable
         Documentable,
         Relations,
         Rememberable,
+        Scopes,
         TableCache;
 
     protected $guarded = ['id'];
