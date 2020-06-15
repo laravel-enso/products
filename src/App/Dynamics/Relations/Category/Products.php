@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\Products\App\Dynamics\Relations;
+namespace LaravelEnso\Products\App\Dynamics\Relations\Category;
 
 use Closure;
 use LaravelEnso\DynamicMethods\App\Contracts\Method;
@@ -15,8 +15,6 @@ class Products implements Method
 
     public function closure(): Closure
     {
-        return fn () => $this->belongsToMany(
-            Product::class, 'product_supplier', 'supplier_id', 'product_id'
-        )->withTimeStamps();
+        return fn () => $this->hasMany(Product::class);
     }
 }

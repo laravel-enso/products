@@ -10,8 +10,7 @@
     "homepage": "https://github.com/laravel-enso/products",
     "type": "library",
     "license": "MIT",
-    "authors": [
-        {
+    "authors": [{
             "name": "Ionut-Catalin Sandu",
             "email": "catalin.sandu@earthlink.com",
             "homepage": "https://laravel-enso.com",
@@ -45,7 +44,8 @@
         "laravel": {
             "providers": [
                 "LaravelEnso\\Products\\AppServiceProvider",
-                "LaravelEnso\\Products\\CompanyServiceProvider"
+                "LaravelEnso\\Products\\CompanyServiceProvider",
+                "LaravelEnso\\Products\\CategoryServiceProvider"
             ]
         }
     }
