@@ -59,7 +59,7 @@ class Product extends Model implements Activatable
 
     public function manufacturer()
     {
-        return $this->belongsTo(Company::class, 'manufacturer_id');
+        return $this->belongsTo(Company::class);
     }
 
     public function suppliers()
