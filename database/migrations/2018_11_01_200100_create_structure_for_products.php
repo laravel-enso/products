@@ -21,6 +21,4 @@ class CreateStructureForProducts extends Migration
     protected array $menu = [
         'name' => 'Products', 'icon' => 'fab product-hunt', 'route' => 'products.index', 'order_index' => 215, 'has_children' => false,
     ];
-
-    protected ?string $parentMenu = '';
 }
