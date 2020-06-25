@@ -3,10 +3,10 @@
 namespace LaravelEnso\Products;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\Companies\App\Models\Company;
-use LaravelEnso\DynamicMethods\App\Services\Methods;
-use LaravelEnso\Products\App\Dynamics\Relations\Company\ManufacturedProducts;
-use LaravelEnso\Products\App\Dynamics\Relations\Company\Products;
+use LaravelEnso\Companies\Models\Company;
+use LaravelEnso\DynamicMethods\Services\Methods;
+use LaravelEnso\Products\Dynamics\Relations\Company\ManufacturedProducts;
+use LaravelEnso\Products\Dynamics\Relations\Company\Products;
 
 class CompanyServiceProvider extends ServiceProvider
 {

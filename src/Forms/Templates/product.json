@@ -1,0 +1,179 @@
+{
+    "routePrefix": "products",
+    "tabs": true,
+    "sections": [{
+            "tab": "General",
+            "columns": 2,
+            "fields": [{
+                    "label": "Name",
+                    "name": "name",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text"
+                    }
+                },
+                {
+                    "label": "Manufacturer",
+                    "name": "manufacturer_id",
+                    "value": null,
+                    "meta": {
+                        "type": "select",
+                        "source": "administration.companies.options"
+                    }
+                },
+                {
+                    "label": "Part Number",
+                    "name": "part_number",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text"
+                    }
+                },
+                {
+                    "label": "Internal Code",
+                    "name": "internal_code",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text"
+                    }
+                }
+            ]
+        },
+        {
+            "columns": 4,
+            "tab": "General",
+            "fields": [{
+                    "label": "Measurement Unit",
+                    "name": "measurement_unit_id",
+                    "value": null,
+                    "meta": {
+                        "type": "select",
+                        "source": "administration.measurementUnits.options",
+                        "translated": true
+                    }
+                },
+                {
+                    "label": "Package Quantity",
+                    "name": "package_quantity",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "number"
+                    }
+                },
+                {
+                    "label": "List Price",
+                    "name": "list_price",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "number",
+                        "min": 0,
+                        "step": 0.01
+                    }
+                },
+                {
+                    "label": "VAT Percent",
+                    "name": "vat_percent",
+                    "value": null,
+                    "meta": {
+                        "type": "select",
+                        "options": "LaravelEnso\\Helpers\\Enums\\VatRates",
+                        "min": 0,
+                        "step": 1
+                    }
+                },
+                {
+                    "label": "Active",
+                    "name": "is_active",
+                    "value": true,
+                    "meta": {
+                        "type": "input",
+                        "content": "checkbox"
+                    }
+                }
+            ]
+        },
+        {
+            "tab": "General",
+            "columns": 1,
+            "fields": [{
+                "label": "Description",
+                "name": "description",
+                "value": null,
+                "meta": {
+                    "type": "textarea",
+                    "content": "text"
+                }
+            }]
+        },
+        {
+            "tab": "General",
+            "columns": 1,
+            "fields": [{
+                "label": "Html Description",
+                "name": "html_description",
+                "value": null,
+                "meta": {
+                    "type": "wysiwyg"
+                }
+            }]
+        },
+        {
+            "tab": "Pictures",
+            "columns": 1,
+            "fields": [{
+                "label": "Gallery",
+                "name": "gallery",
+                "value": null,
+                "meta": {
+                    "hidden": true,
+                    "custom": true
+                }
+            }]
+        },
+        {
+            "tab": "Category",
+            "columns": 1,
+            "fields": [{
+                "label": "Category",
+                "name": "category_id",
+                "value": null,
+                "meta": {
+                    "custom": true
+                }
+            }]
+        },
+        {
+            "tab": "Suppliers",
+            "columns": "slot",
+            "slot": "suppliers",
+            "fields": [{
+                    "label": "Suppliers",
+                    "name": "suppliers",
+                    "value": [],
+                    "meta": {
+                        "objects": true,
+                        "type": "select",
+                        "multiple": true,
+                        "source": "products.suppliers"
+                    }
+                },
+                {
+                    "label": "Default supplier",
+                    "name": "defaultSupplierId",
+                    "value": null,
+                    "meta": {
+                        "custom": true,
+                        "disable-clear": true,
+                        "type": "select",
+                        "source": "administration.companies.options"
+                    }
+                }
+            ]
+        }
+    ]
+}

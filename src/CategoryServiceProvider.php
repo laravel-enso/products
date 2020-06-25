@@ -3,9 +3,9 @@
 namespace LaravelEnso\Products;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelEnso\Categories\App\Models\Category;
-use LaravelEnso\DynamicMethods\App\Services\Methods;
-use LaravelEnso\Products\App\Dynamics\Relations\Category\Products;
+use LaravelEnso\Categories\Models\Category;
+use LaravelEnso\DynamicMethods\Services\Methods;
+use LaravelEnso\Products\Dynamics\Relations\Category\Products;
 
 class CategoryServiceProvider extends ServiceProvider
 {

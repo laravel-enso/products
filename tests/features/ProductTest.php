@@ -2,22 +2,22 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
-use LaravelEnso\Companies\App\Models\Company;
-use LaravelEnso\Core\App\Models\User;
-use LaravelEnso\Forms\App\TestTraits\CreateForm;
-use LaravelEnso\Forms\App\TestTraits\DestroyForm;
-use LaravelEnso\Forms\App\TestTraits\EditForm;
-use LaravelEnso\Products\App\Http\Resources\Supplier;
-use LaravelEnso\Products\App\Models\Product;
-use LaravelEnso\Tables\App\Traits\Tests\Datatable;
+use LaravelEnso\Companies\Models\Company;
+use LaravelEnso\Core\Models\User;
+use LaravelEnso\Forms\TestTraits\CreateForm;
+use LaravelEnso\Forms\TestTraits\DestroyForm;
+use LaravelEnso\Forms\TestTraits\EditForm;
+use LaravelEnso\Products\Http\Resources\Supplier;
+use LaravelEnso\Products\Models\Product;
+use LaravelEnso\Tables\Traits\Tests\Datatable;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
     use Datatable, DestroyForm, EditForm, CreateForm, RefreshDatabase;
 
-    private $permissionGroup = 'products';
-    private $testModel;
+    private string $permissionGroup = 'products';
+    private Product $testModel;
 
     protected function setUp(): void
     {
