@@ -39,6 +39,7 @@ class ValidateProductRequest extends FormRequest
             'list_price' => 'required|numeric|min:0.01',
             'vat_percent' => 'required|integer|min:0',
             'description' => 'nullable|string',
+            'html_description' => 'nullable|string',
             'link' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ];
