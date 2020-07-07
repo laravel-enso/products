@@ -27,13 +27,15 @@
     "require": {
         "php": ">=7.4.0",
         "laravel-enso/categories": "^1.0",
+        "laravel-enso/comments": "^4.0",
         "laravel-enso/core": "^5.0",
+        "laravel-enso/documents": "^4.0",
         "laravel-enso/dynamic-methods": "^2.0",
         "laravel-enso/enums": "^2.0",
-        "laravel-enso/helpers": "^2.0",
         "laravel-enso/forms": "^4.0",
-        "laravel-enso/migrator": "^2.0",
+        "laravel-enso/helpers": "^2.0",
         "laravel-enso/measurement-units": "^2.0",
+        "laravel-enso/migrator": "^2.0",
         "laravel-enso/tables": "^4.0"
     },
     "autoload": {
