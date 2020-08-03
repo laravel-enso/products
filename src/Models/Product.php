@@ -9,8 +9,7 @@ use LaravelEnso\Categories\Models\Category;
 use LaravelEnso\Comments\Traits\Commentable;
 use LaravelEnso\Companies\Models\Company;
 use LaravelEnso\Documents\Traits\Documentable;
-use LaravelEnso\DynamicMethods\Traits\Relations;
-use LaravelEnso\DynamicMethods\Traits\Scopes;
+use LaravelEnso\DynamicMethods\Traits\Abilities;
 use LaravelEnso\Helpers\Contracts\Activatable;
 use LaravelEnso\Helpers\Traits\ActiveState;
 use LaravelEnso\Helpers\Traits\AvoidsDeletionConflicts;
@@ -21,14 +20,13 @@ use LaravelEnso\Tables\Traits\TableCache;
 
 class Product extends Model implements Activatable
 {
-    use ActiveState,
+    use Abilities,
+        ActiveState,
         AvoidsDeletionConflicts,
         CascadesMorphMap,
         Commentable,
         Documentable,
-        Relations,
         Rememberable,
-        Scopes,
         TableCache;
 
     protected $guarded = ['id'];
