@@ -1,7 +1,10 @@
 <?php
 
+namespace LaravelEnso\Products\Tests\Features;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 use LaravelEnso\Companies\Models\Company;
 use LaravelEnso\Core\Models\User;
 use LaravelEnso\Forms\TestTraits\CreateForm;
@@ -17,20 +20,18 @@ class ProductTest extends TestCase
     use Datatable, DestroyForm, EditForm, CreateForm, RefreshDatabase;
 
     private string $permissionGroup = 'products';
-    private Product $testModel;
+    protected Product $testModel;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->withoutExceptionHandling();
 
         $this->seed()
-            ->actingAs(User::first());
+            ->actingAs(App::make(User::class)->first());
 
-        $this->testModel = factory(Product::class)->make([
-            'manufacturer_id' => factory(Company::class)->create()->id,
-        ]);
+        $this->initTestModel();
     }
 
     /** @test */
@@ -129,8 +130,7 @@ class ProductTest extends TestCase
 
         $this->patch(
             route('products.update', $this->testModel->id, false),
-            $this->testModel->toArray()
-            + ['suppliers' => []]
+            $this->upgradeParams()
         )->assertStatus(200)
             ->assertJsonStructure(['message']);
 
@@ -153,7 +153,22 @@ class ProductTest extends TestCase
             ->assertJsonFragment(['name' => $this->testModel->name]);
     }
 
-    private function suppliers()
+    protected function initTestModel(): void
+    {
+        $this->testModel = factory(Product::class)->make([
+            'manufacturer_id' => factory(Company::class)->create()->id,
+        ]);
+    }
+
+    protected function upgradeParams(array $params = []): array
+    {
+        return (new Collection([]))
+            ->merge($this->testModel->toArray())
+            ->merge($params)
+            ->toArray();
+    }
+
+    protected function suppliers()
     {
         $suppliers = Supplier::collection(
             factory(Company::class, 5)->create()
@@ -164,7 +179,7 @@ class ProductTest extends TestCase
             ->toArray();
     }
 
-    private function supplier($supplier)
+    protected function supplier($supplier)
     {
         $supplier['pivot']['part_number'] = $this->testModel->part_number;
         $supplier['pivot']['acquisition_price'] = $this->testModel->list_price - 1;
