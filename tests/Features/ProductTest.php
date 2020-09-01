@@ -162,7 +162,7 @@ class ProductTest extends TestCase
 
     protected function upgradeParams(array $params = []): array
     {
-        return (new Collection([]))
+        return (new Collection(['suppliers' => []]))
             ->merge($this->testModel->toArray())
             ->merge($params)
             ->toArray();
