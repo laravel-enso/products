@@ -35,6 +35,7 @@ class ValidateProductRequest extends FormRequest
             'part_number' => 'required|string',
             'internal_code' => ['nullable', 'string', 'max:255', $this->internalCodeUnique()],
             'measurement_unit_id' => 'required|exists:measurement_units,id',
+            'packaging_unit_id' => 'required|exists:packaging_units,id',
             'package_quantity' => 'nullable|integer',
             'list_price' => 'required|numeric|min:0.01',
             'vat_percent' => 'required|integer|min:0',

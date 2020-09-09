@@ -5,12 +5,14 @@ use LaravelEnso\Categories\Models\Category;
 use LaravelEnso\Companies\Models\Company;
 use LaravelEnso\Helpers\Enums\VatRates;
 use LaravelEnso\MeasurementUnits\Models\MeasurementUnit;
+use LaravelEnso\PackagingUnits\Models\PackagingUnit;
 use LaravelEnso\Products\Models\Product;
 
 $factory->define(Product::class, fn (Faker $faker) => [
     'category_id' => fn () => factory(Category::class)->create()->id,
     'manufacturer_id' => fn () => factory(Company::class)->create()->id,
     'measurement_unit_id' => fn () => MeasurementUnit::firstOrCreate(['name' => 'Piece'])->id,
+    'packaging_unit_id' => fn () => PackagingUnit::firstOrCreate(['name' => 'it'])->id,
     'name' => $faker->word,
     'part_number' => 'P'.(Product::max('id') + 1),
     'internal_code' => 'CT-'.$faker->numberBetween(0, 500),
