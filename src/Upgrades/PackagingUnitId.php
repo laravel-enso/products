@@ -39,7 +39,7 @@ class PackagingUnitId implements MigratesTable, Applicable, ShouldRunManually, M
     public function migratePostDataMigration(): void
     {
         Artisan::call('db:seed', [
-            '--class' => 'PackagingUnitSeeder',
+            '--class' => 'PackagingUnitsSeeder',
         ]);
 
         Product::query()->update([
