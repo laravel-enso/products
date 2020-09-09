@@ -130,7 +130,7 @@ class ProductTest extends TestCase
 
         $this->patch(
             route('products.update', $this->testModel->id, false),
-            $this->upgradeParams()
+            $this->updateParams()
         )->assertStatus(200)
             ->assertJsonStructure(['message']);
 
@@ -160,7 +160,7 @@ class ProductTest extends TestCase
         ]);
     }
 
-    protected function upgradeParams(array $params = []): array
+    protected function updateParams(array $params = []): array
     {
         return (new Collection(['suppliers' => []]))
             ->merge($this->testModel->toArray())
