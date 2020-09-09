@@ -3,7 +3,6 @@
 namespace LaravelEnso\Products\Upgrades;
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use LaravelEnso\PackagingUnits\Models\PackagingUnit;
@@ -44,7 +43,7 @@ class PackagingUnitId implements MigratesTable, Applicable, ShouldRunManually, M
         ]);
 
         Product::query()->update([
-            'packaging_unit_id' => PackagingUnit::first()->id
+            'packaging_unit_id' => PackagingUnit::first()->id,
         ]);
     }
 }
