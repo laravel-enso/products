@@ -15,6 +15,10 @@ class CreateProductsTable extends Migration
             $table->foreign('manufacturer_id')->references('id')
                 ->on('companies');
 
+            $table->unsignedInteger('packaging_unit_id')->index()->nullable();
+            $table->foreign('packaging_unit_id')->references('id')
+                ->on('packaging_units');
+
             $table->unsignedInteger('measurement_unit_id');
             $table->foreign('measurement_unit_id')->references('id')
                 ->on('measurement_units');
@@ -27,9 +31,6 @@ class CreateProductsTable extends Migration
             $table->string('part_number');
             $table->string('internal_code')->nullable()->unique();
 
-            $table->unsignedInteger('packaging_unit_id')->index()->nullable();
-            $table->foreign('packaging_unit_id')->references('id')
-                ->on('packaging_units');
             $table->integer('package_quantity')->nullable();
 
             $table->unsignedDecimal('list_price', 11, 2);

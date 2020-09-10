@@ -3,6 +3,8 @@
 namespace LaravelEnso\Products\Forms\Builders;
 
 use LaravelEnso\Forms\Services\Form;
+use LaravelEnso\MeasurementUnits\Models\MeasurementUnit;
+use LaravelEnso\PackagingUnits\Models\PackagingUnit;
 use LaravelEnso\Products\Http\Resources\Supplier;
 use LaravelEnso\Products\Models\Product;
 
@@ -19,7 +21,10 @@ class ProductForm
 
     public function create()
     {
-        return $this->form->create();
+        return $this->form
+            ->value('measurement_unit_id', MeasurementUnit::first()->id)
+            ->value('packaging_unit_id', PackagingUnit::first()->id)
+            ->create();
     }
 
     public function edit(Product $product)

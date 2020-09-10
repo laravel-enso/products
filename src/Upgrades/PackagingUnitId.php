@@ -23,8 +23,10 @@ class PackagingUnitId implements MigratesTable, Applicable, ShouldRunManually, M
     public function migrateTable(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedInteger('packaging_unit_id')->after('internal_code')
-                ->index()->nullable();
+            $table->unsignedInteger('packaging_unit_id')->after('manufacturer_id')
+                ->default(PackagingUnit::first()->id)
+                ->index();
+
             $table->foreign('packaging_unit_id')->references('id')
                 ->on('packaging_units');
         });
@@ -38,12 +40,10 @@ class PackagingUnitId implements MigratesTable, Applicable, ShouldRunManually, M
 
     public function migratePostDataMigration(): void
     {
-        Artisan::call('db:seed', [
-            '--class' => 'PackagingUnitsSeeder',
-        ]);
-
-        Product::query()->update([
-            'packaging_unit_id' => PackagingUnit::first()->id,
-        ]);
+        Schema::table('products', function (Blueprint $table) {
+            $table->unsignedInteger('packaging_unit_id')
+                ->default(null)
+                ->change();
+        });
     }
 }
