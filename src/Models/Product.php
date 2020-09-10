@@ -15,6 +15,7 @@ use LaravelEnso\Helpers\Traits\ActiveState;
 use LaravelEnso\Helpers\Traits\AvoidsDeletionConflicts;
 use LaravelEnso\Helpers\Traits\CascadesMorphMap;
 use LaravelEnso\MeasurementUnits\Models\MeasurementUnit;
+use LaravelEnso\PackagingUnits\Models\PackagingUnit;
 use LaravelEnso\Rememberable\Traits\Rememberable;
 use LaravelEnso\Tables\Traits\TableCache;
 
@@ -53,6 +54,11 @@ class Product extends Model implements Activatable
     public function measurementUnit()
     {
         return $this->belongsTo(MeasurementUnit::class);
+    }
+
+    public function packagingUnit()
+    {
+        return $this->belongsTo(PackagingUnit::class);
     }
 
     public function manufacturer()

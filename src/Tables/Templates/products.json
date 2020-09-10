@@ -98,6 +98,16 @@
             ]
         },
         {
+            "label": "Packaging Unit",
+            "name": "packagingUnit",
+            "data": "packaging_units.name",
+            "meta": [
+                "searchable",
+                "sortable",
+                "translatable"
+            ]
+        },
+        {
             "label": "Package Quantity",
             "name": "package_quantity",
             "data": "products.package_quantity",

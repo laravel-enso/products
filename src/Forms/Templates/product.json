@@ -54,6 +54,15 @@
                         "source": "administration.measurementUnits.options",
                         "translated": true
                     }
+                },{
+                    "label": "Packaging Unit",
+                    "name": "packaging_unit_id",
+                    "value": null,
+                    "meta": {
+                        "type": "select",
+                        "source": "administration.packagingUnits.options",
+                        "translated": true
+                    }
                 },
                 {
                     "label": "Package Quantity",

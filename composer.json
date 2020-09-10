@@ -36,6 +36,7 @@
         "laravel-enso/helpers": "^2.0",
         "laravel-enso/measurement-units": "^2.0",
         "laravel-enso/migrator": "^2.0",
+        "laravel-enso/packaging-units": "^1.0",
         "laravel-enso/tables": "^4.0"
     },
     "autoload": {
