@@ -3,10 +3,8 @@
 namespace LaravelEnso\Products\Upgrades;
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use LaravelEnso\PackagingUnits\Models\PackagingUnit;
-use LaravelEnso\Products\Models\Product;
 use LaravelEnso\Upgrade\Contracts\Applicable;
 use LaravelEnso\Upgrade\Contracts\MigratesPostDataMigration;
 use LaravelEnso\Upgrade\Contracts\MigratesTable;
