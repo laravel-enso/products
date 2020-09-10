@@ -11,9 +11,10 @@ use LaravelEnso\Products\Models\Product;
 $factory->define(Product::class, fn (Faker $faker) => [
     'category_id' => fn () => factory(Category::class)->create()->id,
     'manufacturer_id' => fn () => factory(Company::class)->create()->id,
-    'measurement_unit_id' => fn () => MeasurementUnit::firstOrCreate(['name' => 'Piece'])->id,
-    'packaging_unit_id' => fn () => PackagingUnit::firstOrNew()->id
+    'packaging_unit_id' => fn () => optional(PackagingUnit::first())->id
         ?? factory(PackagingUnit::class)->create()->id,
+    'measurement_unit_id' => fn () => optional(MeasurementUnit::first())->id
+        ?? factory(MeasurementUnit::class)->create()->id,
     'name' => $faker->word,
     'part_number' => 'P'.(Product::max('id') + 1),
     'internal_code' => 'CT-'.$faker->numberBetween(0, 500),
