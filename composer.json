@@ -28,7 +28,7 @@
         "php": ">=7.4.0",
         "laravel-enso/categories": "^2.0",
         "laravel-enso/comments": "^4.0",
-        "laravel-enso/core": "^5.0",
+        "laravel-enso/core": "^6.0",
         "laravel-enso/documents": "^4.0",
         "laravel-enso/dynamic-methods": "^2.0",
         "laravel-enso/enums": "^2.0",
@@ -41,7 +41,8 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelEnso\\Products\\": "src/"
+            "LaravelEnso\\Products\\": "src/",
+            "LaravelEnso\\Products\\Database\\Factories\\": "database/factories/"
         }
     },
     "extra": {

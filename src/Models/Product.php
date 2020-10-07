@@ -14,6 +14,7 @@ use LaravelEnso\Helpers\Contracts\Activatable;
 use LaravelEnso\Helpers\Traits\ActiveState;
 use LaravelEnso\Helpers\Traits\AvoidsDeletionConflicts;
 use LaravelEnso\Helpers\Traits\CascadesMorphMap;
+use LaravelEnso\Helpers\Traits\HasFactory;
 use LaravelEnso\MeasurementUnits\Models\MeasurementUnit;
 use LaravelEnso\PackagingUnits\Models\PackagingUnit;
 use LaravelEnso\Rememberable\Traits\Rememberable;
@@ -27,6 +28,7 @@ class Product extends Model implements Activatable
         CascadesMorphMap,
         Commentable,
         Documentable,
+        HasFactory,
         Rememberable,
         TableCache;
 
