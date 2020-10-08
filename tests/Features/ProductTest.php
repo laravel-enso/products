@@ -155,8 +155,8 @@ class ProductTest extends TestCase
 
     protected function initTestModel(): void
     {
-        $this->testModel = factory(Product::class)->make([
-            'manufacturer_id' => factory(Company::class)->create()->id,
+        $this->testModel = Product::factory()->make([
+            'manufacturer_id' => Company::factory()->create()->id,
         ]);
     }
 
@@ -171,7 +171,7 @@ class ProductTest extends TestCase
     protected function suppliers()
     {
         $suppliers = Supplier::collection(
-            factory(Company::class, 5)->create()
+            Company::factory()->count(5)->create()
         )->resolve();
 
         return (new Collection($suppliers))
