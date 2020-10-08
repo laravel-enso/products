@@ -20,9 +20,9 @@ class ProductFactory extends Factory
             'category_id' => Category::factory(),
             'manufacturer_id' => Company::factory(),
             'packaging_unit_id' => fn () => optional(PackagingUnit::first())->id
-                ?? factory(PackagingUnit::class)->create()->id,
+                ?? PackagingUnit::factory()->create()->id,
             'measurement_unit_id' => fn () => optional(MeasurementUnit::first())->id
-                ?? factory(MeasurementUnit::class)->create()->id,
+                ?? MeasurementUnit::factory()->create()->id,
             'name' => $this->faker->word,
             'part_number' => 'P'.(Product::max('id') + 1),
             'internal_code' => 'CT-'.$this->faker->numberBetween(0, 500),
