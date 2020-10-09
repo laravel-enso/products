@@ -79,7 +79,7 @@ class ValidateProductRequest extends FormRequest
     {
         $suppliers = new Collection($this->get('suppliers'));
 
-        if ($suppliers->isNotEmpty() && ! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
+        if (! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
             $this->validator->errors()->add('defaultSupplierId', __(
                 'This supplier must be within selected suppliers'
             ));
@@ -99,6 +99,16 @@ class ValidateProductRequest extends FormRequest
             ->where('id', '<>', optional($this->route('product'))->id);
     }
 
+    protected function ensureNotParent()
+    {
+        if (Category::find($this->get('category_id'))->isParent()) {
+            $this->validator->errors()->add(
+                'category_id',
+                __('Must choose a subcategory')
+            );
+        }
+    }
+
     private function invalidSuppliers($suppliers)
     {
         return $suppliers->some(fn ($supplier) => $this->invalidSupplier($supplier));
@@ -115,15 +125,5 @@ class ValidateProductRequest extends FormRequest
     {
         return Rule::unique('products', 'internal_code')
             ->ignore(optional($this->route('product'))->id);
-    }
-
-    private function ensureNotParent()
-    {
-        if (Category::find($this->get('category_id'))->isParent()) {
-            $this->validator->errors()->add(
-                'category_id',
-                __('Must choose a subcategory')
-            );
-        }
     }
 }
