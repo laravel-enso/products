@@ -90,12 +90,6 @@ class ValidateProductRequest extends FormRequest
                 'Part number and acquisition price are mandatory for each supplier'
             ));
         }
-
-        if ($this->filled('defaultSupplierId') && $this->invalidDefaultSupplier($suppliers)) {
-            $this->validator->errors()->add('defaultSupplierId', __(
-                'The default supplier does not have the minimum acquisition price'
-            ));
-        }
     }
 
     protected function product()
@@ -115,17 +109,6 @@ class ValidateProductRequest extends FormRequest
         return ! is_numeric($supplier['pivot']['acquisition_price'])
             || $supplier['pivot']['acquisition_price'] <= 0
             || ! $supplier['pivot']['part_number'];
-    }
-
-    private function invalidDefaultSupplier(Collection $suppliers)
-    {
-        $defaultSupplier = $suppliers
-            ->first(fn ($supplier) => $supplier['id'] === $this->get('defaultSupplierId'));
-
-        return $suppliers
-            ->reject(fn ($supplier) => $supplier['id'] === $defaultSupplier['id'])
-            ->contains(fn ($supplier) => $supplier['pivot']['acquisition_price']
-                < $defaultSupplier['pivot']['acquisition_price']);
     }
 
     private function internalCodeUnique()
