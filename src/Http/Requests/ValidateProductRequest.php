@@ -79,7 +79,7 @@ class ValidateProductRequest extends FormRequest
     {
         $suppliers = new Collection($this->get('suppliers'));
 
-        if (! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
+        if ($this->filled('defaultSupplierId') && ! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
             $this->validator->errors()->add('defaultSupplierId', __(
                 'This supplier must be within selected suppliers'
             ));
