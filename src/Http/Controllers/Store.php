@@ -13,10 +13,12 @@ class Store extends Controller
         $product->fill($request->validatedExcept('suppliers', 'defaultSupplierId'))
             ->save();
 
-        $product->syncSuppliers(
-            $request->get('suppliers'),
-            $request->get('defaultSupplierId')
-        );
+        if($request->filled('suppliers')) {
+            $product->syncSuppliers(
+                $request->get('suppliers'),
+                $request->get('defaultSupplierId')
+            );
+        }
 
         return [
             'message' => __('The product was successfully created'),

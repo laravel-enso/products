@@ -97,9 +97,9 @@ class Product extends Model implements Activatable
         return $this->pictureUrl();
     }
 
-    public function syncSuppliers(array $suppliers, ?int $defaultSupplierId)
+    public function syncSuppliers(array $suppliers, int $defaultSupplierId)
     {
-        $pivot = (new Collection($suppliers))
+        $pivot = Collection::wrap($suppliers)
             ->mapWithKeys(fn ($supplier) => [
                 $supplier['id'] => [
                     'part_number' => $supplier['pivot']['part_number'],
