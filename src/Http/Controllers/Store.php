@@ -13,7 +13,7 @@ class Store extends Controller
         $product->fill($request->validatedExcept('suppliers', 'defaultSupplierId'))
             ->save();
 
-        if($request->filled('suppliers')) {
+        if ($request->filled('suppliers')) {
             $product->syncSuppliers(
                 $request->get('suppliers'),
                 $request->get('defaultSupplierId')

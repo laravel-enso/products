@@ -12,7 +12,7 @@ class Update extends Controller
     {
         $product->update($request->validatedExcept('suppliers', 'defaultSupplierId'));
 
-        if($request->filled('suppliers')) {
+        if ($request->filled('suppliers')) {
             $product->syncSuppliers(
                 $request->get('suppliers'),
                 $request->get('defaultSupplierId')
