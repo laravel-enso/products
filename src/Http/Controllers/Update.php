@@ -10,7 +10,7 @@ class Update extends Controller
 {
     public function __invoke(ValidateProductRequest $request, Product $product)
     {
-        $product->update($request->validatedExcept('suppliers'));
+        $product->update($request->validatedExcept('suppliers', 'defaultSupplierId'));
 
         if (! empty($request->get('suppliers'))) {
             $product->syncSuppliers(

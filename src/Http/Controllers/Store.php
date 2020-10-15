@@ -10,7 +10,7 @@ class Store extends Controller
 {
     public function __invoke(ValidateProductRequest $request, Product $product)
     {
-        $product->fill($request->validatedExcept('suppliers'))
+        $product->fill($request->validatedExcept('suppliers', 'defaultSupplierId'))
             ->save();
 
         if (! empty($request->get('suppliers'))) {
