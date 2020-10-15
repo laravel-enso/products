@@ -89,7 +89,7 @@ class ProductTest extends TestCase
 
         $this->assertTrue(
             $product->suppliers->except($suppliers[0]['id'])
-                ->every(fn ($supplier) => $supplier->pivot->is_default === false)
+                ->every(fn($supplier) => $supplier->pivot->is_default === false)
         );
     }
 
@@ -119,7 +119,7 @@ class ProductTest extends TestCase
 
         $this->assertTrue(
             $refreshedTestModel->suppliers->except($suppliers[1]['id'])
-                ->every(fn ($supplier) => $supplier->pivot->is_default === false)
+                ->every(fn($supplier) => $supplier->pivot->is_default === false)
         );
     }
 
@@ -164,8 +164,8 @@ class ProductTest extends TestCase
     {
         return (new Collection([
             'suppliers' => [],
-            'default_supplier_id' => null]))
-            ->merge($this->testModel->toArray())
+            'default_supplier_id' => null])
+            )->merge($this->testModel->toArray())
             ->merge($params)
             ->toArray();
     }
@@ -177,7 +177,7 @@ class ProductTest extends TestCase
         )->resolve();
 
         return (new Collection($suppliers))
-            ->map(fn ($supplier) => $this->supplier($supplier))
+            ->map(fn($supplier) => $this->supplier($supplier))
             ->toArray();
     }
 
