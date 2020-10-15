@@ -40,7 +40,7 @@ class ProductTest extends TestCase
         $response = $this->post(
             route('products.store', [], false),
             $this->testModel->toArray()
-            + ['suppliers' => []]
+            + ['suppliers' => [], 'default_supplier_id' => null]
         );
 
         $product = Product::whereName($this->testModel->name)
@@ -162,7 +162,9 @@ class ProductTest extends TestCase
 
     protected function updateParams(array $params = []): array
     {
-        return (new Collection(['suppliers' => []]))
+        return (new Collection([
+            'suppliers' => [],
+            'default_supplier_id' => null]))
             ->merge($this->testModel->toArray())
             ->merge($params)
             ->toArray();

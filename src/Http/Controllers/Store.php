@@ -10,10 +10,10 @@ class Store extends Controller
 {
     public function __invoke(ValidateProductRequest $request, Product $product)
     {
-        $product->fill($request->validatedExcept('suppliers', 'defaultSupplierId'))
+        $product->fill($request->validatedExcept('suppliers'))
             ->save();
 
-        if ($request->filled('suppliers')) {
+        if (! empty($request->get('suppliers'))) {
             $product->syncSuppliers(
                 $request->get('suppliers'),
                 $request->get('defaultSupplierId')
