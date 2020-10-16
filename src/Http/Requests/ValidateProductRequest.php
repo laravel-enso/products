@@ -103,14 +103,15 @@ class ValidateProductRequest extends FormRequest
             ));
         }
 
-        if($this->defaultAcquisitionPrice() > $this->get('list_price')) {
+        if ($this->defaultAcquisitionPrice() > $this->get('list_price')) {
             Collection::wrap(['list_price', 'defaultSupplierId'])
                 ->each(fn ($attribute) => $this->validator->errors()
                     ->add($attribute, __('The acquisition price is higher than the list price!')));
         }
     }
 
-    protected function defaultAcquisitionPrice() {
+    protected function defaultAcquisitionPrice()
+    {
         $defaultSupplier = Collection::wrap($this->get('suppliers'))
             ->first(fn ($supplier) => $supplier['id'] === $this->get('defaultSupplierId'));
 
