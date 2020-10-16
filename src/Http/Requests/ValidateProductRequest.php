@@ -85,7 +85,9 @@ class ValidateProductRequest extends FormRequest
             ));
         }
 
-        $this->checkDefaultSupplier($suppliers);
+        if ($this->filled('defaultSupplierId')) {
+            $this->checkDefaultSupplier($suppliers);
+        }
     }
 
     protected function product()
