@@ -79,17 +79,13 @@ class ValidateProductRequest extends FormRequest
     {
         $suppliers = new Collection($this->get('suppliers'));
 
-        if ($this->filled('defaultSupplierId') && ! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
-            $this->validator->errors()->add('defaultSupplierId', __(
-                'This supplier must be within selected suppliers'
-            ));
-        }
-
         if ($this->invalidSuppliers($suppliers)) {
             $this->validator->errors()->add('suppliers', __(
                 'Part number and acquisition price are mandatory for each supplier'
             ));
         }
+
+        $this->checkDefaultSupplier($suppliers);
     }
 
     protected function product()
@@ -97,6 +93,28 @@ class ValidateProductRequest extends FormRequest
         return Product::where('part_number', $this->get('part_number'))
             ->where('manufacturer_id', $this->get('manufacturer_id'))
             ->where('id', '<>', optional($this->route('product'))->id);
+    }
+
+    protected function checkDefaultSupplier($suppliers)
+    {
+        if (! $suppliers->pluck('id')->contains($this->get('defaultSupplierId'))) {
+            $this->validator->errors()->add('defaultSupplierId', __(
+                'This supplier must be within selected suppliers'
+            ));
+        }
+
+        if($this->defaultAcquisitionPrice() > $this->get('list_price')) {
+            Collection::wrap(['list_price', 'defaultSupplierId'])
+                ->each(fn ($attribute) => $this->validator->errors()
+                    ->add($attribute, __('The acquisition price is higher than the list price!')));
+        }
+    }
+
+    protected function defaultAcquisitionPrice() {
+        $defaultSupplier = Collection::wrap($this->get('suppliers'))
+            ->first(fn ($supplier) => $supplier['id'] === $this->get('defaultSupplierId'));
+
+        return $defaultSupplier['pivot']['acquisition_price'] ?? null;
     }
 
     protected function ensureNotParent()
