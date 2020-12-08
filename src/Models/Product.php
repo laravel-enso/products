@@ -124,6 +124,6 @@ class Product extends Model implements Activatable
     {
         $this->pictures()
             ->create(['order_index' => $orderIndex])
-            ->upload($picture);
+            ->file->upload($picture);
     }
 }
