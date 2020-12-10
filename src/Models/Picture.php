@@ -55,7 +55,7 @@ class Picture extends Model implements Attachable, AuthorizesFileAccess
     {
         $appUrl = Config::get('app.url');
 
-        return "{$appUrl}/{$this->folder()}/{$this->file->saved_name}";
+        return "{$appUrl}/{$this->file->path}";
     }
 
     public static function defaultUrl()
