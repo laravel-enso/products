@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEnso\Products\Tests\Features;
+namespace LaravelEnso\Products\tests\features;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
