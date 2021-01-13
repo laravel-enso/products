@@ -9,8 +9,8 @@ use LaravelEnso\Products\Http\Controllers\Pictures\Store;
 Route::prefix('pictures')
     ->as('pictures.')
     ->group(function () {
-        Route::get('{product}/index', Index::class)->name('index');
-        Route::post('{product}/store', Store::class)->name('store');
+        Route::get('{product}', Index::class)->name('index');
+        Route::post('{product}', Store::class)->name('store');
         Route::delete('{picture}', Destroy::class)->name('destroy');
         Route::patch('{picture}/reorder', Reorder::class)->name('reorder');
     });
