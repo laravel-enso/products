@@ -1,10 +1,12 @@
 {
     "routePrefix": "products",
     "tabs": true,
-    "sections": [{
+    "sections": [
+        {
             "tab": "General",
             "columns": 2,
-            "fields": [{
+            "fields": [
+                {
                     "label": "Name",
                     "name": "name",
                     "value": null,
@@ -45,7 +47,8 @@
         {
             "columns": 4,
             "tab": "General",
-            "fields": [{
+            "fields": [
+                {
                     "label": "Measurement Unit",
                     "name": "measurement_unit_id",
                     "value": null,
@@ -54,7 +57,8 @@
                         "source": "administration.measurementUnits.options",
                         "translated": true
                     }
-                },{
+                },
+                {
                     "label": "Packaging Unit",
                     "name": "packaging_unit_id",
                     "value": null,
@@ -109,58 +113,67 @@
         {
             "tab": "General",
             "columns": 1,
-            "fields": [{
-                "label": "Description",
-                "name": "description",
-                "value": null,
-                "meta": {
-                    "type": "textarea",
-                    "content": "text"
+            "fields": [
+                {
+                    "label": "Description",
+                    "name": "description",
+                    "value": null,
+                    "meta": {
+                        "type": "textarea",
+                        "content": "text"
+                    }
                 }
-            }]
+            ]
         },
         {
             "tab": "General",
             "columns": 1,
-            "fields": [{
-                "label": "Html Description",
-                "name": "html_description",
-                "value": null,
-                "meta": {
-                    "type": "wysiwyg"
+            "fields": [
+                {
+                    "label": "Html Description",
+                    "name": "html_description",
+                    "value": null,
+                    "meta": {
+                        "type": "wysiwyg"
+                    }
                 }
-            }]
+            ]
         },
         {
             "tab": "Pictures",
             "columns": 1,
-            "fields": [{
-                "label": "Gallery",
-                "name": "gallery",
-                "value": null,
-                "meta": {
-                    "hidden": true,
-                    "custom": true
+            "fields": [
+                {
+                    "label": "Gallery",
+                    "name": "gallery",
+                    "value": null,
+                    "meta": {
+                        "hidden": true,
+                        "custom": true
+                    }
                 }
-            }]
+            ]
         },
         {
             "tab": "Category",
             "columns": 1,
-            "fields": [{
-                "label": "Category",
-                "name": "category_id",
-                "value": null,
-                "meta": {
-                    "custom": true
+            "fields": [
+                {
+                    "label": "Category",
+                    "name": "category_id",
+                    "value": null,
+                    "meta": {
+                        "custom": true
+                    }
                 }
-            }]
+            ]
         },
         {
             "tab": "Suppliers",
             "columns": "slot",
             "slot": "suppliers",
-            "fields": [{
+            "fields": [
+                {
                     "label": "Suppliers",
                     "name": "suppliers",
                     "value": [],
@@ -183,6 +196,12 @@
                     }
                 }
             ]
+        },
+        {
+            "tab": "Attributes",
+            "columns": "slot",
+            "slot": "attributes",
+            "fields": []
         }
     ]
 }

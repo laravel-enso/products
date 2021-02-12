@@ -29,10 +29,14 @@ class ProductForm
 
     public function edit(Product $product)
     {
+        return $this->editForm($product)->edit($product);
+    }
+
+    protected function editForm(Product $product): Form
+    {
         return $this->form
             ->show('gallery')
             ->value('suppliers', Supplier::collection($product->suppliers))
-            ->value('defaultSupplierId', optional($product->defaultSupplier())->id)
-            ->edit($product);
+            ->value('defaultSupplierId', optional($product->defaultSupplier())->id);
     }
 }
