@@ -12,14 +12,10 @@ class Update extends Controller
     {
         $product->update($request->validatedExcept('suppliers', 'defaultSupplierId'));
 
-        if (! empty($request->get('suppliers'))) {
-            $product->syncSuppliers(
-                $request->get('suppliers'),
-                $request->get('defaultSupplierId')
-            );
-        } else {
-            $product->suppliers()->sync([]);
-        }
+        $product->syncSuppliers(
+            $request->get('suppliers'),
+            $request->get('defaultSupplierId')
+        );
 
         return ['message' => __('The product was successfully updated')];
     }
