@@ -134,21 +134,11 @@ class Product extends Model implements Activatable
             .sprintf('%08d', $this->id);
     }
 
-    public function fillInternalCode()
-    {
-        if (! $this->internal_code) {
-            $this->internal_code = $this->internalCode();
-        }
-
-        return $this;
-    }
-
     protected static function booted()
     {
         if (Config::get('enso.products.internalCode.mode') === 'auto') {
-            static::created(function ($model) {
-                $model::withoutEvents(fn () => $model->fillInternalCode()->save());
-            });
+            static::created(fn ($model) => $model::withoutEvents(fn () => $model
+                ->update(['internal_code' => $model->internalCode()])));
         }
     }
 }
