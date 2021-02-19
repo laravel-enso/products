@@ -10,7 +10,8 @@ return [
     |
     */
     'internalCode' => [
-        'prefix' => 'PROD',
+        'length' => 5,
         'mode' => 'manual',
+        'prefix' => 'PROD',
     ],
 ];

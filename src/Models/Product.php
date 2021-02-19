@@ -130,8 +130,10 @@ class Product extends Model implements Activatable
 
     public function internalCode(): string
     {
+        $length = Config::get('enso.products.internalCode.length');
+
         return Config::get('enso.products.internalCode.prefix')
-            .sprintf('%08d', $this->id);
+            .sprintf("%0{$length}d", $this->id);
     }
 
     protected static function booted()
