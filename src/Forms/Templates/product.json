@@ -196,12 +196,6 @@
                     }
                 }
             ]
-        },
-        {
-            "tab": "Attributes",
-            "columns": "slot",
-            "slot": "attributes",
-            "fields": []
         }
     ]
 }
