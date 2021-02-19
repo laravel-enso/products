@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 use LaravelEnso\Categories\Models\Category;
 use LaravelEnso\Comments\Traits\Commentable;
 use LaravelEnso\Companies\Models\Company;
@@ -125,5 +126,29 @@ class Product extends Model implements Activatable
         $this->pictures()
             ->create(['order_index' => $orderIndex])
             ->file->upload($picture);
+    }
+
+    public function internalCode(): string
+    {
+        return Config::get('enso.products.internalCode.prefix')
+            .sprintf('%08d', $this->id);
+    }
+
+    public function fillInternalCode()
+    {
+        if (! $this->internal_code) {
+            $this->internal_code = $this->internalCode();
+        }
+
+        return $this;
+    }
+
+    protected static function booted()
+    {
+        if (Config::get('enso.products.internalCode.mode') === 'auto') {
+            static::created(function ($model) {
+                $model::withoutEvents(fn () => $model->fillInternalCode()->save());
+            });
+        }
     }
 }

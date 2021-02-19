@@ -51,6 +51,15 @@
             ]
         },
         {
+            "label": "Internal Code",
+            "name": "internal_code",
+            "data": "products.internal_code",
+            "meta": [
+                "searchable",
+                "sortable"
+            ]
+        },
+        {
             "label": "Part Number",
             "name": "part_number",
             "data": "products.part_number",

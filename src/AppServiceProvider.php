@@ -18,13 +18,20 @@ class AppServiceProvider extends ServiceProvider
     private function load()
     {
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        $this->mergeConfigFrom(__DIR__.'/../config/products.php', 'enso.products');
 
         return $this;
     }
 
     private function publish()
     {
+        $this->publishes([
+            __DIR__.'/../config' => config_path('enso'),
+        ], ['products-config', 'enso-config']);
+
         $this->publishes([
             __DIR__.'/../database/factories' => database_path('factories'),
         ], ['products-factories', 'enso-factories']);
