@@ -128,6 +128,15 @@ class Product extends Model implements Activatable
             ->file->upload($picture);
     }
 
+    public function attachPicture(string $path, string $filename)
+    {
+        $orderIndex = $this->pictures()->max('order_index') + 1;
+
+        $this->pictures()
+            ->create(['order_index' => $orderIndex])
+            ->file->attach($path, $filename);
+    }
+
     public function internalCode(): string
     {
         $length = Config::get('enso.products.internalCode.length');
