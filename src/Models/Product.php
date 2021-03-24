@@ -82,6 +82,17 @@ class Product extends Model implements Activatable
             ->first(fn ($supplier) => $supplier->pivot->is_default);
     }
 
+    public function acquisitionPrice(Company $supplier)
+    {
+        $supplier = $this->suppliers()->whereId($supplier->id)->exists()
+            ? $supplier
+            : $this->defaultSupplier();
+
+        return $supplier
+            ? $supplier->pivot->acquisition_price
+            : $this->listPrice();
+    }
+
     public function pictureUrl()
     {
         return optional($this->picture)->url()
