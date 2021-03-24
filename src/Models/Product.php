@@ -23,19 +23,14 @@ use LaravelEnso\Tables\Traits\TableCache;
 
 class Product extends Model implements Activatable
 {
-    use Abilities,
-        ActiveState,
-        AvoidsDeletionConflicts,
-        CascadesMorphMap,
-        Commentable,
-        Documentable,
-        HasFactory,
-        Rememberable,
-        TableCache;
+    use Abilities, ActiveState, AvoidsDeletionConflicts, CascadesMorphMap;
+    use Commentable, Documentable, HasFactory, Rememberable, TableCache;
 
     protected $guarded = ['id'];
 
     protected $casts = ['is_active' => 'boolean'];
+
+    protected $rememberableKeys = ['id', 'internal_code'];
 
     public function picture()
     {
