@@ -84,9 +84,8 @@ class Product extends Model implements Activatable
 
     public function acquisitionPrice(Company $supplier)
     {
-        $supplier = $this->suppliers()->whereId($supplier->id)->exists()
-            ? $supplier
-            : $this->defaultSupplier();
+        $supplier = $this->suppliers()->firstWhere('id', $supplier->id)
+            ?? $this->defaultSupplier();
 
         return $supplier
             ? $supplier->pivot->acquisition_price
