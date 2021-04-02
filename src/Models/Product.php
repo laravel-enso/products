@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 use LaravelEnso\Categories\Models\Category;
 use LaravelEnso\Comments\Traits\Commentable;
 use LaravelEnso\Companies\Models\Company;
@@ -152,7 +153,12 @@ class Product extends Model implements Activatable
 
     protected static function booted()
     {
-        if (Config::get('enso.products.internalCode.mode') === 'auto') {
+        static::creating(fn ($product) => $product
+            ->fill(['slug' => Str::slug($product->name)]));
+
+        $mode = Config::get('enso.products.internalCode.mode');
+
+        if ($mode === 'auto') {
             static::created(fn ($model) => $model::withoutEvents(fn () => $model
                 ->update(['internal_code' => $model->internalCode()])));
         }

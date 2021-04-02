@@ -4,7 +4,7 @@
     "sections": [
         {
             "tab": "General",
-            "columns": 2,
+            "columns": 1,
             "fields": [
                 {
                     "label": "Name",
@@ -15,6 +15,22 @@
                         "content": "text"
                     }
                 },
+                {
+                    "label": "Slug",
+                    "name": "slug",
+                    "value": null,
+                    "meta": {
+                        "type": "input",
+                        "content": "text",
+                        "readonly": true
+                    }
+                }
+            ]
+        },
+        {
+            "tab": "General",
+            "columns": 3,
+            "fields": [
                 {
                     "label": "Manufacturer",
                     "name": "manufacturer_id",
@@ -45,8 +61,8 @@
             ]
         },
         {
-            "columns": 4,
             "tab": "General",
+            "columns": 4,
             "fields": [
                 {
                     "label": "Measurement Unit",

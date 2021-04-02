@@ -27,7 +27,8 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')
                 ->on('categories');
 
-            $table->string('name');
+            $table->string('name')->index();
+            $table->string('slug')->index();
             $table->string('part_number');
             $table->string('internal_code')->nullable()->unique();
 
