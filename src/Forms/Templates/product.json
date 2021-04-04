@@ -150,7 +150,9 @@
                     "name": "html_description",
                     "value": null,
                     "meta": {
-                        "type": "wysiwyg"
+                        "type": "wysiwyg",
+                        "plugins": "codesample autolink link autoresize lists emoticons image preview table code",
+                        "toolbar": "newdocument undo redo bold italic strikethrough underline code codesample h2 bullist numlist alignleft aligncenter alignright alignjustify blockquote indent outdent link table emoticons forecolor backcolor preview removeformat"
                     }
                 }
             ]
