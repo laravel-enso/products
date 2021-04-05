@@ -156,6 +156,9 @@ class Product extends Model implements Activatable
         static::creating(fn ($product) => $product
             ->fill(['slug' => Str::slug($product->name)]));
 
+        static::updating(fn ($product) => $product
+            ->fill(['slug' => Str::slug($product->name)]));
+
         $mode = Config::get('enso.products.internalCode.mode');
 
         if ($mode === 'auto') {
