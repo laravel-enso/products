@@ -164,7 +164,7 @@ class ProductTest extends TestCase
     {
         return (new Collection([
             'suppliers' => [],
-            'default_supplier_id' => null])
+            'default_supplier_id' => null, ])
             )->merge($this->testModel->toArray())
             ->merge($params)
             ->toArray();
