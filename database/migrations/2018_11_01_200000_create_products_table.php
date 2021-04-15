@@ -34,7 +34,7 @@ class CreateProductsTable extends Migration
 
             $table->integer('package_quantity')->nullable();
 
-            $table->unsignedDecimal('list_price', 11, 2);
+            $table->unsignedDecimal('list_price', 13, 4);
             $table->tinyInteger('vat_percent')->unsigned();
 
             $table->text('description')->nullable();
