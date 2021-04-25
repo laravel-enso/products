@@ -18,7 +18,7 @@ class ProductFactory extends Factory
     {
         return [
             'category_id' => Category::factory(),
-            'manufacturer_id' => Company::factory(),
+            'manufacturer_id' => Company::factory()->test(),
             'packaging_unit_id' => fn () => optional(PackagingUnit::first())->id
                 ?? PackagingUnit::factory()->create()->id,
             'measurement_unit_id' => fn () => optional(MeasurementUnit::first())->id

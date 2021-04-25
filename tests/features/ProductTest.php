@@ -40,7 +40,7 @@ class ProductTest extends TestCase
         $response = $this->post(
             route('products.store', [], false),
             $this->testModel->toArray()
-            + ['suppliers' => [], 'default_supplier_id' => null]
+                + ['suppliers' => [], 'default_supplier_id' => null]
         );
 
         $product = Product::whereName($this->testModel->name)
@@ -156,7 +156,7 @@ class ProductTest extends TestCase
     protected function initTestModel(): void
     {
         $this->testModel = Product::factory()->make([
-            'manufacturer_id' => Company::factory()->create()->id,
+            'manufacturer_id' => Company::factory()->test()->create()->id,
         ]);
     }
 
@@ -164,8 +164,8 @@ class ProductTest extends TestCase
     {
         return (new Collection([
             'suppliers' => [],
-            'default_supplier_id' => null, ])
-            )->merge($this->testModel->toArray())
+            'default_supplier_id' => null,
+        ]))->merge($this->testModel->toArray())
             ->merge($params)
             ->toArray();
     }
@@ -173,7 +173,7 @@ class ProductTest extends TestCase
     protected function suppliers()
     {
         $suppliers = Supplier::collection(
-            Company::factory()->count(5)->create()
+            Company::factory()->test()->count(5)->create()
         )->resolve();
 
         return (new Collection($suppliers))
