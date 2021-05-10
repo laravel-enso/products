@@ -153,17 +153,21 @@ class Product extends Model implements Activatable
 
     protected static function booted()
     {
-        static::creating(fn ($product) => $product
-            ->fill(['slug' => Str::slug($product->name)]));
+        static::creating(function ($product) {
+            $product->fill(['slug' => Str::slug($product->name)]);
+        });
 
-        static::updating(fn ($product) => $product
-            ->fill(['slug' => Str::slug($product->name)]));
+        static::updating(function ($product) {
+            $product->fill(['slug' => Str::slug($product->name)]);
+        });
 
         $mode = Config::get('enso.products.internalCode.mode');
 
         if ($mode === 'auto') {
-            static::created(fn ($model) => $model::withoutEvents(fn () => $model
-                ->update(['internal_code' => $model->internalCode()])));
+            static::created(function ($model) {
+                $model::withoutEvents(fn () => $model
+                    ->update(['internal_code' => $model->internalCode()]));
+            });
         }
     }
 }
