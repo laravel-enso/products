@@ -4,8 +4,9 @@ namespace LaravelEnso\Products\Upgrades;
 
 use Illuminate\Support\Facades\Schema;
 use LaravelEnso\Upgrade\Contracts\MigratesTable;
+use LaravelEnso\Upgrade\Contracts\ShouldRunManually;
 
-class Decimals implements MigratesTable
+class Decimals implements MigratesTable, ShouldRunManually
 {
     public function isMigrated(): bool
     {
