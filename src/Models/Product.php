@@ -151,14 +151,19 @@ class Product extends Model implements Activatable
             .sprintf("%0{$length}d", $this->id);
     }
 
+    protected function generateSlug(): string
+    {
+        return Str::slug($this->name);
+    }
+
     protected static function booted()
     {
         static::creating(function ($product) {
-            $product->fill(['slug' => Str::slug($product->name)]);
+            $product->fill(['slug' => $product->generateSlug()]);
         });
 
         static::updating(function ($product) {
-            $product->fill(['slug' => Str::slug($product->name)]);
+            $product->fill(['slug' => $product->generateSlug()]);
         });
 
         $mode = Config::get('enso.products.internalCode.mode');
