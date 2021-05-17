@@ -163,7 +163,9 @@ class Product extends Model implements Activatable
         });
 
         static::updating(function ($product) {
-            $product->fill(['slug' => $product->generateSlug()]);
+            if ($product->isDirty('name')) {
+                $product->fill(['slug' => $product->generateSlug()]);
+            }
         });
 
         $mode = Config::get('enso.products.internalCode.mode');
