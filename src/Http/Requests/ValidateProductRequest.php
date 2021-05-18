@@ -5,6 +5,7 @@ namespace LaravelEnso\Products\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Unique;
 use LaravelEnso\Categories\Models\Category;
 use LaravelEnso\Helpers\Traits\FiltersRequest;
 use LaravelEnso\Products\Models\Product;
@@ -28,8 +29,8 @@ class ValidateProductRequest extends FormRequest
             'manufacturer_id' => 'nullable|integer|exists:companies,id',
             'suppliers' => 'array',
             'suppliers.*.id' => 'numeric|exists:companies,id',
-            'suppliers.*.pivot.part_number' => 'required|string',
-            'suppliers.*.pivot.acquisition_price' => 'required|numeric|min:0.01',
+            'suppliers.*.pivot.partNumber' => 'required|string',
+            'suppliers.*.pivot.acquisitionPrice' => 'required|numeric|min:0.01',
             'defaultSupplierId' => 'nullable|numeric|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:255',
             'part_number' => 'required|string',
@@ -117,7 +118,7 @@ class ValidateProductRequest extends FormRequest
         $defaultSupplier = Collection::wrap($this->get('suppliers'))
             ->first(fn ($supplier) => $supplier['id'] === $this->get('defaultSupplierId'));
 
-        return $defaultSupplier['pivot']['acquisition_price'] ?? null;
+        return $defaultSupplier['pivot']['acquisitionPrice'] ?? null;
     }
 
     protected function ensureNotParent()
@@ -135,14 +136,14 @@ class ValidateProductRequest extends FormRequest
         return $suppliers->some(fn ($supplier) => $this->invalidSupplier($supplier));
     }
 
-    private function invalidSupplier($supplier)
+    private function invalidSupplier($supplier): bool
     {
-        return ! is_numeric($supplier['pivot']['acquisition_price'])
-            || $supplier['pivot']['acquisition_price'] <= 0
-            || ! $supplier['pivot']['part_number'];
+        return ! is_numeric($supplier['pivot']['acquisitionPrice'])
+            || $supplier['pivot']['acquisitionPrice'] <= 0
+            || ! $supplier['pivot']['partNumber'];
     }
 
-    private function internalCodeUnique()
+    private function internalCodeUnique(): Unique
     {
         return Rule::unique('products', 'internal_code')
             ->ignore(optional($this->route('product'))->id);

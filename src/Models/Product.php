@@ -4,6 +4,7 @@ namespace LaravelEnso\Products\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
@@ -33,39 +34,39 @@ class Product extends Model implements Activatable
 
     protected $rememberableKeys = ['id', 'internal_code'];
 
-    public function picture()
+    public function picture(): Relation
     {
         return $this->hasOne(Picture::class)
             ->orderBy('order_index');
     }
 
-    public function pictures()
+    public function pictures(): Relation
     {
         return $this->hasMany(Picture::class)
             ->orderBy('order_index');
     }
 
-    public function category()
+    public function category(): Relation
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function measurementUnit()
+    public function measurementUnit(): Relation
     {
         return $this->belongsTo(MeasurementUnit::class);
     }
 
-    public function packagingUnit()
+    public function packagingUnit(): Relation
     {
         return $this->belongsTo(PackagingUnit::class);
     }
 
-    public function manufacturer()
+    public function manufacturer(): Relation
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function suppliers()
+    public function suppliers(): Relation
     {
         return $this->belongsToMany(
             Company::class,
@@ -109,8 +110,8 @@ class Product extends Model implements Activatable
         $pivot = Collection::wrap($suppliers)
             ->mapWithKeys(fn ($supplier) => [
                 $supplier['id'] => [
-                    'part_number' => $supplier['pivot']['part_number'],
-                    'acquisition_price' => $supplier['pivot']['acquisition_price'],
+                    'part_number' => $supplier['pivot']['partNumber'],
+                    'acquisition_price' => $supplier['pivot']['acquisitionPrice'],
                     'is_default' => $supplier['id'] === $defaultSupplierId,
                 ],
             ]);
