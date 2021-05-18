@@ -183,8 +183,8 @@ class ProductTest extends TestCase
 
     protected function supplier($supplier)
     {
-        $supplier['pivot']['part_number'] = $this->testModel->part_number;
-        $supplier['pivot']['acquisition_price'] = $this->testModel->list_price - 1;
+        $supplier['pivot']['partNumber'] = $this->testModel->part_number;
+        $supplier['pivot']['acquisitionPrice'] = $this->testModel->list_price - 1;
 
         return $supplier;
     }
