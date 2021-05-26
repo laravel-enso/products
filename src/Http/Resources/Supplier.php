@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Config;
 use LaravelEnso\Discounts\Models\Suppliers\General;
-use LaravelEnso\Financials\Services\Computor;
+use LaravelEnso\Helpers\Services\PriceComputor;
 use LaravelEnso\Products\Models\Product;
 
 class Supplier extends JsonResource
@@ -41,25 +41,25 @@ class Supplier extends JsonResource
         return $this;
     }
 
-    private function partNumber()
+    protected function partNumber()
     {
         return optional($this->pivot)->part_number
             ?? optional($this->product)->part_number;
     }
 
-    private function acquisitionPrice()
+    protected function acquisitionPrice()
     {
         return optional($this->pivot)->acquisition_price
             ?? optional($this->product)->list_price;
     }
 
-    private function discountedPrice(): ?string
+    protected function discountedPrice(): ?string
     {
         if (! $this->product || ! class_exists(General::class)) {
             return null;
         }
 
-        return (new Computor($this->product->list_price, $this->product->vat_percent))
+        return (new PriceComputor($this->product->list_price, $this->product->vat_percent))
             ->discountPercent($this->product->purchaseDiscountFor($this->resource))
             ->unitaryPrice();
     }
