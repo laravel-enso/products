@@ -11,7 +11,7 @@ use LaravelEnso\Products\Models\Product;
 
 class Supplier extends JsonResource
 {
-    private ?Product $product;
+    protected ?Product $product;
 
     public function toArray($request)
     {
