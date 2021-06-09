@@ -6,13 +6,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use LaravelEnso\Companies\Models\Company;
-use LaravelEnso\Core\Models\User;
 use LaravelEnso\Forms\TestTraits\CreateForm;
 use LaravelEnso\Forms\TestTraits\DestroyForm;
 use LaravelEnso\Forms\TestTraits\EditForm;
 use LaravelEnso\Products\Http\Resources\Supplier;
 use LaravelEnso\Products\Models\Product;
 use LaravelEnso\Tables\Traits\Tests\Datatable;
+use LaravelEnso\Users\Models\User;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -25,8 +25,6 @@ class ProductTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->withoutExceptionHandling();
 
         $this->seed()
             ->actingAs(App::make(User::class)->first());
@@ -162,10 +160,10 @@ class ProductTest extends TestCase
 
     protected function updateParams(array $params = []): array
     {
-        return (new Collection([
+        return Collection::wrap([
             'suppliers' => [],
             'default_supplier_id' => null,
-        ]))->merge($this->testModel->toArray())
+        ])->merge($this->testModel->toArray())
             ->merge($params)
             ->toArray();
     }
@@ -176,7 +174,7 @@ class ProductTest extends TestCase
             Company::factory()->test()->count(5)->create()
         )->resolve();
 
-        return (new Collection($suppliers))
+        return Collection::wrap($suppliers)
             ->map(fn ($supplier) => $this->supplier($supplier))
             ->toArray();
     }

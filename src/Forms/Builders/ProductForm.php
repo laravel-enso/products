@@ -37,6 +37,6 @@ class ProductForm
         return $this->form
             ->show('gallery')
             ->value('suppliers', Supplier::collection($product->suppliers))
-            ->value('defaultSupplierId', optional($product->defaultSupplier())->id);
+            ->value('defaultSupplierId', $product->defaultSupplier()?->id);
     }
 }

@@ -4,11 +4,11 @@ namespace LaravelEnso\Products\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
-use LaravelEnso\Core\Models\User;
 use LaravelEnso\Files\Contracts\Attachable;
 use LaravelEnso\Files\Contracts\AuthorizesFileAccess;
 use LaravelEnso\Files\Traits\HasFile;
 use LaravelEnso\Helpers\Traits\CascadesMorphMap;
+use LaravelEnso\Users\Models\User;
 
 class Picture extends Model implements Attachable, AuthorizesFileAccess
 {

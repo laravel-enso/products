@@ -6,6 +6,6 @@ Route::middleware(['api', 'auth', 'core'])
     ->prefix('api/products')
     ->as('products.')
     ->group(function () {
-        require 'app/products.php';
-        require 'app/pictures.php';
+        require __DIR__.'/app/products.php';
+        require __DIR__.'/app/pictures.php';
     });

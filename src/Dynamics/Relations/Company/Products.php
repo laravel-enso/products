@@ -15,6 +15,7 @@ class Products implements Method
 
     public function closure(): Closure
     {
+        //TODO check if we need the extra details
         return fn () => $this->belongsToMany(
             Product::class,
             'product_supplier',

@@ -16,7 +16,7 @@ class ValidatePictureRequest extends FormRequest
     {
         $rule = 'required|image|max:8192';
 
-        return (new Collection($this->allFiles()))->keys()
+        return Collection::wrap($this->allFiles())->keys()
             ->mapWithKeys(fn ($key) => [$key => $rule])->toArray();
     }
 

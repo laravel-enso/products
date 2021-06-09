@@ -72,11 +72,8 @@
             "label": "List Price",
             "name": "list_price",
             "data": "products.list_price",
-            "money": {
-                "symbol": "",
-                "precision": 2,
-                "thousand": "",
-                "decimal": "."
+            "number": {
+                "precision": 2
             },
             "meta": [
                 "searchable",
@@ -87,8 +84,7 @@
             "label": "Vat",
             "name": "vat",
             "data": "products.vat_percent",
-            "money": {
-                "symbol": "",
+            "number": {
                 "precision": 0
             },
             "meta": [
@@ -120,10 +116,7 @@
             "label": "Package Quantity",
             "name": "package_quantity",
             "data": "products.package_quantity",
-            "money": {
-                "symbol": "",
-                "precision": 0
-            },
+            "number": {},
             "meta": [
                 "searchable",
                 "sortable"

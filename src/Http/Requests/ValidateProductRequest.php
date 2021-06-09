@@ -69,7 +69,7 @@ class ValidateProductRequest extends FormRequest
             return;
         }
 
-        (new Collection(['part_number', 'manufacturer_id']))
+        Collection::wrap(['part_number', 'manufacturer_id'])
             ->each(fn ($attribute) => $this->validator->errors()->add(
                 $attribute,
                 __('A product with the specified part number and manufacturer already exists')
@@ -95,7 +95,7 @@ class ValidateProductRequest extends FormRequest
     {
         return Product::where('part_number', $this->get('part_number'))
             ->where('manufacturer_id', $this->get('manufacturer_id'))
-            ->where('id', '<>', optional($this->route('product'))->id);
+            ->where('id', '<>', $this->route('product')?->id);
     }
 
     protected function checkDefaultSupplier($suppliers)
@@ -146,6 +146,6 @@ class ValidateProductRequest extends FormRequest
     private function internalCodeUnique(): Unique
     {
         return Rule::unique('products', 'internal_code')
-            ->ignore(optional($this->route('product'))->id);
+            ->ignore($this->route('product')?->id);
     }
 }

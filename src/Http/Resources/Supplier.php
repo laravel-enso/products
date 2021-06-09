@@ -17,7 +17,7 @@ class Supplier extends JsonResource
     {
         $format = Config::get('enso.config.dateFormat');
         $params = json_decode($request->get('customParams'), true);
-        $id = $params['product'] ?? optional($this->pivot)->product_id;
+        $id = $params['product'] ?? $this->pivot?->product_id;
 
         $this->product = $id ? Product::find($id) : null;
 
@@ -43,14 +43,14 @@ class Supplier extends JsonResource
 
     protected function partNumber()
     {
-        return optional($this->pivot)->part_number
-            ?? optional($this->product)->part_number;
+        return $this->pivot?->part_number
+            ?? $this->product?->part_number;
     }
 
     protected function acquisitionPrice()
     {
-        return optional($this->pivot)->acquisition_price
-            ?? optional($this->product)->list_price;
+        return $this->pivot?->acquisition_price
+            ?? $this->product?->list_price;
     }
 
     protected function discountedPrice(): ?string
@@ -66,13 +66,11 @@ class Supplier extends JsonResource
 
     private function createdAt(): Carbon
     {
-        return optional($this->pivot)->created_at
-            ?? Carbon::now();
+        return $this->pivot?->created_at ?? Carbon::now();
     }
 
     private function updatedAt(): Carbon
     {
-        return optional($this->pivot)->updated_at
-            ?? Carbon::now();
+        return $this->pivot?->updated_at ?? Carbon::now();
     }
 }

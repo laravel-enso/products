@@ -94,10 +94,9 @@ class Product extends Model implements Activatable
             : $this->listPrice();
     }
 
-    public function pictureUrl()
+    public function pictureUrl(): string
     {
-        return optional($this->picture)->url()
-            ?? Picture::defaultUrl();
+        return $this->picture?->url() ?? Picture::defaultUrl();
     }
 
     public function getPictureUrlAttribute()
@@ -123,7 +122,7 @@ class Product extends Model implements Activatable
     {
         $lastIndex = (int) $this->pictures()->max('order_index');
 
-        (new Collection($pictures))->values()
+        Collection::wrap($pictures)->values()
             ->each(fn ($picture, $index) => $this
                 ->uploadPicture($picture, $lastIndex + $index + 1));
     }
