@@ -28,7 +28,7 @@ class ProductFactory extends Factory
             'internal_code' => 'CT-'.$this->faker->numberBetween(0, 500),
             'list_price' => $this->faker->numberBetween(1, 300),
             'vat_percent' => VatRates::keys()->random(),
-            'package_quantity' => $this->faker->numberBetween(0, 5),
+            'package_quantity' => $this->faker->numberBetween(1, 5),
             'description' => $this->faker->text(50),
             'link' => $this->faker->url,
             'is_active' => true,
