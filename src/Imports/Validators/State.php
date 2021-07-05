@@ -9,7 +9,6 @@ use LaravelEnso\Products\Imports\Product;
 
 class State extends Validator
 {
-
     public function run(Obj $row, DataImport $import)
     {
         if (! Product::get($row)) {

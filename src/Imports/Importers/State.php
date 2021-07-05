@@ -2,7 +2,6 @@
 
 namespace LaravelEnso\Products\Imports\Importers;
 
-use LaravelEnso\Companies\Models\Company;
 use LaravelEnso\DataImport\Contracts\Importable;
 use LaravelEnso\DataImport\Models\DataImport;
 use LaravelEnso\Helpers\Services\Obj;
