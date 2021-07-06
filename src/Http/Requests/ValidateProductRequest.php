@@ -26,7 +26,7 @@ class ValidateProductRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'category_id' => 'required|integer|exists:categories,id',
+            'category_id' => 'filled|integer|exists:categories,id',
             'manufacturer_id' => 'required|integer|exists:companies,id',
             'suppliers' => 'array',
             'suppliers.*.id' => 'numeric|exists:companies,id',
