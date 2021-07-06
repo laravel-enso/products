@@ -168,12 +168,11 @@ class Product extends Model implements Activatable
             }
         });
 
-        $mode = Config::get('enso.products.internalCode.mode');
+        $auto = Config::get('enso.products.internalCode.mode') === 'auto';
 
-        if ($mode === 'auto') {
+        if ($auto) {
             static::created(function ($model) {
-                $model::withoutEvents(fn () => $model
-                    ->update(['internal_code' => $model->internalCode()]));
+                $model->update(['internal_code' => $model->internalCode()]);
             });
         }
     }
