@@ -25,8 +25,8 @@ class ValidateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_id' => 'nullable|integer|exists:categories,id',
-            'manufacturer_id' => 'nullable|integer|exists:companies,id',
+            'category_id' => 'required|integer|exists:categories,id',
+            'manufacturer_id' => 'required|integer|exists:companies,id',
             'suppliers' => 'array',
             'suppliers.*.id' => 'numeric|exists:companies,id',
             'suppliers.*.pivot.partNumber' => 'required|string',

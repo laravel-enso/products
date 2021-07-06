@@ -6,7 +6,7 @@ use LaravelEnso\Categories\Models\Category as Model;
 use LaravelEnso\DataImport\Models\DataImport;
 use LaravelEnso\Helpers\Services\Obj;
 
-class Category extends BaseProduct
+class Category extends Product
 {
     public function run(Obj $row, DataImport $import)
     {

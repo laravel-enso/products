@@ -4,7 +4,7 @@
         {
             "name": "products",
             "importerClass": "LaravelEnso\\Products\\Imports\\Importers\\State",
-            "validatorClass": "LaravelEnso\\Products\\Imports\\Validators\\BaseProduct",
+            "validatorClass": "LaravelEnso\\Products\\Imports\\Validators\\Product",
             "columns": [
                 {
                     "name": "part_number",

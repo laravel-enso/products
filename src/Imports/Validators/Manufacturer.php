@@ -6,7 +6,7 @@ use LaravelEnso\Companies\Models\Company;
 use LaravelEnso\DataImport\Models\DataImport;
 use LaravelEnso\Helpers\Services\Obj;
 
-class Manufacturer extends BaseProduct
+class Manufacturer extends Product
 {
     public function run(Obj $row, DataImport $import)
     {
