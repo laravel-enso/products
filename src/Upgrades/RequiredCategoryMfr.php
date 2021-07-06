@@ -12,16 +12,16 @@ class RequiredCategoryMfr implements MigratesTable, ShouldRunManually
     public function isMigrated(): bool
     {
         return Column::isNotNullable('products', 'category_id')
-            && Column::isNotNullable('products', 'manufacturer_id');
+            && Column::isNotNullable('products', 'manufacturer_id')
+            && Column::isNotNullable('products', 'internal_code');
     }
 
     public function migrateTable(): void
     {
         Schema::table('products', function ($table) {
-            $table->unsignedInteger('manufacturer_id')
-                ->nullable(false)->change();
-            $table->unsignedInteger('category_id')
-                ->nullable(false)->change();
+            $table->unsignedInteger('manufacturer_id')->nullable(false)->change();
+            $table->unsignedInteger('category_id')->nullable(false)->change();
+            $table->unsignedInteger('internal_code')->nullable(false)->change();
         });
     }
 }

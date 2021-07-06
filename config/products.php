@@ -5,7 +5,7 @@ return [
     |--------------------------------------------------------------------------
     | Internal code
     |--------------------------------------------------------------------------
-    | The package provides the ability to autmatically manage the product's
+    | The package provides the ability to automatically manage the product's
     | internal code. To use this, change the mode to 'auto'.
     |
     */

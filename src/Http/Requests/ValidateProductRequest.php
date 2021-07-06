@@ -34,7 +34,7 @@ class ValidateProductRequest extends FormRequest
             'defaultSupplierId' => 'nullable|numeric|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:255',
             'part_number' => 'required|string',
-            'internal_code' => ['nullable', 'string', 'max:255', $this->internalCodeUnique()],
+            'internal_code' => ['string', 'max:255', $this->internalCodeUnique()],
             'measurement_unit_id' => 'required|exists:measurement_units,id',
             'packaging_unit_id' => 'required|exists:packaging_units,id',
             'package_quantity' => 'nullable|integer|min:1',
@@ -51,6 +51,7 @@ class ValidateProductRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $this->validator = $validator;
+
             $this->validateUniqueness();
 
             if ($this->filled('suppliers')) {
@@ -58,7 +59,7 @@ class ValidateProductRequest extends FormRequest
             }
 
             if ($this->filled('category_id')) {
-                $this->ensureNotParent();
+                $this->ensureCategoryIsLeaf();
             }
         });
     }
@@ -66,14 +67,10 @@ class ValidateProductRequest extends FormRequest
     protected function validateUniqueness()
     {
         if (! $this->product()->exists()) {
-            return;
+            Collection::wrap(['part_number', 'manufacturer_id'])
+                ->each(fn ($attribute) => $this->validator->errors()
+                    ->add($attribute, __('Product is duplicated')));
         }
-
-        Collection::wrap(['part_number', 'manufacturer_id'])
-            ->each(fn ($attribute) => $this->validator->errors()->add(
-                $attribute,
-                __('A product with the specified part number and manufacturer already exists')
-            ));
     }
 
     protected function checkSuppliers()
@@ -108,26 +105,26 @@ class ValidateProductRequest extends FormRequest
 
         if ($this->defaultAcquisitionPrice() > $this->get('list_price')) {
             Collection::wrap(['list_price', 'defaultSupplierId'])
-                ->each(fn ($attribute) => $this->validator->errors()
-                    ->add($attribute, __('The acquisition price is higher than the list price!')));
+                ->each(fn ($attribute) => $this->validator
+                    ->errors()->add($attribute, __(
+                        'The acquisition price cannot be higher than the list price'
+                    )));
         }
     }
 
     protected function defaultAcquisitionPrice()
     {
         $defaultSupplier = Collection::wrap($this->get('suppliers'))
-            ->first(fn ($supplier) => $supplier['id'] === $this->get('defaultSupplierId'));
+            ->firstWhere('id', $this->get('defaultSupplierId'));
 
         return $defaultSupplier['pivot']['acquisitionPrice'] ?? null;
     }
 
-    protected function ensureNotParent()
+    protected function ensureCategoryIsLeaf()
     {
         if (Category::find($this->get('category_id'))->isParent()) {
-            $this->validator->errors()->add(
-                'category_id',
-                __('Must choose a subcategory')
-            );
+            $this->validator->errors()
+                ->add('category_id', __('Must choose a subcategory'));
         }
     }
 
