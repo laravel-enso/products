@@ -16,6 +16,7 @@ class Category extends Product
 
         if (! $category) {
             $this->addError(__('Category not found'));
+
             return;
         }
 
