@@ -16,6 +16,11 @@ class Category extends Product
 
         if (! $category) {
             $this->addError(__('Category not found'));
+            return;
+        }
+
+        if ($category->isParent()) {
+            $this->addError(__('Must choose a subcategory'));
         }
     }
 }
