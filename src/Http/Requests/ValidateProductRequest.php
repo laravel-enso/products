@@ -4,6 +4,7 @@ namespace LaravelEnso\Products\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Unique;
 use LaravelEnso\Categories\Models\Category;
@@ -24,7 +25,7 @@ class ValidateProductRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $rules = [
             'category_id' => 'required|integer|exists:categories,id',
             'manufacturer_id' => 'required|integer|exists:companies,id',
             'suppliers' => 'array',
@@ -34,7 +35,6 @@ class ValidateProductRequest extends FormRequest
             'defaultSupplierId' => 'nullable|numeric|exists:companies,id|required_with:suppliers',
             'name' => 'required|string|max:255',
             'part_number' => 'required|string',
-            'internal_code' => ['string', 'max:255', $this->internalCodeUnique()],
             'measurement_unit_id' => 'required|exists:measurement_units,id',
             'packaging_unit_id' => 'required|exists:packaging_units,id',
             'package_quantity' => 'nullable|integer|min:1',
@@ -45,6 +45,12 @@ class ValidateProductRequest extends FormRequest
             'link' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ];
+
+        if (Config::get('enso.products.internalCode.mode' === 'manual')) {
+            $rules['internal_code'] = ['required', 'string', 'max:255', $this->internalCodeUnique()];
+        }
+
+        return $rules;
     }
 
     public function withValidator($validator)

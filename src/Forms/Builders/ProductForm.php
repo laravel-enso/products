@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\Products\Forms\Builders;
 
+use Illuminate\Support\Facades\Config;
 use LaravelEnso\Forms\Services\Form;
 use LaravelEnso\MeasurementUnits\Models\MeasurementUnit;
 use LaravelEnso\PackagingUnits\Models\PackagingUnit;
@@ -16,7 +17,10 @@ class ProductForm
 
     public function __construct()
     {
-        $this->form = new Form(static::TemplatePath);
+        $readonly = Config::get('enso.products.internalCode.mode') === 'auto';
+
+        $this->form = (new Form(static::TemplatePath))
+            ->readonly('internal_code', $readonly);
     }
 
     public function create()
