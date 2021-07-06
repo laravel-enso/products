@@ -2,10 +2,10 @@
 
 namespace LaravelEnso\Products\Imports\Validators;
 
+use LaravelEnso\Categories\Models\Category as Model;
 use LaravelEnso\DataImport\Models\DataImport;
 use LaravelEnso\DataImport\Services\Validators\Validator;
 use LaravelEnso\Helpers\Services\Obj;
-use LaravelEnso\Categories\Models\Category as Model;
 
 class Category extends Validator
 {
