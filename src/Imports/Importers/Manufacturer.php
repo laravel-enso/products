@@ -2,19 +2,20 @@
 
 namespace LaravelEnso\Products\Imports\Importers;
 
+use Illuminate\Support\Facades\App;
 use LaravelEnso\Companies\Models\Company;
 use LaravelEnso\DataImport\Contracts\Importable;
 use LaravelEnso\DataImport\Models\DataImport;
 use LaravelEnso\Helpers\Services\Obj;
-use LaravelEnso\Products\Models\Product;
+use LaravelEnso\Products\Imports\Product;
 
 class Manufacturer implements Importable
 {
     public function run(Obj $row, DataImport $import)
     {
-        $manufacturer = Company::cacheGetBy('name', $row->get('manufacturer'));
+        $newManufacturer = Company::cacheGetBy('name', $row->get('new_manufacturer'));
 
-        Product::whereId($row->get('id'))
-            ->update(['manufacturer_id' => $manufacturer->id]);
+        App::make(Product::class)::get($row)
+            ->update(['manufacturer_id' => $newManufacturer->id]);
     }
 }

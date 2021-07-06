@@ -12,6 +12,11 @@ class Product
     {
         $manufacturer = Company::cacheGetBy('name', $row->get('manufacturer'));
 
+        return self::product($row, $manufacturer);
+    }
+
+    protected static function product(Obj $row, ?Company $manufacturer)
+    {
         return Model::wherePartNumber($row->get('part_number'))
             ->whereManufacturerId($manufacturer?->id)
             ->first();

@@ -7,11 +7,15 @@
             "validatorClass": "LaravelEnso\\Products\\Imports\\Validators\\Manufacturer",
             "columns": [
                 {
-                    "name": "id",
+                    "name": "part_number",
                     "validations": "required"
                 },
                 {
                     "name": "manufacturer",
+                    "validations": "nullable"
+                },
+                {
+                    "name": "new_manufacturer",
                     "validations": "required"
                 }
             ]

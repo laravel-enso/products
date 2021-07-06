@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\Products\Imports\Importers;
 
+use Illuminate\Support\Facades\App;
 use LaravelEnso\DataImport\Contracts\Importable;
 use LaravelEnso\DataImport\Models\DataImport;
 use LaravelEnso\Helpers\Services\Obj;
@@ -11,7 +12,7 @@ class State implements Importable
 {
     public function run(Obj $row, DataImport $import)
     {
-        Product::get($row)
+        App::make(Product::class)::get($row)
             ->update(['is_active' => $row->get('active')]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\Products\Imports\Importers;
 
+use Illuminate\Support\Facades\App;
 use LaravelEnso\Categories\Models\Category as Model;
 use LaravelEnso\DataImport\Contracts\Importable;
 use LaravelEnso\DataImport\Models\DataImport;
@@ -14,7 +15,7 @@ class Category implements Importable
     {
         $category = Model::cacheGetBy('name', $row->get('category'));
 
-        Product::get($row)
+        App::make(Product::class)::get($row)
             ->update(['category_id' => $category->id]);
     }
 }
