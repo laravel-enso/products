@@ -3,7 +3,6 @@
 namespace LaravelEnso\Products\Imports\Validators;
 
 use Illuminate\Support\Facades\App;
-use LaravelEnso\Categories\Models\Category as Model;
 use LaravelEnso\DataImport\Models\DataImport;
 use LaravelEnso\DataImport\Services\Validators\Validator;
 use LaravelEnso\Helpers\Services\Obj;
