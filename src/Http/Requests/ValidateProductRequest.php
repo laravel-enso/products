@@ -17,12 +17,12 @@ class ValidateProductRequest extends FormRequest
     protected $validator;
     protected $suppliers;
 
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'category_id' => 'required|integer|exists:categories,id',
