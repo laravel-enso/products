@@ -1,0 +1,20 @@
+{
+    "timeout": 300,
+    "sheets": [
+        {
+            "name": "products",
+            "importerClass": "LaravelEnso\\Products\\Imports\\Importers\\Manufacturer",
+            "validatorClass": "LaravelEnso\\Products\\Imports\\Validators\\Manufacturer",
+            "columns": [
+                {
+                    "name": "id",
+                    "validations": "required"
+                },
+                {
+                    "name": "manufacturer",
+                    "validations": "required"
+                }
+            ]
+        }
+    ]
+}

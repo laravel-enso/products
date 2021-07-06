@@ -1,0 +1,24 @@
+{
+    "timeout": 300,
+    "sheets": [
+        {
+            "name": "products",
+            "importerClass": "LaravelEnso\\Products\\Imports\\Importers\\Category",
+            "validatorClass": "LaravelEnso\\Products\\Imports\\Validators\\Category",
+            "columns": [
+                {
+                    "name": "part_number",
+                    "validations": "required"
+                },
+                {
+                    "name": "manufacturer",
+                    "validations": "required"
+                },
+                {
+                    "name": "category",
+                    "validations": "required"
+                }
+            ]
+        }
+    ]
+}
