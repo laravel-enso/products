@@ -3,8 +3,8 @@
     "sheets": [
         {
             "name": "products",
-            "importerClass": "LaravelEnso\\Products\\Imports\\Importers\\State",
-            "validatorClass": "LaravelEnso\\Products\\Imports\\Validators\\Product",
+            "importerClass": "LaravelEnso\\Products\\Imports\\Importers\\Category",
+            "validatorClass": "LaravelEnso\\Products\\Imports\\Validators\\Category",
             "columns": [
                 {
                     "name": "part_number",
@@ -15,8 +15,8 @@
                     "validations": "required"
                 },
                 {
-                    "name": "active",
-                    "validations": "required|boolean"
+                    "name": "category",
+                    "validations": "required"
                 }
             ]
         }

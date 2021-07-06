@@ -2,16 +2,17 @@
 
 namespace LaravelEnso\Products\Imports\Validators;
 
+use Illuminate\Support\Facades\App;
 use LaravelEnso\DataImport\Models\DataImport;
 use LaravelEnso\DataImport\Services\Validators\Validator;
 use LaravelEnso\Helpers\Services\Obj;
-use LaravelEnso\Products\Imports\Product;
+use LaravelEnso\Products\Imports\Product as Resolver;
 
-class State extends Validator
+class Product extends Validator
 {
     public function run(Obj $row, DataImport $import)
     {
-        if (! Product::get($row)) {
+        if (! App::make(Resolver::class)::get($row)) {
             $this->addError(__('Product not found'));
         }
     }
