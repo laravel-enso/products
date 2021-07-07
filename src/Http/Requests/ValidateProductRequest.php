@@ -72,7 +72,7 @@ class ValidateProductRequest extends FormRequest
 
     protected function validateUniqueness()
     {
-        if (! $this->product()->exists()) {
+        if ($this->product()->exists()) {
             Collection::wrap(['part_number', 'manufacturer_id'])
                 ->each(fn ($attribute) => $this->validator->errors()
                     ->add($attribute, __('Product is duplicated')));
